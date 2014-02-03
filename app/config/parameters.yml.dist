@@ -1,0 +1,15 @@
+parameters:
+    database_driver:   pdo_mysql
+    database_host:     127.0.0.1
+    database_port:     null
+    database_name:     bluerose
+    database_user:     bluerose
+    database_password: bluerose
+
+    mailer_transport:  smtp
+    mailer_host:       127.0.0.1
+    mailer_user:       null
+    mailer_password:   null
+
+    locale:            pl
+    secret:            ThisTokenIsNotSoSecretChangeIt
