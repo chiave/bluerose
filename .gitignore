@@ -7,7 +7,16 @@ vendor/*
 */cache/*
 web/uploads/*
 web/bundles/*
+public_html/uploads/*
+public_html/bundles/*
 
 # Configuration files
 app/config/parameters.ini
 app/config/parameters.yml
+
+build/*
+bin/*
+composer.phar
+
+!app/cache/.gitkeep
+!app/logs/.gitkeep
