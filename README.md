@@ -41,3 +41,23 @@ Polska wersja (minimalnie nieaktualna): http://symfony-docs.pl/
 
 
 Tyle na start - zachęcam do pisania ticketów w zakładce Issues. W razie problemów z Symfony, serwerem, gitem lub czymś związanym z projektem można śmiało zaczepiać tutaj, na IRC-u, gTalku i mailowo.
+
+
+EDIT:
+Utworzyłem trzy pierwsze bundle. Wszystkie siedzą w src/Chiave
+
+
+CoreBundle:
+    Będzie służył do niewielu rzeczy, ale takie jest jego założenie. Obsługa logowania, może szablony niektórych widoków. Na razie nie robi nic.
+
+ErepublikScrobblerBundle:
+    Chyba najtrudniejsze co nas czeka. Będzie miał za zadanie skanować co jakiś czas eRepublik, a to co wyszpera będzie zapisywał do bazy danych. Na chwilę obecną przewiduję, że będzie on działał cały czas iterując po id-kach userów, firm, bojówek i czego nam tylko przyjdzie do głowy. Pytanie tylko, czy nas erepublik wtedy nie zablokuje. Jeśli tak, ograniczymy się do listy zarejestrowanych nastronce userów.
+
+StatsBundle:
+    Tutaj będą się wykonywały wszelakie automagiczne czynności na zescrobblowanych danych. Przeliczanie, wyliczanie, podliczanie, zliczanie, i wszystko inne. Cel prosty.
+
+StaticBundle:
+    W zasadzie gotowy do użytku. Jego zadaniem jest wyświetlanie stron statycznych. Controller jest całkiem prosty - ma za zadanie przekierować wchodzącego na <naszadomena>/xyz usera do widoku xyz.html.twig siedzącego w src/Chiave/StaticBundle/Resources/views/Frontend. Cokolwiek będzie wpisane po slashu - do takiego zasobu nas wyśle. Gdy zasób nie istnieje - zwraca 404. Bundle przyda się dla każdego, kto będzie pracował nad wyglądem stron, bo tutaj może to robić na spokojnie bez obaw, że jakieś dziwne dane wyjściowe będzie dostawał.
+
+MilitaryUnitBundle:
+    Bundle z rzeczami specyficznymi dla bojówki. Nie mam pewności co tu wsadzimy jeszcze, ale celuję w takie rzeczy jak wysyłąnie PM-ek, linki do profilów, mapy, dotacje, wewnętrzne informacje, wyliczenia należności i tym podobne. W skrócie - narzędzia ułatwiające pracę bojówce.

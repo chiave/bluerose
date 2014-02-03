@@ -1,0 +1,24 @@
+chiave_military_unit:
+    resource: "@ChiaveMilitaryUnitBundle/Controller/"
+    type:     annotation
+    prefix:   /
+
+chiave_stats:
+    resource: "@ChiaveStatsBundle/Controller/"
+    type:     annotation
+    prefix:   /
+
+chiave_core:
+    resource: "@ChiaveCoreBundle/Controller/"
+    type:     annotation
+    prefix:   /
+
+chiave_erepublik_scrobbler:
+    resource: "@ChiaveErepublikScrobblerBundle/Controller/"
+    type:     annotation
+    prefix:   /
+
+chiave_static:
+    resource: "@ChiaveStaticBundle/Controller/"
+    type:     annotation
+    prefix:   /

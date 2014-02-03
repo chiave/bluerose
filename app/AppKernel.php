@@ -16,6 +16,11 @@ class AppKernel extends Kernel
             new Symfony\Bundle\AsseticBundle\AsseticBundle(),
             new Doctrine\Bundle\DoctrineBundle\DoctrineBundle(),
             new Sensio\Bundle\FrameworkExtraBundle\SensioFrameworkExtraBundle(),
+            new Chiave\CoreBundle\ChiaveCoreBundle(),
+            new Chiave\StaticBundle\ChiaveStaticBundle(),
+            new Chiave\ErepublikScrobblerBundle\ChiaveErepublikScrobblerBundle(),
+            new Chiave\StatsBundle\ChiaveStatsBundle(),
+            new Chiave\MilitaryUnitBundle\ChiaveMilitaryUnitBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {
