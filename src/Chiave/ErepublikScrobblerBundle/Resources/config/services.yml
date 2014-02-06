@@ -1,0 +1,5 @@
+services:
+    erepublik_citizen_scrobbler:
+        class:  Chiave\ErepublikScrobblerBundle\Service\CitizenScrobblerService
+        calls:
+            - [setContainer, [@service_container]]
