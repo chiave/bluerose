@@ -1,3 +1,18 @@
+Dostępność akcji:
+/test/{erepublikId}
+/test/4241769
+    surowe wypisanie danych o userze.
+
+konsola:
+app/console erepublik:scrobbler:citizes {erepublikId}
+app/console erepublik:scrobbler:citizes 4241769
+    aktualizuje/tworzy wpis o userze w naszej bazie danych. Zwraca info, jeśli za id-kiem nie kryje się aktywny gracz.
+
+
+
+
+
+
 Symfony2 project.
 
 Zaczynamy!

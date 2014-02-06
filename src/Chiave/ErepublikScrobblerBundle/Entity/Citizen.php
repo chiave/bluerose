@@ -7,11 +7,11 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * Player
  *
- * @ORM\Table()
+ * @ORM\Table(name="erepublik_citizen")
  * @ORM\Entity
  * @ORM\HasLifecycleCallbacks()
  */
-class Player
+class Citizen
 {
     /**
      * @var integer

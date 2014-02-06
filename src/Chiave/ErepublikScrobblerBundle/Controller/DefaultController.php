@@ -24,7 +24,7 @@ class DefaultController extends Controller
      */
     public function testAction($id)
     {
-        $this->get('erepublik_citizen_scrobbler')->getAllData($id);
+        $this->get('erepublik_citizen_scrobbler')->showRawData($id);
         die;
 
         return array();

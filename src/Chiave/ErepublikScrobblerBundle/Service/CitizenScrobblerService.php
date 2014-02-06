@@ -2,8 +2,9 @@
 
 namespace Chiave\ErepublikScrobblerBundle\Service;
 
-use Chiave\ErepublikScrobblerBundle\Entity\Player;
 use Chiave\ErepublikScrobblerBundle\Libraries\CurlUtils;
+
+use Chiave\ErepublikScrobblerBundle\Entity\Citizen;
 
 /**
  * class CitizenScrobblerService
@@ -28,7 +29,7 @@ class CitizenScrobblerService extends CurlUtils
     private $_xpath;
     private $_id;
 
-    public function getAllData($id) {
+    public function showRawData($id) {
         $this->_prepare($id);
 
         if ($this->userExists()) {
@@ -45,7 +46,7 @@ class CitizenScrobblerService extends CurlUtils
             echo '<br>rank image url: ' . $this->getRankImage();
             echo '<br>tp: ' . $this->getTruePatriot();
             echo '<br>';
-            echo '<br>eUrodziny: ' . $this->getEBirthday();
+            echo '<br>eUrodziny: ' . $this->getEBirthday()->format('Y-m-d');
             echo '<br>panstwo: ' . $this->getCountry();
             echo '<br>region: ' . $this->getRegion();
             echo '<br>obywatelstwo: ' . $this->getCitizenship();
@@ -61,6 +62,57 @@ class CitizenScrobblerService extends CurlUtils
         } else {
             echo '<br />User o podanym ID prawdopodobnie nie istnieje.';
         }
+    }
+
+    public function updateCitizen($id) {
+        $this->_prepare($id);
+
+        if (!$this->userExists()) {
+            $status = 'nouser';
+            return $status;
+        }
+
+        $em = $this->container
+            ->get('doctrine.orm.entity_manager')
+        ;
+
+        $citizen = $em
+            ->getRepository('Chiave\ErepublikScrobblerBundle\Entity\Citizen')
+            ->findOneByUserId($id)
+        ;
+
+        if ($citizen instanceof Citizen) {
+            $status = 'update';
+        } else {
+            $status = 'create';
+            $citizen = new Citizen();
+        }
+
+        $citizen->setUserId($id);
+        $citizen->setNick($this->getName());
+        $citizen->setAvatarUrl($this->getAvatar());
+        // $citizen->set($this->getLvl());
+        $citizen->setExperience($this->getExp());
+        $citizen->setStrength($this->getStr());
+        // $citizen->set($this->getRank());
+        $citizen->setRankPoints($this->getRankPoints());
+        // $citizen->set($this->getRankImage());
+        $citizen->setTruePatriot($this->getTruePatriot());
+        $citizen->setEbirth($this->getEBirthday());
+        $citizen->setCountry($this->getCountry());
+        $citizen->setRegion($this->getRegion());
+        $citizen->setCitizenship($this->getCitizenship());
+        $citizen->setNationalRank($this->getNationalRank());
+        $citizen->setPartyId($this->getPartyId());
+        $citizen->setPartyName($this->getParty());
+        $citizen->setMilitaryUnitId($this->getMilitaryUnitId());
+        $citizen->setMilitaryUnitName($this->getMilitaryUnit());
+        $citizen->setAchievements($this->getMedals());
+
+        $em->persist($citizen);
+        $em->flush();
+
+        return $status;
     }
 
     public function userExists()
@@ -142,14 +194,15 @@ class CitizenScrobblerService extends CurlUtils
 
     public function getTruePatriot()
     {
-        $tp = $this->_formatNumber(
-            $this->_getBeforeSlash(
-                $this->_xpath->query("//div[@class='citizen_military'][3]/div[@class='stat']/small[2]/strong")
+        $query = $this->_xpath->query("//div[@class='citizen_military'][3]/div[@class='stat']/small[2]/strong")
                     ->item(0)
-        ));
+        ;
 
-        if ($tp) {
-            return $tp->nodeValue;
+        if ($query) {
+            return $this->_formatNumber(
+                $this->_getBeforeSlash(
+                   $query->nodeValue
+            ));
         }
 
         return null;
@@ -161,7 +214,7 @@ class CitizenScrobblerService extends CurlUtils
             ->item(0)->nodeValue);
         $dt = new \DateTime();
         $dt = $dt->createFromFormat('M d, Y', $eBirthday);
-        return $dt->format('Y-m-d');
+        return $dt;
     }
 
 
@@ -201,7 +254,7 @@ class CitizenScrobblerService extends CurlUtils
         ;
 
         if ($partyString) {
-            return $partyString->nodeValue;
+            return trim($partyString->nodeValue);
         }
 
         return null;
@@ -229,7 +282,7 @@ class CitizenScrobblerService extends CurlUtils
         ;
 
         if ($mu) {
-            return $mu->nodeValue;
+            return trim($mu->nodeValue);
         }
 
         return null;

@@ -1,0 +1,22 @@
+.page {
+    min-width: 1050px;
+}
+
+.header {
+
+}
+
+.wrapper {
+    width: 1050px;
+    margin: 0 auto;
+}
+
+.sidebar {
+    width: 20%;
+    float: left;
+}
+
+.content {
+    width: 80%;
+    float: right;
+}
