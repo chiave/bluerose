@@ -10,8 +10,8 @@ class CurlUtils {
     $options = array(
       CURLOPT_HEADER => false,
       CURLOPT_COOKIE => true,
-      CURLOPT_COOKIEFILE => 'cookies.txt',
-      CURLOPT_COOKIEJAR => 'cookies.txt',
+      CURLOPT_COOKIEFILE => 'app/cache/cookies.txt',
+      CURLOPT_COOKIEJAR => 'app/cache/cookies.txt',
       CURLOPT_ENCODING => 'utf8',
       CURLOPT_USERAGENT => 'Mozilla/5.0 (Windows NT 6.2; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/32.0.1667.0 Safari/537.36',
       CURLOPT_RETURNTRANSFER => true,

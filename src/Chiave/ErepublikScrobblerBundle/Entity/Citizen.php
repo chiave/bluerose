@@ -3,11 +3,12 @@
 namespace Chiave\ErepublikScrobblerBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * Player
  *
- * @ORM\Table(name="erepublik_citizen")
+ * @ORM\Table(name="citizen")
  * @ORM\Entity
  * @ORM\HasLifecycleCallbacks()
  */
@@ -23,11 +24,17 @@ class Citizen
     private $id;
 
     /**
+     * @ORM\OneToOne(targetEntity="\Chiave\UserBundle\Entity\User", inversedBy="citizen", cascade={"all"})
+     * @ORM\JoinColumn(name="user_id", referencedColumnName="id", nullable=true)
+     **/
+    private $user;
+
+    /**
      * @var integer
      *
-     * @ORM\Column(name="userId", type="integer")
+     * @ORM\Column(name="citizenId", type="integer", nullable=true)
      */
-    private $userId;
+    private $citizenId;
 
     /**
      * @var string
@@ -67,7 +74,7 @@ class Citizen
     /**
      * @var integer
      *
-     * @ORM\Column(name="truePatriot", type="integer")
+     * @ORM\Column(name="truePatriot", type="integer", nullable=true)
      */
     private $truePatriot;
 
@@ -109,37 +116,42 @@ class Citizen
     /**
      * @var integer
      *
-     * @ORM\Column(name="partyId", type="integer")
+     * @ORM\Column(name="partyId", type="integer", nullable=true)
      */
     private $partyId;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="partyName", type="string", length=64)
+     * @ORM\Column(name="partyName", type="string", length=64, nullable=true)
      */
     private $partyName;
 
     /**
      * @var integer
      *
-     * @ORM\Column(name="militaryUnitId", type="integer")
+     * @ORM\Column(name="militaryUnitId", type="integer", nullable=true)
      */
     private $militaryUnitId;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="militaryUnitName", type="string", length=64)
+     * @ORM\Column(name="militaryUnitName", type="string", length=64, nullable=true)
      */
     private $militaryUnitName;
 
     /**
      * @var array
      *
-     * @ORM\Column(name="achievements", type="json_array")
+     * @ORM\Column(name="achievements", type="json_array", nullable=true)
      */
     private $achievements;
+
+    /**
+     * @ORM\OneToMany(targetEntity="CitizenChange", mappedBy="citizen")
+     */
+    private $changes;
 
     /**
      * @var \DateTime
@@ -156,6 +168,14 @@ class Citizen
     private $updatedAt;
 
 
+    public function __construct() {
+        $this->changes = new ArrayCollection();
+    }
+
+    public function __toString() {
+        return $this->getNick();
+    }
+
     /**
      * Get id
      *
@@ -167,26 +187,49 @@ class Citizen
     }
 
     /**
-     * Set userId
+     * Set user
      *
-     * @param integer $userId
-     * @return Player
+     * @param \Chiave\UserBundle\Entity\User $user
+     * @return Citizen
      */
-    public function setUserId($userId)
+    public function setUser(\Chiave\UserBundle\Entity\User $user = null)
     {
-        $this->userId = $userId;
+        $this->user = $user;
 
         return $this;
     }
 
     /**
-     * Get userId
+     * Get user
+     *
+     * @return \Chiave\UserBundle\Entity\User
+     */
+    public function getUser()
+    {
+        return $this->user;
+    }
+
+    /**
+     * Set citizenId
+     *
+     * @param integer $citizenId
+     * @return User
+     */
+    public function setCitizenId($citizenId)
+    {
+        $this->citizenId = $citizenId;
+
+        return $this;
+    }
+
+    /**
+     * Get citizenId
      *
      * @return integer
      */
-    public function getUserId()
+    public function getCitizenId()
     {
-        return $this->userId;
+        return $this->citizenId;
     }
 
     /**
@@ -555,6 +598,39 @@ class Citizen
     public function getAchievements()
     {
         return $this->achievements;
+    }
+
+    /**
+     * Add changes
+     *
+     * @param CitizenChange $changes
+     * @return Citizen
+     */
+    public function addChange(CitizenChange $changes)
+    {
+        $this->changes[] = $changes;
+
+        return $this;
+    }
+
+    /**
+     * Remove change
+     *
+     * @param CitizenChange $changes
+     */
+    public function removeChange(CitizenChange $changes)
+    {
+        $this->changes->removeElement($changes);
+    }
+
+    /**
+     * Get changes
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getChanges()
+    {
+        return $this->changes;
     }
 
     /**

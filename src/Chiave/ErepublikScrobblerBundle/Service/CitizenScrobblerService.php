@@ -64,31 +64,28 @@ class CitizenScrobblerService extends CurlUtils
         }
     }
 
-    public function updateCitizen($id) {
-        $this->_prepare($id);
+    public function updateCitizen($citizen) {
+        $this->_prepare($citizen->getCitizenId());
 
         if (!$this->userExists()) {
-            $status = 'nouser';
-            return $status;
+            return null;
         }
 
         $em = $this->container
             ->get('doctrine.orm.entity_manager')
         ;
 
-        $citizen = $em
-            ->getRepository('Chiave\ErepublikScrobblerBundle\Entity\Citizen')
-            ->findOneByUserId($id)
-        ;
+        // $citizen = $em
+        //     ->getRepository('Chiave\ErepublikScrobblerBundle\Entity\Citizen')
+        //     ->findOneByUser($citizen)
+        // ;
 
-        if ($citizen instanceof Citizen) {
-            $status = 'update';
-        } else {
-            $status = 'create';
-            $citizen = new Citizen();
-        }
+        // if (!($citizen instanceof Citizen)) {
+        //     $citizen = new Citizen();
+        //     $citizen->setUser($citizen);
+        // }
 
-        $citizen->setUserId($id);
+        // $citizen->setUserId($id);
         $citizen->setNick($this->getName());
         $citizen->setAvatarUrl($this->getAvatar());
         // $citizen->set($this->getLvl());
@@ -112,7 +109,7 @@ class CitizenScrobblerService extends CurlUtils
         $em->persist($citizen);
         $em->flush();
 
-        return $status;
+        return $citizen;
     }
 
     public function userExists()

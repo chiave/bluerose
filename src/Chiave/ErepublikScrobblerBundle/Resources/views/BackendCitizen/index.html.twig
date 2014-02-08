@@ -1,0 +1,62 @@
+{% extends "ChiaveCoreBundle::backendbase.html.twig" %}
+
+{% block title %}Gracze{% endblock %}
+{% block description %}lista graczy{% endblock %}
+
+{% block active_name %}chiave_scrobbler_citizens{% endblock %}
+
+{% block body %}
+
+    <table class="records_list">
+        <thead>
+            <tr>
+                <th></th>
+                <th>Citizen ID</th>
+                <th>Nick</th>
+                <th>Experience</th>
+                <th>Strength</th>
+                <th>rankPoints</th>
+                <th>truePatriot</th>
+                <th>eBirth</th>
+                <th>location</th>
+                <th>nationalRank</th>
+                <th>partyName</th>
+                <th>militaryUnitName</th>
+                <th>
+                    <a class="tiny button success" href="{{ path('chiave_user_user_new') }}">
+                        Dodaj nowego usera
+                    </a>
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for citizen in citizens %}
+            <tr>
+                <td>{{ loop.index }}</td>
+                <td>{{ citizen.citizenId }}</td>
+                <td>{{ citizen.nick }}</td>
+                <td>{{ citizen.experience }}</td>
+                <td>{{ citizen.strength }}</td>
+                <td>{{ citizen.rankPoints }}</td>
+                <td>{{ citizen.truePatriot }}</td>
+                <td>eBirth{# {{ citizen.citizenId }} #}</td>
+                <td>{{ citizen.country }}<br />
+                    {{ citizen.region }}<br />
+                    {{ citizen.citizenship }}</td>
+                <td>{{ citizen.nationalRank }}</td>
+                <td>{{ citizen.partyName }}</td>
+                <td>{{ citizen.militaryUnitName }}</td>
+                <td>
+                    {#<div  class="button-bar">
+                        <ul class="button-group">
+                            <li><a class="tiny button" href="{{ path('chiave_gallery_categories_edit', { 'id': category.id }) }}">Edytuj</a></li>
+                            <li><a class="tiny button alert delete_button" href="{{ path('chiave_gallery_categories_delete', { 'id': category.id }) }}">Usuń</a></li>
+                        </ul>
+                    </div> #}
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+{% endblock %}

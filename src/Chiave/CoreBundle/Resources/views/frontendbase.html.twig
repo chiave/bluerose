@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8" />
+        <title>GAMP - {% block title %}nieruchomości{% endblock %}</title>
+        <!--title>{% block description %}Strona główna{% endblock %}</title-->
+        {% block stylesheets %}{% endblock %}
+
+        <link rel="stylesheet" type="text/css" href="{{ asset('css/style.css') }}" />
+        <link rel="stylesheet" type="text/css" href="{{ asset('css/reset.css') }}" />
+        <link href="{{ asset('css/lightbox.css') }}" rel="stylesheet" />
+
+        <script src="//code.jquery.com/jquery-1.10.2.min.js"></script>
+        <script src="{{ asset('js/lightbox-2.6.min.js') }}"></script>
+        <script src="{{ asset('bundles/chiavecore/js/modernizr.js') }}"></script>
+        <script src="{{ asset('bundles/chiavecore/js/vendor/fastclick.js') }}"></script>
+    </head>
+    <body>
+        <div id="page">
+            <div id="header">
+                <div class="fullWrapper">
+
+                    <div class="topMenu">
+                        {{ render(controller('ChiaveCMSBundle:Pages:renderMenu')) }}
+                    </div><!-- end topMenu class -->
+                </div><!--  end class fullWrapper for #header -->
+            </div><!-- end div header -->
+
+            <div id="content">
+                <div class="fullWrapperPad">
+                    <div class="column s7">
+                        {% block body %}{% endblock %}
+                    </div><!-- end column s7 -->
+
+                    <div class="column s3">
+                        {{ render(controller('ChiaveCMSBundle:Articles:importantArticles')) }}
+                    </div><!-- end column s3 -->
+            </div><!--  end fullWrapperPad for content -->
+            </div><!-- end div content -->
+
+            <div id="footer">
+            </div><!--  end div footer -->
+        </div><!-- end div page -->
+
+        {% block javascripts %}{% endblock %}
+        <script type="text/javascript">
+
+            $(document).ready(function(){
+
+                $('.tabWrapper ul:FIRST-CHILD li:FIRST-CHILD' ).addClass('active');
+                $('.tabWrapper ul:FIRST-CHILD li').click(function(){
+                	$('.tabWrapper ul:FIRST-CHILD li').removeClass("active");
+                	$(this).addClass('active');
+                	$('div.tabWrapper > div').hide();
+                    $('div.tabWrapper > div:eq('+$(this).index()+')').show();
+                    });
+
+                $(".listToggle").click(function(){
+                    $('div.more').slideUp();
+                    if($(this).next().is(':hidden'))
+                    {
+                    	$(this).next().slideDown();
+                    }
+                });
+
+                $('.hide').click(function() {
+                    $(this).parent().slideUp();
+                    });
+
+                $('#plainBoxToggle').click(function(){
+                    $(this).hide();
+                    $('#plainBoxTarget').slideDown();
+                });
+                $('#plainBoxToggle2').click(function(){
+                    $('#plainBoxTarget').slideUp();
+                    $('#plainBoxToggle').show();
+                });
+            });
+        </script>
+    </body>
+</html>

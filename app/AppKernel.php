@@ -21,6 +21,8 @@ class AppKernel extends Kernel
             new Chiave\ErepublikScrobblerBundle\ChiaveErepublikScrobblerBundle(),
             new Chiave\StatsBundle\ChiaveStatsBundle(),
             new Chiave\MilitaryUnitBundle\ChiaveMilitaryUnitBundle(),
+            new Chiave\UserBundle\ChiaveUserBundle(),
+            new FOS\UserBundle\FOSUserBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {
