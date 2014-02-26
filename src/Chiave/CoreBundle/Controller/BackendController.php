@@ -22,6 +22,13 @@ class BackendController extends Controller
      */
     public function dashboardAction()
     {
+        // var_dump(
+        //      $this->container
+        //         ->get('doctrine.orm.entity_manager')
+        //         ->getClassMetadata('Chiave\ErepublikScrobblerBundle\Entity\Citizen')
+        //         ->getFieldNames()
+        // );
+
         return $this->render(
             'ChiaveCoreBundle:Backend:dashboard.html.twig'
         );

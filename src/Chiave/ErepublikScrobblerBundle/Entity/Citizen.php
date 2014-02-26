@@ -6,7 +6,11 @@ use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
 
 /**
- * Player
+ * Citizen
+ *
+ * If you will add new field, remember to add
+ * field checking in CitizenScrobblerService
+ * (function updateCitizenChanges())
  *
  * @ORM\Table(name="citizen")
  * @ORM\Entity
@@ -23,11 +27,11 @@ class Citizen
      */
     private $id;
 
-    /**
-     * @ORM\OneToOne(targetEntity="\Chiave\UserBundle\Entity\User", inversedBy="citizen", cascade={"all"})
-     * @ORM\JoinColumn(name="user_id", referencedColumnName="id", nullable=true)
-     **/
-    private $user;
+    // *
+    //  * @ORM\OneToOne(targetEntity="\Chiave\UserBundle\Entity\User", inversedBy="citizen", cascade={"all"})
+    //  * @ORM\JoinColumn(name="user_id", referencedColumnName="id", nullable=true)
+    //  *
+    // private $user;
 
     /**
      * @var integer
@@ -186,28 +190,28 @@ class Citizen
         return $this->id;
     }
 
-    /**
-     * Set user
-     *
-     * @param \Chiave\UserBundle\Entity\User $user
-     * @return Citizen
-     */
-    public function setUser(\Chiave\UserBundle\Entity\User $user = null)
-    {
-        $this->user = $user;
+    // /**
+    //  * Set user
+    //  *
+    //  * @param \Chiave\UserBundle\Entity\User $user
+    //  * @return Citizen
+    //  */
+    // public function setUser(\Chiave\UserBundle\Entity\User $user = null)
+    // {
+    //     $this->user = $user;
 
-        return $this;
-    }
+    //     return $this;
+    // }
 
-    /**
-     * Get user
-     *
-     * @return \Chiave\UserBundle\Entity\User
-     */
-    public function getUser()
-    {
-        return $this->user;
-    }
+    // /**
+    //  * Get user
+    //  *
+    //  * @return \Chiave\UserBundle\Entity\User
+    //  */
+    // public function getUser()
+    // {
+    //     return $this->user;
+    // }
 
     /**
      * Set citizenId

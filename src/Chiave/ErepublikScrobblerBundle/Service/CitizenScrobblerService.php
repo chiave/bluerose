@@ -5,6 +5,7 @@ namespace Chiave\ErepublikScrobblerBundle\Service;
 use Chiave\ErepublikScrobblerBundle\Libraries\CurlUtils;
 
 use Chiave\ErepublikScrobblerBundle\Entity\Citizen;
+use Chiave\ErepublikScrobblerBundle\Entity\citizenChange;
 
 /**
  * class CitizenScrobblerService
@@ -71,9 +72,7 @@ class CitizenScrobblerService extends CurlUtils
             return null;
         }
 
-        $em = $this->container
-            ->get('doctrine.orm.entity_manager')
-        ;
+        $em = $this->getEm();
 
         // $citizen = $em
         //     ->getRepository('Chiave\ErepublikScrobblerBundle\Entity\Citizen')
@@ -84,6 +83,8 @@ class CitizenScrobblerService extends CurlUtils
         //     $citizen = new Citizen();
         //     $citizen->setUser($citizen);
         // }
+
+        $currentCitizen = clone $citizen;
 
         // $citizen->setUserId($id);
         $citizen->setNick($this->getName());
@@ -106,10 +107,151 @@ class CitizenScrobblerService extends CurlUtils
         $citizen->setMilitaryUnitName($this->getMilitaryUnit());
         $citizen->setAchievements($this->getMedals());
 
+        $this->updateCitizenChanges($currentCitizen, $citizen);
+
         $em->persist($citizen);
         $em->flush();
 
         return $citizen;
+    }
+
+    public function updateCitizenChanges($currentCitizen, $updatedCitizen)
+    {
+        if($currentCitizen->getNick() != $updatedCitizen->getNick()) {
+            $citizenChange = new citizenChange(
+                $updatedCitizen,
+                'Nick',
+                $updatedCitizen->getNick()
+            );
+
+            $this->getEm()->persist($citizenChange);
+        }
+        if($currentCitizen->getAvatarUrl() != $updatedCitizen->getAvatarUrl()) {
+            $citizenChange = new citizenChange(
+                $updatedCitizen,
+                'AvatarUrl',
+                $updatedCitizen->getAvatarUrl()
+            );
+
+            $this->getEm()->persist($citizenChange);
+        }
+        if($currentCitizen->getExperience() != $updatedCitizen->getExperience()) {
+            $citizenChange = new citizenChange(
+                $updatedCitizen,
+                'Experience',
+                $updatedCitizen->getExperience()
+            );
+
+            $this->getEm()->persist($citizenChange);
+        }
+        if($currentCitizen->getStrength() != $updatedCitizen->getStrength()) {
+            $citizenChange = new citizenChange(
+                $updatedCitizen,
+                'Strength',
+                $updatedCitizen->getStrength()
+            );
+
+            $this->getEm()->persist($citizenChange);
+        }
+        if($currentCitizen->getRankPoints() != $updatedCitizen->getRankPoints()) {
+            $citizenChange = new citizenChange(
+                $updatedCitizen,
+                'RankPoints',
+                $updatedCitizen->getRankPoints()
+            );
+
+            $this->getEm()->persist($citizenChange);
+        }
+        if($currentCitizen->getTruePatriot() != $updatedCitizen->getTruePatriot()) {
+            $citizenChange = new citizenChange(
+                $updatedCitizen,
+                'TruePatriot',
+                $updatedCitizen->getTruePatriot()
+            );
+
+            $this->getEm()->persist($citizenChange);
+        }
+        if($currentCitizen->getCountry() != $updatedCitizen->getCountry()) {
+            $citizenChange = new citizenChange(
+                $updatedCitizen,
+                'Country',
+                $updatedCitizen->getCountry()
+            );
+
+            $this->getEm()->persist($citizenChange);
+        }
+        if($currentCitizen->getRegion() != $updatedCitizen->getRegion()) {
+            $citizenChange = new citizenChange(
+                $updatedCitizen,
+                'Region',
+                $updatedCitizen->getRegion()
+            );
+
+            $this->getEm()->persist($citizenChange);
+        }
+        if($currentCitizen->getCitizenship() != $updatedCitizen->getCitizenship()) {
+            $citizenChange = new citizenChange(
+                $updatedCitizen,
+                'Citizenship',
+                $updatedCitizen->getCitizenship()
+            );
+
+            $this->getEm()->persist($citizenChange);
+        }
+        if($currentCitizen->getNationalRank() != $updatedCitizen->getNationalRank()) {
+            $citizenChange = new citizenChange(
+                $updatedCitizen,
+                'NationalRank',
+                $updatedCitizen->getNationalRank()
+            );
+
+            $this->getEm()->persist($citizenChange);
+        }
+        if($currentCitizen->getPartyId() != $updatedCitizen->getPartyId()) {
+            $citizenChange = new citizenChange(
+                $updatedCitizen,
+                'PartyId',
+                $updatedCitizen->getPartyId()
+            );
+
+            $this->getEm()->persist($citizenChange);
+        }
+        if($currentCitizen->getPartyName() != $updatedCitizen->getPartyName()) {
+            $citizenChange = new citizenChange(
+                $updatedCitizen,
+                'PartyName',
+                $updatedCitizen->getPartyName()
+            );
+
+            $this->getEm()->persist($citizenChange);
+        }
+        if($currentCitizen->getMilitaryUnitId() != $updatedCitizen->getMilitaryUnitId()) {
+            $citizenChange = new citizenChange(
+                $updatedCitizen,
+                'MilitaryUnitId',
+                $updatedCitizen->getMilitaryUnitId()
+            );
+
+            $this->getEm()->persist($citizenChange);
+        }
+        if($currentCitizen->getMilitaryUnitName() != $updatedCitizen->getMilitaryUnitName()) {
+            $citizenChange = new citizenChange(
+                $updatedCitizen,
+                'MilitaryUnitName',
+                $updatedCitizen->getMilitaryUnitName()
+            );
+
+            $this->getEm()->persist($citizenChange);
+        }
+        if($currentCitizen->getAchievements() != $updatedCitizen->getAchievements()) {
+            $citizenChange = new citizenChange(
+                $updatedCitizen,
+                'Achievements',
+                $updatedCitizen->getAchievements()
+            );
+
+            $this->getEm()->persist($citizenChange);
+        }
     }
 
     public function userExists()
@@ -309,6 +451,15 @@ class CitizenScrobblerService extends CurlUtils
             $medals[$type] = ($amount->length > 0 ? (int)$amount->item(0)->nodeValue : 0);
         }
         return $medals;
+    }
+
+
+
+    private function getEm()
+    {
+        return $this->container
+            ->get('doctrine.orm.entity_manager')
+        ;
     }
 
     private function _prepare($id)

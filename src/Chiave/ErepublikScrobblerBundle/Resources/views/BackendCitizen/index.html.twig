@@ -47,6 +47,11 @@
                 <td>{{ citizen.partyName }}</td>
                 <td>{{ citizen.militaryUnitName }}</td>
                 <td>
+                    <div class="button-bar">
+                        <ul class="button-group">
+                            <li><a class="tiny button" href="{{ path('chiave_scrobbler_citizens_changes', { 'citizenId': citizen.id }) }}">Pokaż zmiany</a></li>
+                        </ul>
+                    </div>
                     {#<div  class="button-bar">
                         <ul class="button-group">
                             <li><a class="tiny button" href="{{ path('chiave_gallery_categories_edit', { 'id': category.id }) }}">Edytuj</a></li>

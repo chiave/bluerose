@@ -21,18 +21,18 @@ class User extends BaseUser
      */
     protected $id;
 
-    /**
-     * @var integer
-     *
-     * @ORM\Column(name="citizenId", type="integer", nullable=true)
-     */
-    private $citizenId;
+    // /**
+    //  * @var integer
+    //  *
+    //  * @ORM\Column(name="citizenId", type="integer", nullable=true)
+    //  */
+    // private $citizenId;
 
-    /**
-     * @ORM\OneToOne(targetEntity="\Chiave\ErepublikScrobblerBundle\Entity\Citizen", mappedBy="user")
-     * @ORM\JoinColumn(name="citizen_id", referencedColumnName="id", nullable=true)
-     **/
-    private $citizen;
+    // *
+    //  * @ORM\OneToOne(targetEntity="\Chiave\ErepublikScrobblerBundle\Entity\Citizen", mappedBy="user")
+    //  * @ORM\JoinColumn(name="citizen_id", referencedColumnName="id", nullable=true)
+    //  *
+    // private $citizen;
 
     /**
      * @var \DateTime
@@ -66,51 +66,51 @@ class User extends BaseUser
         return $this->id;
     }
 
-    /**
-     * Set citizenId
-     *
-     * @param integer $citizenId
-     * @return User
-     */
-    public function setCitizenId($citizenId)
-    {
-        $this->citizenId = $citizenId;
+    // /**
+    //  * Set citizenId
+    //  *
+    //  * @param integer $citizenId
+    //  * @return User
+    //  */
+    // public function setCitizenId($citizenId)
+    // {
+    //     $this->citizenId = $citizenId;
 
-        return $this;
-    }
+    //     return $this;
+    // }
 
-    /**
-     * Get citizenId
-     *
-     * @return integer
-     */
-    public function getCitizenId()
-    {
-        return $this->citizenId;
-    }
+    // /**
+    //  * Get citizenId
+    //  *
+    //  * @return integer
+    //  */
+    // public function getCitizenId()
+    // {
+    //     return $this->citizenId;
+    // }
 
-    /**
-     * Set citizen
-     *
-     * @param \Chiave\ErepublikScrobblerBundle\Entity\Citizen $citizen
-     * @return User
-     */
-    public function setCitizen(\Chiave\ErepublikScrobblerBundle\Entity\Citizen $citizen = null)
-    {
-        $this->citizen = $citizen;
+    // *
+    //  * Set citizen
+    //  *
+    //  * @param \Chiave\ErepublikScrobblerBundle\Entity\Citizen $citizen
+    //  * @return User
 
-        return $this;
-    }
+    // public function setCitizen(\Chiave\ErepublikScrobblerBundle\Entity\Citizen $citizen = null)
+    // {
+    //     $this->citizen = $citizen;
 
-    /**
-     * Get citizen
-     *
-     * @return \Chiave\ErepublikScrobblerBundle\Entity\Citizen
-     */
-    public function getCitizen()
-    {
-        return $this->citizen;
-    }
+    //     return $this;
+    // }
+
+    // /**
+    //  * Get citizen
+    //  *
+    //  * @return \Chiave\ErepublikScrobblerBundle\Entity\Citizen
+    //  */
+    // public function getCitizen()
+    // {
+    //     return $this->citizen;
+    // }
 
     /**
      * Set createdAt

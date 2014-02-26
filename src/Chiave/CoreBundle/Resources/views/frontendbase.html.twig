@@ -1,20 +1,49 @@
-<!DOCTYPE html>
-<html>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
     <head>
-        <meta charset="UTF-8" />
-        <title>GAMP - {% block title %}nieruchomości{% endblock %}</title>
-        <!--title>{% block description %}Strona główna{% endblock %}</title-->
-        {% block stylesheets %}{% endblock %}
+        <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+        <title>BLUEROSE najlepsza mafijna bojówka</title>
+        <link rel="Stylesheet" type="text/css" href={{ asset('css/style.css') }} />
 
-        <link rel="stylesheet" type="text/css" href="{{ asset('css/style.css') }}" />
-        <link rel="stylesheet" type="text/css" href="{{ asset('css/reset.css') }}" />
-        <link href="{{ asset('css/lightbox.css') }}" rel="stylesheet" />
-
-        <script src="//code.jquery.com/jquery-1.10.2.min.js"></script>
-        <script src="{{ asset('js/lightbox-2.6.min.js') }}"></script>
-        <script src="{{ asset('bundles/chiavecore/js/modernizr.js') }}"></script>
-        <script src="{{ asset('bundles/chiavecore/js/vendor/fastclick.js') }}"></script>
     </head>
+
+    <body>
+        <center>
+        <div id= "content">
+            <div id="logo1">
+            </div>
+            <div id="logo2">
+            </div>
+            <div id="menu">
+                <ul>
+<li><a href="{{ path('chiave_static', { slug: 'statystyki'}) }}">Statystyki</a></li>
+<li><a href="{{ path('chiave_static', { slug: 'zbiorki'}) }}">Zbiórki</a></li>
+<li><a href="{{ path('chiave_static', { slug: 'ranking'}) }}">Ranking</a></li>
+<li><a href="{{ path('chiave_static', { slug: 'partia'}) }}">Partia</a></li>
+<li><a href="{{ path('chiave_static', { slug: 'dolacz'}) }}">Dołącz do nas</a></li>
+<li><a href="{{ path('chiave_static', { slug: 'dof'}) }}">Dofinansowanie</a></li>
+<li><a href="{{ path('chiave_static', { slug: 'download'}) }}">Do pobrania</a></li>
+<li><a href="{{ path('chiave_static', { slug: 'funrose'}) }}">Strefa FUNrose</a></li>
+<li><a href="#">LOGOWANIE</a></li>
+                </ul>
+            </div>
+
+            <div id="prawa_strona">
+                <!-- Tutaj jest wstawiana treść z plików zewnętrznych -->
+                {% block body %}{% endblock %}
+            </div>
+
+
+        <div class="both"></div>
+        <div id="stopka">
+        Copyright @BLUEROSE
+    </div>
+
+
+    </body>
+
+{#
     <body>
         <div id="page">
             <div id="header">
@@ -77,5 +106,5 @@
                 });
             });
         </script>
-    </body>
+    </body> #}
 </html>

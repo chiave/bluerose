@@ -50,6 +50,12 @@ class CitizenChange
     private $changedAt;
 
 
+    public function __construct($citizen, $field, $value) {
+        $this->citizen = $citizen;
+        $this->field = $field;
+        $this->value = $value;
+    }
+
     /**
      * Get id
      *
