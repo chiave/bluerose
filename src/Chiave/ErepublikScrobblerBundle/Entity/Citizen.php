@@ -64,7 +64,14 @@ class Citizen
     /**
      * @var integer
      *
-     * @ORM\Column(name="strength", type="integer")
+     * @ORM\Column(name="level", type="integer")
+     */
+    private $level;
+
+    /**
+     * @var float
+     *
+     * @ORM\Column(name="strength", type="float")
      */
     private $strength;
 
@@ -283,6 +290,44 @@ class Citizen
     }
 
     /**
+     * Get avatarUrl
+     *
+     * @return string
+     */
+    public function getLargeAvatarUrl()
+    {
+        return $this->avatarUrl;
+    }
+
+    /**
+     * Get medium avatarUrl
+     *
+     * @return string
+     */
+    public function getMediumAvatarUrl()
+    {
+        $filename = $this->avatarUrl;
+        $extension_pos = strrpos($filename, '.');
+
+        return substr($filename, 0, $extension_pos) .
+            '_142x142' . substr($filename, $extension_pos);
+    }
+
+    /**
+     * Get small avatarUrl
+     *
+     * @return string
+     */
+    public function getSmallAvatarUrl()
+    {
+        $filename = $this->avatarUrl;
+        $extension_pos = strrpos($filename, '.');
+
+        return substr($filename, 0, $extension_pos) .
+            '_55x55' . substr($filename, $extension_pos);
+    }
+
+    /**
      * Set experience
      *
      * @param integer $experience
@@ -303,6 +348,29 @@ class Citizen
     public function getExperience()
     {
         return $this->experience;
+    }
+
+    /**
+     * Set level
+     *
+     * @param integer $level
+     * @return Citizen
+     */
+    public function setLevel($level)
+    {
+        $this->level = $level;
+
+        return $this;
+    }
+
+    /**
+     * Get level
+     *
+     * @return integer
+     */
+    public function getLevel()
+    {
+        return $this->level;
     }
 
     /**

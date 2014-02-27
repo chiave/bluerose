@@ -89,7 +89,7 @@ class CitizenScrobblerService extends CurlUtils
         // $citizen->setUserId($id);
         $citizen->setNick($this->getName());
         $citizen->setAvatarUrl($this->getAvatar());
-        // $citizen->set($this->getLvl());
+        $citizen->setLevel($this->getLvl());
         $citizen->setExperience($this->getExp());
         $citizen->setStrength($this->getStr());
         // $citizen->set($this->getRank());
@@ -144,8 +144,16 @@ class CitizenScrobblerService extends CurlUtils
 
             $this->getEm()->persist($citizenChange);
         }
+        if($currentCitizen->getLevel() != $updatedCitizen->getLevel()) {
+            $citizenChange = new citizenChange(
+                $updatedCitizen,
+                'Level',
+                $updatedCitizen->getLevel()
+            );
 
-        if((float) $currentCitizen->getStrength() != (float) $updatedCitizen->getStrength()) {
+            $this->getEm()->persist($citizenChange);
+        }
+        if($currentCitizen->getStrength() != $updatedCitizen->getStrength()) {
             $citizenChange = new citizenChange(
                 $updatedCitizen,
                 'Strength',

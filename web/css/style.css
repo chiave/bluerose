@@ -27,6 +27,10 @@ body table tbody tr td {
     padding:5px;
 }
 
+table img {
+    height: 32px;
+    width: 32px;
+}
 #content{
 	width:1010px;
 	min-height:1200px;

@@ -22,6 +22,13 @@ class BackendController extends Controller
      */
     public function dashboardAction()
     {
+        // $this->container
+        //     ->get('erepublik_citizen_scrobbler')
+        //     ->showRawData(4241769)
+        // ;
+
+
+
         // var_dump(
         //      $this->container
         //         ->get('doctrine.orm.entity_manager')
