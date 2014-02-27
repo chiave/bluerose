@@ -107,75 +107,75 @@ class BackendCitizenController extends Controller
         );
     }
 
+    // /**
+    //  * Displays a form to edit an existing category.
+    //  *
+    //  * @Route("/{id}/edit", name="chiave_gallery_categories_edit")
+    //  * @Method("GET")
+    //  * @Security("has_role('ROLE_ADMIN')")
+    //  * @Template("ChiaveGalleryBundle:BackendCategories:update.html.twig")
+    //  */
+    // public function editAction($id)
+    // {
+    //     $em = $this->getDoctrine()->getManager();
+
+    //     $category = $em->getRepository('ChiaveGalleryBundle:Categories')->find($id);
+
+    //     if (!$category) {
+    //         throw $this->createNotFoundException('Unable to find Categories.');
+    //     }
+
+    //     $form = $this->createCategoryForm(
+    //         $category,
+    //         'chiave_gallery_categories_update'
+    //         );
+
+    //     return array(
+    //         'category'      => $category,
+    //         'form'   => $form->createView(),
+    //     );
+    // }
+
+    // *
+    //  * Edits an existing category.
+    //  *
+    //  * @Route("/{id}/update", name="chiave_gallery_categories_update")
+    //  * @Method("POST")
+    //  * @Security("has_role('ROLE_ADMIN')")
+    //  * @Template()
+
+    // public function updateAction(Request $request, $id)
+    // {
+    //     $em = $this->getDoctrine()->getManager();
+
+    //     $category = $em->getRepository('ChiaveGalleryBundle:Categories')->find($id);
+
+    //     if (!$category) {
+    //         throw $this->createNotFoundException('Unable to find Categories.');
+    //     }
+
+    //     $form = $this->createCategoryForm(
+    //         $category,
+    //         'chiave_gallery_categories_update'
+    //         );
+    //     $form->handleRequest($request);
+
+    //     if ($form->isValid()) {
+    //         $em->flush();
+
+    //         return $this->redirect($this->generateUrl('chiave_gallery_categories_edit', array('id' => $id)));
+    //     }
+
+    //     return array(
+    //         'category' => $category,
+    //         'form'   => $form->createView(),
+    //     );
+    // }
+
     /**
-     * Displays a form to edit an existing category.
+     * Deletes citizen.
      *
-     * @Route("/{id}/edit", name="chiave_gallery_categories_edit")
-     * @Method("GET")
-     * @Security("has_role('ROLE_ADMIN')")
-     * @Template("ChiaveGalleryBundle:BackendCategories:update.html.twig")
-     */
-    public function editAction($id)
-    {
-        $em = $this->getDoctrine()->getManager();
-
-        $category = $em->getRepository('ChiaveGalleryBundle:Categories')->find($id);
-
-        if (!$category) {
-            throw $this->createNotFoundException('Unable to find Categories.');
-        }
-
-        $form = $this->createCategoryForm(
-            $category,
-            'chiave_gallery_categories_update'
-            );
-
-        return array(
-            'category'      => $category,
-            'form'   => $form->createView(),
-        );
-    }
-
-    /**
-     * Edits an existing category.
-     *
-     * @Route("/{id}/update", name="chiave_gallery_categories_update")
-     * @Method("POST")
-     * @Security("has_role('ROLE_ADMIN')")
-     * @Template()
-     */
-    public function updateAction(Request $request, $id)
-    {
-        $em = $this->getDoctrine()->getManager();
-
-        $category = $em->getRepository('ChiaveGalleryBundle:Categories')->find($id);
-
-        if (!$category) {
-            throw $this->createNotFoundException('Unable to find Categories.');
-        }
-
-        $form = $this->createCategoryForm(
-            $category,
-            'chiave_gallery_categories_update'
-            );
-        $form->handleRequest($request);
-
-        if ($form->isValid()) {
-            $em->flush();
-
-            return $this->redirect($this->generateUrl('chiave_gallery_categories_edit', array('id' => $id)));
-        }
-
-        return array(
-            'category' => $category,
-            'form'   => $form->createView(),
-        );
-    }
-
-    /**
-     * Deletes category.
-     *
-     * @Route("/{id}/delete", name="chiave_gallery_categories_delete")
+     * @Route("/{id}/delete", name="chiave_scrobbler_citizen_delete")
      * @Method("POST")
      * @Security("has_role('ROLE_ADMIN')")
      */
@@ -185,13 +185,13 @@ class BackendCitizenController extends Controller
         $result->success = false;
 
         $em = $this->getDoctrine()->getManager();
-        $category = $em->getRepository('ChiaveGalleryBundle:Categories')->find($id);
+        $citizen = $em->getRepository('ChiaveErepublikScrobblerBundle:Citizen')->find($id);
 
-        if (!$category) {
+        if (!$citizen) {
             // throw $this->createNotFoundException('Unable to find Categories.');
-            $result->error = 'Unable to find Categories.';
+            $result->error = 'Unable to find Citizen.';
         } else {
-            $em->remove($category);
+            $em->remove($citizen);
             $em->flush();
 
             $result->success = true;

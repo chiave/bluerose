@@ -188,7 +188,11 @@ class Citizen
     private $achievements;
 
     /**
-     * @ORM\OneToMany(targetEntity="CitizenChange", mappedBy="citizen")
+     * @ORM\OneToMany(
+     *     targetEntity="CitizenChange",
+     *     mappedBy="citizen",
+     *     cascade={"all"}
+     * )
      */
     private $changes;
 

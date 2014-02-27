@@ -49,13 +49,18 @@
                 <td>
                     <div class="button-bar">
                         <ul class="button-group">
-                            <li><a class="tiny button" href="{{ path('chiave_scrobbler_citizens_changes', { 'citizenId': citizen.id }) }}">Pokaż zmiany</a></li>
+                            <li>
+                                <a class="tiny button" href="{{ path('chiave_scrobbler_citizens_changes', { 'citizenId': citizen.id }) }}">Pokaż zmiany</a>
+                            </li>
+                            <li>
+                                <a class="tiny button alert delete_button" href="{{ path('chiave_scrobbler_citizen_delete', { 'id': citizen.id }) }}">Usuń</a>
+                            </li>
                         </ul>
                     </div>
                     {#<div  class="button-bar">
                         <ul class="button-group">
                             <li><a class="tiny button" href="{{ path('chiave_gallery_categories_edit', { 'id': category.id }) }}">Edytuj</a></li>
-                            <li><a class="tiny button alert delete_button" href="{{ path('chiave_gallery_categories_delete', { 'id': category.id }) }}">Usuń</a></li>
+                            <li><a class="tiny button alert delete_button" href="{{ path('chiave_scrobbler_citizen_delete', { 'id': category.id }) }}">Usuń</a></li>
                         </ul>
                     </div> #}
                 </td>
@@ -63,5 +68,28 @@
         {% endfor %}
         </tbody>
     </table>
+
+{% endblock %}
+
+{% block javascripts -%}
+
+<script type="text/javascript">
+    $('.delete_button').click(function(e) {
+        e.preventDefault();
+
+        var toRemove = $(this).closest('tr');
+
+        $.post(
+            $(this).attr('href'),
+            function(data) {
+                if (data.success) {
+                    $(toRemove).remove();
+                    alert('Citizen usunięty pomyślnie');
+                } else {
+                    alert('Wystąpił straszny błąd: '+data.error+' :(');
+                }
+            });
+    });
+</script>
 
 {% endblock %}
