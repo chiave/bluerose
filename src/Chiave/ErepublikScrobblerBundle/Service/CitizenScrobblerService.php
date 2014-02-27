@@ -144,7 +144,8 @@ class CitizenScrobblerService extends CurlUtils
 
             $this->getEm()->persist($citizenChange);
         }
-        if($currentCitizen->getStrength() != $updatedCitizen->getStrength()) {
+
+        if((float) $currentCitizen->getStrength() != (float) $updatedCitizen->getStrength()) {
             $citizenChange = new citizenChange(
                 $updatedCitizen,
                 'Strength',
