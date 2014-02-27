@@ -28,22 +28,46 @@ class BackendController extends Controller
         //     ->showRawData(4241769)
         // ;
 
-        // NEW FIELD UPDATER SNIPPET
-        $em = $this->getDoctrine()->getManager();
+        // // NEW FIELD UPDATER SNIPPET
+        // $em = $this->getDoctrine()->getManager();
 
-        $citizens = $em
-            ->getRepository('ChiaveErepublikScrobblerBundle:Citizen')
-            ->findAll()
-        ;
+        // $citizens = $em
+        //     ->getRepository('ChiaveErepublikScrobblerBundle:Citizen')
+        //     ->findAll()
+        // ;
 
-        foreach ($citizens as $citizen) {
-            $citizen->setRankPoints($citizen->getRankPoints());
-        }
+        // foreach ($citizens as $citizen) {
+        //     $citizen->setRankPoints($citizen->getRankPoints());
+        // }
 
-        $em->flush();
+        // $em->flush();
 
         // // TESTING
         // // FIELDNAMES FOR CLASS
+
+        // var_dump(
+        //      $this->container
+        //         ->get('doctrine.orm.entity_manager')
+        //         ->getClassMetadata('Chiave\ErepublikScrobblerBundle\Entity\Citizen')
+        //         ->getFieldNames()
+        // );
+
+
+        // // DATETIME PLAYGROUND
+
+        // todays day change
+        // $lastDayChange = new \DateTime('now');
+        // $lastDayChange->modify('+8 hours');
+
+        // if($lastDayChange->format('G') < 9) {
+        //     $lastDayChange->modify('-1 day');
+        // }
+
+        // $lastDayChange->setTime(9, 0);
+
+        // return $lastDayChange;
+
+        // die;
 
         // var_dump(
         //      $this->container
