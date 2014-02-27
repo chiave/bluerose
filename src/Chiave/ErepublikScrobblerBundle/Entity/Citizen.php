@@ -69,6 +69,13 @@ class Citizen
     private $level;
 
     /**
+     * @var integer
+     *
+     * @ORM\Column(name="division", type="integer")
+     */
+    private $division;
+
+    /**
      * @var float
      *
      * @ORM\Column(name="strength", type="float")
@@ -81,6 +88,20 @@ class Citizen
      * @ORM\Column(name="rankPoints", type="integer")
      */
     private $rankPoints;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="rankName", type="string")
+     */
+    private $rankName;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="rankImageUrl", type="string")
+     */
+    private $rankImageUrl;
 
     /**
      * @var integer
@@ -360,6 +381,10 @@ class Citizen
     {
         $this->level = $level;
 
+        $this->setDivision(
+            $this->countDivision($level)
+        );
+
         return $this;
     }
 
@@ -371,6 +396,34 @@ class Citizen
     public function getLevel()
     {
         return $this->level;
+    }
+
+    /**
+     * Set division
+     *
+     * @param integer $division
+     * @return Citizen
+     */
+    public function setDivision($division)
+    {
+        $this->division = $division;
+
+        return $this;
+    }
+
+    /**
+     * Get division
+     *
+     * @return integer
+     */
+    public function getDivision($mode = 'arabic')
+    {
+        $result = '';
+        $mode == 'arabic' ?
+            $result = $this->division :
+            $result = $this->romanNumerals($this->division)
+        ;
+        return $result;
     }
 
     /**
@@ -417,6 +470,52 @@ class Citizen
     public function getRankPoints()
     {
         return $this->rankPoints;
+    }
+
+    /**
+     * Set rankName
+     *
+     * @param string $rankName
+     * @return Citizen
+     */
+    public function setRankName($rankName)
+    {
+        $this->rankName = $rankName;
+
+        return $this;
+    }
+
+    /**
+     * Get rankName
+     *
+     * @return string
+     */
+    public function getRankName()
+    {
+        return $this->rankName;
+    }
+
+    /**
+     * Set rankImageUrl
+     *
+     * @param string $rankImageUrl
+     * @return Citizen
+     */
+    public function setRankImageUrl($rankImageUrl)
+    {
+        $this->rankImageUrl = $rankImageUrl;
+
+        return $this;
+    }
+
+    /**
+     * Get rankImageUrl
+     *
+     * @return string
+     */
+    public function getRankImageUrl()
+    {
+        return $this->rankImageUrl;
     }
 
     /**
@@ -706,6 +805,27 @@ class Citizen
     }
 
     /**
+     * Count division
+     *
+     * @return string
+     */
+    public function countDivision()
+    {
+        $level = $this->level;
+
+        if ($level >= 70) {
+            return 4;
+        } else if ($level >= 50) {
+            return 3;
+        } else if ($level >= 35) {
+            return 2;
+        } else {
+            return 1;
+        }
+        return $this->changes;
+    }
+
+    /**
      * Set createdAt
      *
      * @param \DateTime $createdAt
@@ -766,5 +886,41 @@ class Citizen
     public function setUpdatedTimestamps()
     {
         $this->updatedAt = new \DateTime('now');
+    }
+
+
+    private function romanNumerals($num){
+        $n = intval($num);
+        $res = '';
+
+        /*** roman_numerals array  ***/
+        $roman_numerals = array(
+            'M'  => 1000,
+            'CM' => 900,
+            'D'  => 500,
+            'CD' => 400,
+            'C'  => 100,
+            'XC' => 90,
+            'L'  => 50,
+            'XL' => 40,
+            'X'  => 10,
+            'IX' => 9,
+            'V'  => 5,
+            'IV' => 4,
+            'I'  => 1);
+
+        foreach ($roman_numerals as $roman => $number){
+            /*** divide to get  matches ***/
+            $matches = intval($n / $number);
+
+            /*** assign the roman char * $matches ***/
+            $res .= str_repeat($roman, $matches);
+
+            /*** substract from the number ***/
+            $n = $n % $number;
+        }
+
+        /*** return the res ***/
+        return $res;
     }
 }

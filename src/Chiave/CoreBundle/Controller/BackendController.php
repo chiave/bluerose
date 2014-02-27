@@ -22,12 +22,28 @@ class BackendController extends Controller
      */
     public function dashboardAction()
     {
-        // $this->container
-        //     ->get('erepublik_citizen_scrobbler')
-        //     ->showRawData(4241769)
+        // RAW DATA FOR USER
+        $this->container
+            ->get('erepublik_citizen_scrobbler')
+            ->showRawData(4241769)
+        ;
+
+        // // NE FIELD UPDATER SNIPPET
+        // $em = $this->getDoctrine()->getManager();
+
+        // $citizens = $em
+        //     ->getRepository('ChiaveErepublikScrobblerBundle:Citizen')
+        //     ->findAll()
         // ;
 
+        // foreach ($citizens as $citizen) {
+        //     $citizen->setLevel($citizen->getLevel());
+        // }
 
+        // $em->flush();
+
+        // // TESTING
+        // // FIELDNAMES FOR CLASS
 
         // var_dump(
         //      $this->container

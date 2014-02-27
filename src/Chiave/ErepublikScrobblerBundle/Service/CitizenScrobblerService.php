@@ -92,9 +92,9 @@ class CitizenScrobblerService extends CurlUtils
         $citizen->setLevel($this->getLvl());
         $citizen->setExperience($this->getExp());
         $citizen->setStrength($this->getStr());
-        // $citizen->set($this->getRank());
         $citizen->setRankPoints($this->getRankPoints());
-        // $citizen->set($this->getRankImage());
+        $citizen->setRankName($this->getRank());
+        $citizen->setRankImageUrl($this->getRankImage());
         $citizen->setTruePatriot($this->getTruePatriot());
         $citizen->setEbirth($this->getEBirthday());
         $citizen->setCountry($this->getCountry());
@@ -106,6 +106,9 @@ class CitizenScrobblerService extends CurlUtils
         $citizen->setMilitaryUnitId($this->getMilitaryUnitId());
         $citizen->setMilitaryUnitName($this->getMilitaryUnit());
         $citizen->setAchievements($this->getMedals());
+
+        //counted values
+
 
         $this->updateCitizenChanges($currentCitizen, $citizen);
 
@@ -167,6 +170,24 @@ class CitizenScrobblerService extends CurlUtils
                 $updatedCitizen,
                 'RankPoints',
                 $updatedCitizen->getRankPoints()
+            );
+
+            $this->getEm()->persist($citizenChange);
+        }
+        if($currentCitizen->getRankName() != $updatedCitizen->getRankName()) {
+            $citizenChange = new citizenChange(
+                $updatedCitizen,
+                'RankName',
+                $updatedCitizen->getRankName()
+            );
+
+            $this->getEm()->persist($citizenChange);
+        }
+        if($currentCitizen->getRankImageUrl() != $updatedCitizen->getRankImageUrl()) {
+            $citizenChange = new citizenChange(
+                $updatedCitizen,
+                'RankImageUrl',
+                $updatedCitizen->getRankImageUrl()
             );
 
             $this->getEm()->persist($citizenChange);
