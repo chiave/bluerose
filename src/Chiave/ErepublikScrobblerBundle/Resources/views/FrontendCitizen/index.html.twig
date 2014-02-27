@@ -29,12 +29,12 @@
                 <td>{{ citizen.citizenId }}</td>
                 <td>{{ citizen.nick }}</td>
                 <td>{{ citizen.division('roman') }}</td>
-                <td>{{ citizen.level }}<br />(xx/100 %)</td>
+                <td>{{ citizen.level }}{# <br />(xx/100 %) #}</td>
                 <td>
                     <img src="{{ citizen.rankImageUrl }}" /><br />
-                    {{ citizen.rankName }}
+                    {{ citizen.rankName }}{#  - {{ citizen.rankLevel }} #}
                 </td>
-                <td>hit q7</td>
+                <td>{{ citizen.countHit }} dmg</td>
                 <td>{{ citizen.strength }}</td>
                 <td>dmg td</td>
                 <td>dmg yd</td>
