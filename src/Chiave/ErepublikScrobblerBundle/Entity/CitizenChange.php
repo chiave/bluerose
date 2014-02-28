@@ -54,7 +54,7 @@ class CitizenChange
         $this->citizen = $citizen;
         $this->field = $field;
 
-        $this->value = $this->setValue($value);
+        $this->setValue($value);
     }
 
     //TODO: Why error if no those lines and adding

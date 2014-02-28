@@ -35,8 +35,8 @@ class CitizenStatsService
             ->createQueryBuilder('cc')
                 ->where('cc.citizen = :citizen')
                     ->setParameter('citizen', $citizen)
-                ->andWhere('cc.changedAt < :changedAt')
-                    ->setParameter('changedAt', $lastDayChange)
+                ->andWhere('cc.changedAt < :lasdDC')
+                    ->setParameter('lasdDC', $lastDayChange)
                 ->andWhere('cc.field = \'RankPoints\'')
                 ->orderBy('cc.changedAt', 'DESC')
                 ->setMaxResults(1)
@@ -49,9 +49,14 @@ class CitizenStatsService
         if ($lastRankPointsChange != null) {
             $oldRankPoints = $lastRankPointsChange->getValue();
             $currentRankPoints = $citizen->getRankPoints();
-            $RankPointsDifference = $currentRankPoints - $oldRankPoints;
 
-            $influence = $RankPointsDifference*10;
+            if ($oldRankPoints && $currentRankPoints) {
+                $RankPointsDifference = $currentRankPoints - $oldRankPoints;
+
+                $influence = $RankPointsDifference*10;
+            }
+            echo 'DEBUG:<br />';
+            echo 'o:', $oldRankPoints, '<br />', 'c:', $currentRankPoints, '<br />//DEBUG<br />';
         }
 
         return new Response($influence);
@@ -81,6 +86,7 @@ class CitizenStatsService
                 ->getQuery()
                 ->getOneOrNullResult()
         ;
+        //TODO: wczoraj - przedwczoraj
 
         $influence = 0;
 

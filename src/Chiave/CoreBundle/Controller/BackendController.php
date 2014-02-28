@@ -22,14 +22,22 @@ class BackendController extends Controller
      */
     public function dashboardAction()
     {
-        // RAW DATA FOR USER
+        $em = $this->getDoctrine()->getManager();
+
+        // // // RAW DATA FOR USER
+        // $citizen = $em
+        //     ->getRepository('Chiave\ErepublikScrobblerBundle\Entity\Citizen')
+        //     ->findOneByCitizenId(4241769)
+        // ;
         // $this->container
         //     ->get('erepublik_citizen_scrobbler')
-        //     ->showRawData(4241769)
+        //     ->updateCitizen($citizen)
         // ;
 
+        //2494465 - djstrach
+        //4241769 - aplhanumerix
+
         // // NEW FIELD UPDATER SNIPPET
-        // $em = $this->getDoctrine()->getManager();
 
         // $citizens = $em
         //     ->getRepository('ChiaveErepublikScrobblerBundle:Citizen')
