@@ -84,6 +84,10 @@ class BackendController extends Controller
 
         // die;
 
+        // echo $this->container
+        //     ->get('date_time')
+        //     ->getErepublikDate();
+
         // var_dump(
         //      $this->container
         //         ->get('doctrine.orm.entity_manager')

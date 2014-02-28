@@ -33,6 +33,17 @@ class DateTimeService
         return $dayChange;
     }
 
+    public function getErepublikDate($date = null)
+    {
+        if ($date == null) {
+            $date = new \DateTime('now');
+        }
+
+        $erepZeroDay = new \DateTime('2007-11-20 9:00:00');
+        $interval = $date->diff($erepZeroDay);
+        return $interval->format('%a');
+    }
+
     private function getEm()
     {
         return $this->container
