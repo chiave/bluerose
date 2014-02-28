@@ -55,9 +55,9 @@ class Citizen
     private $avatarUrl;
 
     /**
-     * @var integer
+     * @var string
      *
-     * @ORM\Column(name="experience", type="integer")
+     * @ORM\Column(name="experience", type="string")
      */
     private $experience;
 
@@ -83,9 +83,9 @@ class Citizen
     private $strength;
 
     /**
-     * @var integer
+     * @var string
      *
-     * @ORM\Column(name="rankPoints", type="integer")
+     * @ORM\Column(name="rankPoints", type="string")
      */
     private $rankPoints;
 
@@ -111,9 +111,9 @@ class Citizen
     private $rankImageUrl;
 
     /**
-     * @var integer
+     * @var string
      *
-     * @ORM\Column(name="truePatriot", type="integer", nullable=true)
+     * @ORM\Column(name="truePatriot", type="string", nullable=true)
      */
     private $truePatriot;
 
@@ -362,7 +362,7 @@ class Citizen
     /**
      * Set experience
      *
-     * @param integer $experience
+     * @param string $experience
      * @return Player
      */
     public function setExperience($experience)
@@ -375,7 +375,7 @@ class Citizen
     /**
      * Get experience
      *
-     * @return integer
+     * @return string
      */
     public function getExperience()
     {
@@ -463,7 +463,7 @@ class Citizen
     /**
      * Set rankPoints
      *
-     * @param integer $rankPoints
+     * @param string $rankPoints
      * @return Player
      */
     public function setRankPoints($rankPoints)
@@ -477,7 +477,7 @@ class Citizen
     /**
      * Get rankPoints
      *
-     * @return integer
+     * @return string
      */
     public function getRankPoints()
     {
@@ -543,7 +543,7 @@ class Citizen
     /**
      * Set truePatriot
      *
-     * @param integer $truePatriot
+     * @param string $truePatriot
      * @return Player
      */
     public function setTruePatriot($truePatriot)
@@ -556,7 +556,7 @@ class Citizen
     /**
      * Get truePatriot
      *
-     * @return integer
+     * @return string
      */
     public function getTruePatriot()
     {

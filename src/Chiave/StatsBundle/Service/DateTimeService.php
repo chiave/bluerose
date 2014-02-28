@@ -19,18 +19,18 @@ class DateTimeService
         $this->container = $container;
     }
 
-    public function getLastDayChange()
+    public function getDayChange($modifyDays = 0)
     {
-        $lastDayChange = new \DateTime('now');
-        $lastDayChange->modify('+8 hours');
+        $dayChange = new \DateTime('now');
+        $dayChange->modify("-$modifyDays days");
 
-        if($lastDayChange->format('G') < 9) {
-            $lastDayChange->modify('-1 day');
+        if($dayChange->format('G') < 9) {
+            $dayChange->modify('-1 day');
         }
 
-        $lastDayChange->setTime(9, 0);
+        $dayChange->setTime(9, 0);
 
-        return $lastDayChange;
+        return $dayChange;
     }
 
     private function getEm()

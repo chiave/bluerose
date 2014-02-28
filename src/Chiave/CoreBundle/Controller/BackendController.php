@@ -60,12 +60,12 @@ class BackendController extends Controller
         // TESTING
         // FIELDNAMES FOR CLASS
 
-        var_dump(
-             $this->container
-                ->get('doctrine.orm.entity_manager')
-                ->getClassMetadata('Chiave\ErepublikScrobblerBundle\Entity\Citizen')
-                ->getFieldNames()
-        );
+        // var_dump(
+        //      $this->container
+        //         ->get('doctrine.orm.entity_manager')
+        //         ->getClassMetadata('Chiave\ErepublikScrobblerBundle\Entity\Citizen')
+        //         ->getFieldNames()
+        // );
 
 
         // // DATETIME PLAYGROUND

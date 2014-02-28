@@ -126,11 +126,11 @@ class CitizenChange
      */
     public function setValue($value)
     {
-        // if($this->field == 'Achievements') {
-        //     $this->value = json_encode($value);
-        // } else {
+        if($this->field == 'Achievements') {
+            $this->value = json_encode($value);
+        } else {
             $this->value = $value;
-        // }
+        }
 
         return $this;
     }
