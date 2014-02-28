@@ -45,20 +45,27 @@ class BackendController extends Controller
         // ;
 
         // foreach ($citizens as $citizen) {
-        //     $citizen->setRankPoints($citizen->getRankPoints());
+        //     $changes = $citizen->getChanges();
+
+        //     foreach ($changes as $change) {
+        //         if ($change->getValue() == '') {
+        //             $em->remove($change);
+        //         }
+        //     }
+        //     // $citizen->setRankPoints($citizen->getRankPoints());
         // }
 
         // $em->flush();
 
-        // // TESTING
-        // // FIELDNAMES FOR CLASS
+        // TESTING
+        // FIELDNAMES FOR CLASS
 
-        // var_dump(
-        //      $this->container
-        //         ->get('doctrine.orm.entity_manager')
-        //         ->getClassMetadata('Chiave\ErepublikScrobblerBundle\Entity\Citizen')
-        //         ->getFieldNames()
-        // );
+        var_dump(
+             $this->container
+                ->get('doctrine.orm.entity_manager')
+                ->getClassMetadata('Chiave\ErepublikScrobblerBundle\Entity\Citizen')
+                ->getFieldNames()
+        );
 
 
         // // DATETIME PLAYGROUND

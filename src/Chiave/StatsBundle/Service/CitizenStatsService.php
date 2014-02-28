@@ -55,8 +55,6 @@ class CitizenStatsService
 
                 $influence = $RankPointsDifference*10;
             }
-            echo 'DEBUG:<br />';
-            echo 'o:', $oldRankPoints, '<br />', 'c:', $currentRankPoints, '<br />//DEBUG<br />';
         }
 
         return new Response($influence);
