@@ -53,7 +53,13 @@ class CitizenChange
     public function __construct($citizen, $field, $value) {
         $this->citizen = $citizen;
         $this->field = $field;
-        $this->value = $value;
+
+        $this->value = $this->setValue($value);
+    }
+
+    //TODO: Why error if no those lines and adding
+    public function __toString() {
+        return strval($this->id);
     }
 
     /**
@@ -115,12 +121,16 @@ class CitizenChange
     /**
      * Set value
      *
-     * @param string $value
+     * @param mixed $value
      * @return CitizenChange
      */
     public function setValue($value)
     {
-        $this->value = $value;
+        // if($this->field == 'Achievements') {
+        //     $this->value = json_encode($value);
+        // } else {
+            $this->value = $value;
+        // }
 
         return $this;
     }

@@ -181,7 +181,7 @@ class Citizen
     private $militaryUnitName;
 
     /**
-     * @var array
+     * @var json_array
      *
      * @ORM\Column(name="achievements", type="json_array", nullable=true)
      */
@@ -773,7 +773,7 @@ class Citizen
     /**
      * Set achievements
      *
-     * @param array $achievements
+     * @param json_array $achievements
      * @return Player
      */
     public function setAchievements($achievements)
@@ -786,7 +786,7 @@ class Citizen
     /**
      * Get achievements
      *
-     * @return array
+     * @return json_array
      */
     public function getAchievements()
     {
@@ -918,10 +918,9 @@ class Citizen
             return 3;
         } else if ($level >= 35) {
             return 2;
-        } else {
-            return 1;
         }
-        return $this->changes;
+
+        return 1;
     }
 
     /**
@@ -938,6 +937,8 @@ class Citizen
                 return $rankLevel;
             }
         }
+
+        return 0;
     }
 
     private function romanNumerals($num){

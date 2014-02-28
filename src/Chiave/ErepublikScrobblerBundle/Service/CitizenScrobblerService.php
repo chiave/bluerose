@@ -109,10 +109,9 @@ class CitizenScrobblerService extends CurlUtils
 
         //counted values
 
-
         $this->updateCitizenChanges($currentCitizen, $citizen);
 
-        $em->persist($citizen);
+        // $em->persist($citizen);
         $em->flush();
 
         return $citizen;
