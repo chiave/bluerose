@@ -37,8 +37,8 @@
                     </td>
                     <td>{{ citizen.countHit }}</td>
                     <td>{{ citizen.strength }}</td>
-                    <td>Optimize<br />me!!{# {% render controller('citizen_stats:getTodayInfluence', {'citizenId': citizen.citizenId } ) %} #}</td>
-                    <td>Optimize<br />me!!{# {% render controller('citizen_stats:getYesterdayInfluence', {'citizenId': citizen.citizenId } ) %} #}</td>
+                    <td>{% render controller('citizen_stats:getTodayInfluence', {'citizenId': citizen.citizenId } ) %}</td>
+                    <td>{% render controller('citizen_stats:getYesterdayInfluence', {'citizenId': citizen.citizenId } ) %}</td>
                 </tr>
                 {% endfor %}
 
