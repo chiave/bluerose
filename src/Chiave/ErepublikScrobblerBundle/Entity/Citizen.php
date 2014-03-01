@@ -223,6 +223,7 @@ class Citizen
 
     public function __construct() {
         $this->changes = new ArrayCollection();
+        $this->influenceHistory = new ArrayCollection();
     }
 
     public function __toString() {

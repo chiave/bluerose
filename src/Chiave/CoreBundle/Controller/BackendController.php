@@ -32,6 +32,11 @@ class BackendController extends Controller
         // var_dump($citizen->getInfluence());
 
 
+        // var_dump(
+        //     $this->container
+        //         ->get('egov_nationalraport_fetcher')
+        //         ->parseMUProfile(125)
+        // );
 
 
 

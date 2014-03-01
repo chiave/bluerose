@@ -71,6 +71,11 @@
                         <li {% if active == "chiave_scrobbler_citizens" %}class="active"{% endif %}>
                             <a href="{{ path('chiave_scrobbler_citizens') }}">Zarządzaj</a>
                         </li>
+                        <li class="divider"></li>
+                        <li><h6><strong>Bojówki</strong></h6></li>
+                        <li {% if active == "chiave_militaryunits" %}class="active"{% endif %}>
+                            <a href="{{ path('chiave_militaryunits') }}">Zarządzaj</a>
+                        </li>
                         {# <li {% if active == "cms_articles" %}class="active"{% endif %}>
                             <a href="{{ path('cms_articles') }}">Wpisy</a>
                         </li>

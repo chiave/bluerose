@@ -2,6 +2,8 @@
 
 namespace Chiave\StatsBundle\Service;
 
+use Symfony\Component\HttpFoundation\Response;
+
 /**
  * class DateTimeService
  *
@@ -33,14 +35,18 @@ class DateTimeService
         return $dayChange;
     }
 
-    public function getErepublikDate($date = null)
+    public function getErepublikDate($modifyDays = 0, $response = false)
     {
-        if ($date == null) {
-            $date = new \DateTime('now');
-        }
+        $date = new \DateTime('now');
+        $date->modify("-$modifyDays days");
 
         $erepZeroDay = new \DateTime('2007-11-20 9:00:00');
         $interval = $date->diff($erepZeroDay);
+
+        if ($response == true) {
+            return new Response($interval->format('%a'));
+        }
+
         return $interval->format('%a');
     }
 

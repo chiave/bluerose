@@ -1,0 +1,84 @@
+{% extends "ChiaveCoreBundle::frontendbase.html.twig" %}
+
+{% block body -%}
+
+    <table>
+        <caption><h2>Zbiórki Bluerose</h2></caption>
+      <tbody>
+        <tr>
+          <td>LP</td>
+          <td>Avatar</td>
+          <td>Nick</td>
+          <td>Ilość walk</td>
+          <td>Hity</td>
+          <td>Obrażenia</td>
+          <td>Q broni</td>
+
+        </tr>
+        <tr>
+          <td>LP</td>
+          <td>Av</td>
+          <td>djstrach</td>
+          <td>2</td>
+          <td>234</td>
+          <td>15098273</td>
+          <td>10.03</td>
+
+        </tr>
+
+      </tbody>
+    </table>
+    <table>
+        <caption><h2>Statystyki żołnierzy bijących na zbiórkach w dniu {% render controller('date_time:getErepublikDate', {'modifyDays':1, 'response': true}) %}(egov)</h2></caption>
+      <tbody>
+        <tr>
+          <td>LP</td>
+          <td>Avatar</td>
+          <td>Nick</td>
+          <td>Ilość walk</td>
+          <td>Hity</td>
+          <td>Obrażenia</td>
+
+        </tr>
+        <tr>
+          <td>LP</td>
+          <td>Av</td>
+          <td>djstrach</td>
+          <td>2</td>
+          <td>234</td>
+          <td>15098273</td>
+
+        </tr>
+
+      </tbody>
+    </table>
+    <table>
+        <caption><h2>Bluerose w świetle innych bojówek w dniu
+        {% render controller('date_time:getErepublikDate', {'modifyDays':1, 'response': true}) %}
+        (egov)</h2></caption>
+      <tbody>
+        <tr>
+          <td>LP</td>
+          <td>Armia</td>
+          <td>Bitwy</td>
+          <td>Żołnierze</td>
+          <td>Hity</td>
+          <td>DMG</td>
+        </tr>
+        {% for mu in militaryUnits %}
+        <tr>
+          <td>{{ loop.index }}</td>
+          <td>{{ mu.name }}</td>
+          <td>{{ mu.getSingleHistory(1).battles }}</td>
+          <td>{{ mu.getSingleHistory(1).soldiers }}</td>
+          <td>{{ mu.getSingleHistory(1).hits }}</td>
+          <td>{{ mu.getSingleHistory(1).influence }}</td>
+
+        </tr>
+        {% endfor %}
+
+      </tbody>
+    </table>
+
+{% endblock %}
+
