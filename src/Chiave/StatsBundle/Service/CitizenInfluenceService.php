@@ -21,26 +21,6 @@ class CitizenInfluenceService
         $this->container = $container;
     }
 
-    // public function get($citizen, $dayChange = null)
-    // {
-    //     if ($dayChange == null) {
-    //         $dayChange = $this->container->get('date_time')->getDayChange();
-    //     }
-
-    //     $influence = $em
-    //         ->getRepository('ChiaveErepublikScrobblerBundle:CitizenInfluenceHistory')
-    //         ->createQueryBuilder('cih')
-    //             ->where('cih.citizen = :citizen')
-    //                 ->setParameter('citizen', $citizen)
-    //             ->andWhere('cih.createdAt >= :dayChange')
-    //                 ->setParameter('dayChange', $dayChange)
-    //             ->setMaxResults(1)
-    //             ->getQuery()
-    //             ->getOneOrNullResult()
-    //     ;
-
-    // }
-
     public function update($citizen)
     {
         $dayChange = $this->container->get('date_time')->getDayChange();
@@ -78,14 +58,25 @@ class CitizenInfluenceService
                 ->getOneOrNullResult()
         ;
 
+        //for citizen that joined system today
+        //  where stats are for today
+         if ($rankPointsChange == null) {
+            $rankPointsChange = $em
+                ->getRepository('ChiaveErepublikScrobblerBundle:CitizenChange')
+                ->createQueryBuilder('cc')
+                    ->where('cc.citizen = :citizen')
+                        ->setParameter('citizen', $citizen)
+                    ->andWhere('cc.changedAt >= :dayChange')
+                        ->setParameter('dayChange', $dayChange)
+                    ->andWhere('cc.field = \'RankPoints\'')
+                    ->orderBy('cc.changedAt', 'ASC')
+                    ->setMaxResults(1)
+                    ->getQuery()
+                    ->getOneOrNullResult()
+            ;
+         }
+
         $influenceValue = 0;
-
-        // if ($startRankPointsChange != null)
-        //     echo 'srp', $startRankPointsChange->getValue(), '<br />';
-        // if ($endRankPointsChange != null)
-        //     echo 'erp', $endRankPointsChange->getValue(), '<br />';
-
-        // echo 'crp', $citizen->getRankPoints(), '<br />';
 
         if ($rankPointsChange != null) {
             $startRankPoints = $rankPointsChange->getValue();

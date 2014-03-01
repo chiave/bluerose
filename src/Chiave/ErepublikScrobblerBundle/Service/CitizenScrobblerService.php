@@ -107,11 +107,11 @@ class CitizenScrobblerService extends CurlUtils
         $citizen->setMilitaryUnitName($this->getMilitaryUnit());
         $citizen->setAchievements($this->getMedals());
 
-        //counted values
+        $em->persist($citizen);
+        $em->flush();
 
         $this->updateCitizenChanges($currentCitizen, $citizen);
 
-        $em->persist($citizen);
         $em->flush();
 
         return $citizen;

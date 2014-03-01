@@ -22,14 +22,14 @@ class BackendController extends Controller
      */
     public function dashboardAction()
     {
-        $em = $this->getDoctrine()->getManager();
+        // $em = $this->getDoctrine()->getManager();
 
-        $citizen = $em
-            ->getRepository('Chiave\ErepublikScrobblerBundle\Entity\Citizen')
-            ->findOneByCitizenId(4241769)
-        ;
+        // $citizen = $em
+        //     ->getRepository('Chiave\ErepublikScrobblerBundle\Entity\Citizen')
+        //     ->findOneByCitizenId(4241769)
+        // ;
 
-        var_dump($citizen->getInfluence());
+        // var_dump($citizen->getInfluence());
 
 
 
