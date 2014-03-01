@@ -908,7 +908,7 @@ class Citizen
         );
 
         if ($influences->isEmpty()) {
-            return '-----';
+            return new \Chiave\ErepublikScrobblerBundle\Entity\CitizenInfluenceHistory($this);
         }
 
         return $influences->last();

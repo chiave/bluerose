@@ -57,9 +57,9 @@ class EgovFetcherService extends CurlUtils
 
             $history = $mu->getSingleHistory();
 
-            if($history == null) {
-                $history = new MilitaryUnitHistory($mu);
-            }
+            // if($history == null) {
+            //     $history = new MilitaryUnitHistory($mu);
+            // }
 
             $history->setBattles($muFreshData['battles']);
             $history->setHits($muFreshData['hits']);

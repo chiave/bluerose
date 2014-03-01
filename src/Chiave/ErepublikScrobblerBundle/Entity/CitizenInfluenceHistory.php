@@ -55,7 +55,7 @@ class CitizenInfluenceHistory
     }
 
     public function __toString() {
-        return $this->influence;
+        return $this->influence ? $this->influence : '-----';
     }
 
     /**
