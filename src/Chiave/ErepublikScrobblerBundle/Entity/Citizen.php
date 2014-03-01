@@ -197,6 +197,16 @@ class Citizen
     private $changes;
 
     /**
+     * @ORM\OneToMany(
+     *     targetEntity="CitizenInfuenceHistory",
+     *     mappedBy="citizen",
+     *     cascade={"all"}
+     * )
+     * @ORM\OrderBy({"createdAt" = "DESC"})
+     */
+    private $influenceHistory;
+
+    /**
      * @var \DateTime
      *
      * @ORM\Column(name="createdAt", type="datetime")
@@ -824,6 +834,72 @@ class Citizen
     public function getChanges()
     {
         return $this->changes;
+    }
+
+    /**
+     * Set rankLevel
+     *
+     * @param integer $rankLevel
+     * @return Citizen
+     */
+    public function setRankLevel($rankLevel)
+    {
+        $this->rankLevel = $rankLevel;
+
+        return $this;
+    }
+
+    /**
+     * Add influenceHistory
+     *
+     * @param \Chiave\ErepublikScrobblerBundle\Entity\CitizenInfuenceHistory $influenceHistory
+     * @return Citizen
+     */
+    public function addInfluenceHistory(\Chiave\ErepublikScrobblerBundle\Entity\CitizenInfuenceHistory $influenceHistory)
+    {
+        $this->influenceHistory[] = $influenceHistory;
+
+        return $this;
+    }
+
+    /**
+     * Remove influenceHistory
+     *
+     * @param \Chiave\ErepublikScrobblerBundle\Entity\CitizenInfuenceHistory $influenceHistory
+     */
+    public function removeInfluenceHistory(\Chiave\ErepublikScrobblerBundle\Entity\CitizenInfuenceHistory $influenceHistory)
+    {
+        $this->influenceHistory->removeElement($influenceHistory);
+    }
+
+    /**
+     * Get influenceHistory
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getInfluenceHistory()
+    {
+        return $this->influenceHistory;
+    }
+
+    /**
+     * Get influence
+     *
+     * @return \Chiave\ErepublikScrobblerBundle\Entity\CitizenInfuenceHistory
+     */
+    public function getInfluence($dayChange = null)
+    {
+        if ($dayChange == null) {
+            $dayChange = $this->container->get('date_time')->getDayChange();
+        }
+
+        $influences = $this->influenceHistory->filter(
+            function($influence) use ($dayChange) {
+                return $influence->getCreatedAt() >= $dayChange;
+            }
+        );
+
+        return $influences->last();
     }
 
     /**

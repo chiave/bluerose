@@ -5,7 +5,7 @@ namespace Chiave\ErepublikScrobblerBundle\Service;
 use Chiave\ErepublikScrobblerBundle\Libraries\CurlUtils;
 
 use Chiave\ErepublikScrobblerBundle\Entity\Citizen;
-use Chiave\ErepublikScrobblerBundle\Entity\citizenChange;
+use Chiave\ErepublikScrobblerBundle\Entity\CitizenChange;
 
 /**
  * class CitizenScrobblerService
@@ -172,6 +172,7 @@ class CitizenScrobblerService extends CurlUtils
                 $updatedCitizen->getRankPoints()
             );
 
+            $this->container->get('citizen_infuence')->update($updatedCitizen);
             $em->persist($citizenChange);
         }
         if($currentCitizen->getRankName() != $updatedCitizen->getRankName()) {

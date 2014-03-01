@@ -8,3 +8,8 @@ services:
         class:  Chiave\StatsBundle\Service\CitizenStatsService
         calls:
             - [setContainer, [@service_container]]
+
+    citizen_infuence:
+        class:  Chiave\StatsBundle\Service\CitizenInfluenceService
+        calls:
+            - [setContainer, [@service_container]]

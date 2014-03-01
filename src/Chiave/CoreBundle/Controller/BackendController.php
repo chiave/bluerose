@@ -24,6 +24,17 @@ class BackendController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
+        $citizen = $em
+            ->getRepository('Chiave\ErepublikScrobblerBundle\Entity\Citizen')
+            ->findOneByCitizenId(4241769)
+        ;
+
+        var_dump($citizen->getInfluence());
+
+
+
+
+
         // // // RAW DATA FOR USER
         // $citizen = $em
         //     ->getRepository('Chiave\ErepublikScrobblerBundle\Entity\Citizen')
