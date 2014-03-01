@@ -121,7 +121,7 @@ class CitizenScrobblerService extends CurlUtils
     {
         $em = $this->getEm();
         if($currentCitizen->getNick() != $updatedCitizen->getNick()) {
-            $citizenChange = new citizenChange(
+            $citizenChange = new CitizenChange(
                 $updatedCitizen,
                 'Nick',
                 $updatedCitizen->getNick()
@@ -130,7 +130,7 @@ class CitizenScrobblerService extends CurlUtils
             $em->persist($citizenChange);
         }
         if($currentCitizen->getAvatarUrl() != $updatedCitizen->getAvatarUrl()) {
-            $citizenChange = new citizenChange(
+            $citizenChange = new CitizenChange(
                 $updatedCitizen,
                 'AvatarUrl',
                 $updatedCitizen->getAvatarUrl()
@@ -139,7 +139,7 @@ class CitizenScrobblerService extends CurlUtils
             $em->persist($citizenChange);
         }
         if($currentCitizen->getExperience() != $updatedCitizen->getExperience()) {
-            $citizenChange = new citizenChange(
+            $citizenChange = new CitizenChange(
                 $updatedCitizen,
                 'Experience',
                 $updatedCitizen->getExperience()
@@ -148,7 +148,7 @@ class CitizenScrobblerService extends CurlUtils
             $em->persist($citizenChange);
         }
         if($currentCitizen->getLevel() != $updatedCitizen->getLevel()) {
-            $citizenChange = new citizenChange(
+            $citizenChange = new CitizenChange(
                 $updatedCitizen,
                 'Level',
                 $updatedCitizen->getLevel()
@@ -157,7 +157,7 @@ class CitizenScrobblerService extends CurlUtils
             $em->persist($citizenChange);
         }
         if($currentCitizen->getStrength() != $updatedCitizen->getStrength()) {
-            $citizenChange = new citizenChange(
+            $citizenChange = new CitizenChange(
                 $updatedCitizen,
                 'Strength',
                 $updatedCitizen->getStrength()
@@ -166,7 +166,7 @@ class CitizenScrobblerService extends CurlUtils
             $em->persist($citizenChange);
         }
         if($currentCitizen->getRankPoints() != $updatedCitizen->getRankPoints()) {
-            $citizenChange = new citizenChange(
+            $citizenChange = new CitizenChange(
                 $updatedCitizen,
                 'RankPoints',
                 $updatedCitizen->getRankPoints()
@@ -176,7 +176,7 @@ class CitizenScrobblerService extends CurlUtils
             $em->persist($citizenChange);
         }
         if($currentCitizen->getRankName() != $updatedCitizen->getRankName()) {
-            $citizenChange = new citizenChange(
+            $citizenChange = new CitizenChange(
                 $updatedCitizen,
                 'RankName',
                 $updatedCitizen->getRankName()
@@ -185,7 +185,7 @@ class CitizenScrobblerService extends CurlUtils
             $em->persist($citizenChange);
         }
         if($currentCitizen->getRankImageUrl() != $updatedCitizen->getRankImageUrl()) {
-            $citizenChange = new citizenChange(
+            $citizenChange = new CitizenChange(
                 $updatedCitizen,
                 'RankImageUrl',
                 $updatedCitizen->getRankImageUrl()
@@ -194,7 +194,7 @@ class CitizenScrobblerService extends CurlUtils
             $em->persist($citizenChange);
         }
         if($currentCitizen->getTruePatriot() != $updatedCitizen->getTruePatriot()) {
-            $citizenChange = new citizenChange(
+            $citizenChange = new CitizenChange(
                 $updatedCitizen,
                 'TruePatriot',
                 $updatedCitizen->getTruePatriot()
@@ -203,7 +203,7 @@ class CitizenScrobblerService extends CurlUtils
             $em->persist($citizenChange);
         }
         if($currentCitizen->getCountry() != $updatedCitizen->getCountry()) {
-            $citizenChange = new citizenChange(
+            $citizenChange = new CitizenChange(
                 $updatedCitizen,
                 'Country',
                 $updatedCitizen->getCountry()
@@ -212,7 +212,7 @@ class CitizenScrobblerService extends CurlUtils
             $em->persist($citizenChange);
         }
         if($currentCitizen->getRegion() != $updatedCitizen->getRegion()) {
-            $citizenChange = new citizenChange(
+            $citizenChange = new CitizenChange(
                 $updatedCitizen,
                 'Region',
                 $updatedCitizen->getRegion()
@@ -221,7 +221,7 @@ class CitizenScrobblerService extends CurlUtils
             $em->persist($citizenChange);
         }
         if($currentCitizen->getCitizenship() != $updatedCitizen->getCitizenship()) {
-            $citizenChange = new citizenChange(
+            $citizenChange = new CitizenChange(
                 $updatedCitizen,
                 'Citizenship',
                 $updatedCitizen->getCitizenship()
@@ -230,7 +230,7 @@ class CitizenScrobblerService extends CurlUtils
             $em->persist($citizenChange);
         }
         if($currentCitizen->getNationalRank() != $updatedCitizen->getNationalRank()) {
-            $citizenChange = new citizenChange(
+            $citizenChange = new CitizenChange(
                 $updatedCitizen,
                 'NationalRank',
                 $updatedCitizen->getNationalRank()
@@ -239,7 +239,7 @@ class CitizenScrobblerService extends CurlUtils
             $em->persist($citizenChange);
         }
         if($currentCitizen->getPartyId() != $updatedCitizen->getPartyId()) {
-            $citizenChange = new citizenChange(
+            $citizenChange = new CitizenChange(
                 $updatedCitizen,
                 'PartyId',
                 $updatedCitizen->getPartyId()
@@ -248,7 +248,7 @@ class CitizenScrobblerService extends CurlUtils
             $em->persist($citizenChange);
         }
         if($currentCitizen->getPartyName() != $updatedCitizen->getPartyName()) {
-            $citizenChange = new citizenChange(
+            $citizenChange = new CitizenChange(
                 $updatedCitizen,
                 'PartyName',
                 $updatedCitizen->getPartyName()
@@ -257,7 +257,7 @@ class CitizenScrobblerService extends CurlUtils
             $em->persist($citizenChange);
         }
         if($currentCitizen->getMilitaryUnitId() != $updatedCitizen->getMilitaryUnitId()) {
-            $citizenChange = new citizenChange(
+            $citizenChange = new CitizenChange(
                 $updatedCitizen,
                 'MilitaryUnitId',
                 $updatedCitizen->getMilitaryUnitId()
@@ -266,7 +266,7 @@ class CitizenScrobblerService extends CurlUtils
             $em->persist($citizenChange);
         }
         if($currentCitizen->getMilitaryUnitName() != $updatedCitizen->getMilitaryUnitName()) {
-            $citizenChange = new citizenChange(
+            $citizenChange = new CitizenChange(
                 $updatedCitizen,
                 'MilitaryUnitName',
                 $updatedCitizen->getMilitaryUnitName()
@@ -275,7 +275,7 @@ class CitizenScrobblerService extends CurlUtils
             $em->persist($citizenChange);
         }
         if($currentCitizen->getAchievements() != $updatedCitizen->getAchievements()) {
-            $citizenChange = new citizenChange(
+            $citizenChange = new CitizenChange(
                 $updatedCitizen,
                 'Achievements',
                 $updatedCitizen->getAchievements()

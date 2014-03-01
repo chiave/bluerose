@@ -28,7 +28,7 @@ class CitizenInfluenceService
     //     }
 
     //     $influence = $em
-    //         ->getRepository('ChiaveErepublikScrobblerBundle:CitizenInfuenceHistory')
+    //         ->getRepository('ChiaveErepublikScrobblerBundle:CitizenInfluenceHistory')
     //         ->createQueryBuilder('cih')
     //             ->where('cih.citizen = :citizen')
     //                 ->setParameter('citizen', $citizen)
@@ -48,7 +48,7 @@ class CitizenInfluenceService
         $em = $this->getEm();
 
         $influence = $em
-            ->getRepository('ChiaveErepublikScrobblerBundle:CitizenInfuenceHistory')
+            ->getRepository('ChiaveErepublikScrobblerBundle:CitizenInfluenceHistory')
             ->createQueryBuilder('cih')
                 ->where('cih.citizen = :citizen')
                     ->setParameter('citizen', $citizen)
@@ -88,7 +88,7 @@ class CitizenInfluenceService
         // echo 'crp', $citizen->getRankPoints(), '<br />';
 
         if ($rankPointsChange != null) {
-            $startRankPoints = $startRankPointsChange->getValue();
+            $startRankPoints = $rankPointsChange->getValue();
             $endRankPoints = $citizen->getRankPoints();
             $rankPointsDifference = $endRankPoints - $startRankPoints;
 

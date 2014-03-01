@@ -198,7 +198,7 @@ class Citizen
 
     /**
      * @ORM\OneToMany(
-     *     targetEntity="CitizenInfuenceHistory",
+     *     targetEntity="CitizenInfluenceHistory",
      *     mappedBy="citizen",
      *     cascade={"all"}
      * )
@@ -852,10 +852,10 @@ class Citizen
     /**
      * Add influenceHistory
      *
-     * @param \Chiave\ErepublikScrobblerBundle\Entity\CitizenInfuenceHistory $influenceHistory
+     * @param \Chiave\ErepublikScrobblerBundle\Entity\CitizenInfluenceHistory $influenceHistory
      * @return Citizen
      */
-    public function addInfluenceHistory(\Chiave\ErepublikScrobblerBundle\Entity\CitizenInfuenceHistory $influenceHistory)
+    public function addInfluenceHistory(\Chiave\ErepublikScrobblerBundle\Entity\CitizenInfluenceHistory $influenceHistory)
     {
         $this->influenceHistory[] = $influenceHistory;
 
@@ -865,9 +865,9 @@ class Citizen
     /**
      * Remove influenceHistory
      *
-     * @param \Chiave\ErepublikScrobblerBundle\Entity\CitizenInfuenceHistory $influenceHistory
+     * @param \Chiave\ErepublikScrobblerBundle\Entity\CitizenInfluenceHistory $influenceHistory
      */
-    public function removeInfluenceHistory(\Chiave\ErepublikScrobblerBundle\Entity\CitizenInfuenceHistory $influenceHistory)
+    public function removeInfluenceHistory(\Chiave\ErepublikScrobblerBundle\Entity\CitizenInfluenceHistory $influenceHistory)
     {
         $this->influenceHistory->removeElement($influenceHistory);
     }
@@ -885,19 +885,30 @@ class Citizen
     /**
      * Get influence
      *
-     * @return \Chiave\ErepublikScrobblerBundle\Entity\CitizenInfuenceHistory
+     * @return \Chiave\ErepublikScrobblerBundle\Entity\CitizenInfluenceHistory
      */
-    public function getInfluence($dayChange = null)
+    public function getInfluence($modifyDays = 0)
     {
-        if ($dayChange == null) {
-            $dayChange = $this->container->get('date_time')->getDayChange();
-        }
+        //same logic as in DateTimeService:getDayChange()
+            $dayChange = new \DateTime('now');
+            $dayChange->modify("-$modifyDays days");
+            if($dayChange->format('G') < 9) {
+                $dayChange->modify('-1 day');
+            }
+
+            $dayChange->setTime(9, 0);
 
         $influences = $this->influenceHistory->filter(
             function($influence) use ($dayChange) {
-                return $influence->getCreatedAt() >= $dayChange;
+                return $influence->getCreatedAt() >= $dayChange &&
+                    $influence->getCreatedAt() <= $dayChange->modify('+1 day')
+                ;
             }
         );
+
+        if ($influences->isEmpty()) {
+            return '-----';
+        }
 
         return $influences->last();
     }

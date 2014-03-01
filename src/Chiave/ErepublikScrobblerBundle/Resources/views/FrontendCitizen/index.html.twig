@@ -37,14 +37,14 @@
                     </td>
                     <td>{{ citizen.countHit }}</td>
                     <td>{{ citizen.strength }}</td>
-                    <td>{# {% render controller('citizen_stats:getTodayInfluence', {'citizenId': citizen.citizenId } ) %}<br /> #}
-                    {% render controller('citizen_stats:getInfluenceByDay', {'citizenId': citizen.citizenId, } ) %}
+                    <td>{{ citizen.getInfluence() }}{# {% render controller('citizen_stats:getTodayInfluence', {'citizenId': citizen.citizenId } ) %}<br /> #}
+                    {# {% render controller('citizen_stats:getInfluenceByDay', {'citizenId': citizen.citizenId, } ) %} #}
                     </td>
-                    <td>{% render controller(
+                    <td>{{ citizen.getInfluence(1) }}{# {% render controller(
                     'citizen_stats:getInfluenceByDay', {
                         'citizenId': citizen.citizenId,
                         'modify': 1
-                    } ) %}</td>
+                    } ) %} #}</td>
                 </tr>
                 {% endfor %}
 
