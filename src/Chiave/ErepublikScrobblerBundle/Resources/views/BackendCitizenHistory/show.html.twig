@@ -1,0 +1,84 @@
+{% extends "ChiaveCoreBundle::backendbase.html.twig" %}
+
+{% block title %}Gracze{% endblock %}
+{% block description %}lista aktualizacji gracza
+ {{ histories | first .citizen }}{% endblock %}
+
+{% block active_name %}chiave_scrobbler_citizens{% endblock %}
+
+{% block body %}
+
+    <table class="records_list">
+        <thead>
+            <tr>
+                <th></th>
+                <th>nick</th>
+                <th>experience</th>
+                <th>level</th>
+                <th>division</th>
+                <th>strength</th>
+                <th>rankPoints</th>
+                <th>rankLevel</th>
+                <th>rankName</th>
+                <th>truePatriot</th>
+                <th>country</th>
+                <th>region</th>
+                <th>citizenship</th>
+                <th>nationalRank</th>
+                <th>partyId</th>
+                <th>partyName</th>
+                <th>militaryUnitId</th>
+                <th>militaryUnitName</th>
+                {# <th>achievements</th> #}
+                <th>influence</th>
+                <th>egovBattles</th>
+                <th>egovHits</th>
+                <th>egovInfluence</th>
+                <th>Created</th>
+                <th>Updated</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for history in histories %}
+            <tr>
+                <td>{{ loop.index }}
+
+                {% if history.citizen.getSingleHistory == history %}
+                    - current
+                {% elseif history.citizen.getSingleHistory(1) == history %}
+                    - previous
+                {% endif %}
+
+
+
+                </td>
+                <td>{{ history.nick }}</td>
+                <td>{{ history.experience }}</td>
+                <td>{{ history.level }}</td>
+                <td>{{ history.division }}</td>
+                <td>{{ history.strength }}</td>
+                <td>{{ history.rankPoints }}</td>
+                <td>{{ history.rankLevel }}</td>
+                <td>{{ history.rankName }}</td>
+                <td>{{ history.truePatriot }}</td>
+                <td>{{ history.country }}</td>
+                <td>{{ history.region }}</td>
+                <td>{{ history.citizenship }}</td>
+                <td>{{ history.nationalRank }}</td>
+                <td>{{ history.partyId }}</td>
+                <td>{{ history.partyName }}</td>
+                <td>{{ history.militaryUnitId }}</td>
+                <td>{{ history.militaryUnitName }}</td>
+                {# <td>{{ history.achievements }}</td> #}
+                <td>{{ history.influence }}</td>
+                <td>{{ history.egovBattles }}</td>
+                <td>{{ history.egovHits }}</td>
+                <td>{{ history.egovInfluence }}</td>
+                <td>{{ history.createdAt | date("d m Y H:i:s") }}</td>
+                <td>{{ history.updatedAt | date("d m Y H:i:s") }}</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+{% endblock %}

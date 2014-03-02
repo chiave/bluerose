@@ -202,7 +202,7 @@ class CitizenHistory
     }
 
     public function __toString() {
-        return $this->egovInfluence ? $this->egovInfluence : '0';
+        return $this->influence ? $this->influence : '0';
     }
 
     /**

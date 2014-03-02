@@ -53,6 +53,9 @@
                                 <a class="tiny button" href="{{ path('chiave_scrobbler_citizens_changes', { 'citizenId': citizen.id }) }}">Pokaż zmiany</a>
                             </li>
                             <li>
+                                <a class="tiny button" href="{{ path('chiave_scrobbler_citizens_histories', { 'citizenId': citizen.id }) }}">Pokaż historię</a>
+                            </li>
+                            <li>
                                 <a class="tiny button alert delete_button" href="{{ path('chiave_scrobbler_citizen_delete', { 'id': citizen.id }) }}">Usuń</a>
                             </li>
                         </ul>
