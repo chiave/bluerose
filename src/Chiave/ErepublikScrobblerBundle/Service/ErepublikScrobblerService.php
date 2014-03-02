@@ -8,14 +8,14 @@ use Chiave\ErepublikScrobblerBundle\Entity\Citizen;
 use Chiave\ErepublikScrobblerBundle\Entity\CitizenChange;
 
 /**
- * class CitizenScrobblerService
+ * class ErepublikScrobblerService
  *
  * class description here
  *
  * @author  Sowx <>
  * @author  Alphanumerix <>
  */
-class CitizenScrobblerService extends CurlUtils
+class ErepublikScrobblerService extends CurlUtils
 {
 
     protected $container;
@@ -111,10 +111,41 @@ class CitizenScrobblerService extends CurlUtils
         $em->flush();
 
         $this->updateCitizenChanges($currentCitizen, $citizen);
+        $this->updateCitizenHistory($citizen);
 
         $em->flush();
 
         return $citizen;
+    }
+
+    public function updateCitizenHistory($citizen)
+    {
+        $em = $this->getEm();
+
+        $history = $citizen->getSingleHistory();
+
+        $history->setNick($citizen->getNick());
+        $history->setExperience($citizen->getExperience());
+        $history->setLevel($citizen->getLevel());
+        $history->setDivision($citizen->getDivision());
+        $history->setStrength($citizen->getStrength());
+        $history->setRankPoints($citizen->getRankPoints());
+        $history->setRankLevel($citizen->getRankLevel());
+        $history->setRankName($citizen->getRankName());
+        $history->setTruePatriot($citizen->getTruePatriot());
+        $history->setCountry($citizen->getCountry());
+        $history->setRegion($citizen->getRegion());
+        $history->setCitizenship($citizen->getCitizenship());
+        $history->setNationalRank($citizen->getNationalRank());
+        $history->setPartyId($citizen->getPartyId());
+        $history->setPartyName($citizen->getPartyName());
+        $history->setMilitaryUnitId($citizen->getMilitaryUnitId());
+        $history->setMilitaryUnitName($citizen->getMilitaryUnitName());
+        $history->setAchievements($citizen->getAchievements());
+        $history->setInfluence($citizen->getInfluence());
+
+        $em->persist($history);
+        $em->flush();
     }
 
     public function updateCitizenChanges($currentCitizen, $updatedCitizen)

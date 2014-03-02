@@ -30,6 +30,139 @@ class CitizenHistory
     private $citizen;
 
     /**
+     * @var string
+     *
+     * @ORM\Column(name="nick", type="string", length=64, nullable=true)
+     */
+    private $nick;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="experience", type="string", nullable=true)
+     */
+    private $experience;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="level", type="integer", nullable=true)
+     */
+    private $level;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="division", type="integer", nullable=true)
+     */
+    private $division;
+
+    /**
+     * @var float
+     *
+     * @ORM\Column(name="strength", type="float", nullable=true)
+     */
+    private $strength;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="rankPoints", type="string", nullable=true)
+     */
+    private $rankPoints;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="rankLevel", type="integer", nullable=true)
+     */
+    private $rankLevel;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="rankName", type="string", nullable=true)
+     */
+    private $rankName;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="truePatriot", type="string", nullable=true)
+     */
+    private $truePatriot;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="country", type="string", length=64, nullable=true)
+     */
+    private $country;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="region", type="string", length=64, nullable=true)
+     */
+    private $region;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="citizenship", type="string", length=64, nullable=true)
+     */
+    private $citizenship;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="nationalRank", type="integer", nullable=true)
+     */
+    private $nationalRank;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="partyId", type="integer", nullable=true)
+     */
+    private $partyId;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="partyName", type="string", length=64, nullable=true)
+     */
+    private $partyName;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="militaryUnitId", type="integer", nullable=true)
+     */
+    private $militaryUnitId;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="militaryUnitName", type="string", length=64, nullable=true)
+     */
+    private $militaryUnitName;
+
+    /**
+     * @var json_array
+     *
+     * @ORM\Column(name="achievements", type="json_array", nullable=true)
+     */
+    private $achievements;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="influence", type="string")
+     */
+    private $influence = '0';
+
+    /**
      * @var integer
      *
      * @ORM\Column(type="integer")
@@ -48,7 +181,7 @@ class CitizenHistory
      *
      * @ORM\Column(type="string", length=1024)
      */
-    private $egovInfluence = '-----';
+    private $egovInfluence = '0';
 
     /**
      * @var \DateTime
@@ -69,7 +202,7 @@ class CitizenHistory
     }
 
     public function __toString() {
-        return $this->egovInfluence ? $this->egovInfluence : '-----';
+        return $this->egovInfluence ? $this->egovInfluence : '0';
     }
 
     /**
@@ -103,6 +236,453 @@ class CitizenHistory
     public function getCitizen()
     {
         return $this->citizen;
+    }
+
+    /**
+     * Set nick
+     *
+     * @param string $nick
+     * @return Player
+     */
+    public function setNick($nick)
+    {
+        $this->nick = $nick;
+
+        return $this;
+    }
+
+    /**
+     * Get nick
+     *
+     * @return string
+     */
+    public function getNick()
+    {
+        return $this->nick;
+    }
+
+    /**
+     * Set experience
+     *
+     * @param string $experience
+     * @return Player
+     */
+    public function setExperience($experience)
+    {
+        $this->experience = $experience;
+
+        return $this;
+    }
+
+    /**
+     * Get experience
+     *
+     * @return string
+     */
+    public function getExperience()
+    {
+        return $this->experience;
+    }
+
+    /**
+     * Set level
+     *
+     * @param integer $level
+     * @return Citizen
+     */
+    public function setLevel($level)
+    {
+        $this->level = $level;
+
+        $this->setDivision(
+            $this->countDivision($level)
+        );
+
+        return $this;
+    }
+
+    /**
+     * Get level
+     *
+     * @return integer
+     */
+    public function getLevel()
+    {
+        return $this->level;
+    }
+
+    /**
+     * Set division
+     *
+     * @param integer $division
+     * @return Citizen
+     */
+    public function setDivision($division)
+    {
+        $this->division = $division;
+
+        return $this;
+    }
+
+    /**
+     * Get division
+     *
+     * @return integer
+     */
+    public function getDivision($mode = 'arabic')
+    {
+        $result = '';
+        $mode == 'arabic' ?
+            $result = $this->division :
+            $result = $this->romanNumerals($this->division)
+        ;
+        return $result;
+    }
+
+    /**
+     * Set strength
+     *
+     * @param integer $strength
+     * @return Player
+     */
+    public function setStrength($strength)
+    {
+        $this->strength = $strength;
+
+        return $this;
+    }
+
+    /**
+     * Get strength
+     *
+     * @return integer
+     */
+    public function getStrength()
+    {
+        return $this->strength;
+    }
+
+    /**
+     * Set rankPoints
+     *
+     * @param string $rankPoints
+     * @return Player
+     */
+    public function setRankPoints($rankPoints)
+    {
+        $this->rankPoints = $rankPoints;
+        $this->rankLevel = $this->countRankLevel($rankPoints);
+
+        return $this;
+    }
+
+    /**
+     * Get rankPoints
+     *
+     * @return string
+     */
+    public function getRankPoints()
+    {
+        return $this->rankPoints;
+    }
+
+    /**
+     * Set rankLevel
+     *
+     * @param integer $rankLevel
+     * @return CitizenHistory
+     */
+    public function setRankLevel($rankLevel)
+    {
+        $this->rankLevel = $rankLevel;
+
+        return $this;
+    }
+
+    /**
+     * Get rankLevel
+     *
+     * @return integer
+     */
+    public function getRankLevel()
+    {
+        return $this->rankLevel;
+    }
+
+    /**
+     * Set rankName
+     *
+     * @param string $rankName
+     * @return Citizen
+     */
+    public function setRankName($rankName)
+    {
+        $this->rankName = $rankName;
+
+        return $this;
+    }
+
+    /**
+     * Get rankName
+     *
+     * @return string
+     */
+    public function getRankName()
+    {
+        return $this->rankName;
+    }
+
+    /**
+     * Set truePatriot
+     *
+     * @param string $truePatriot
+     * @return Player
+     */
+    public function setTruePatriot($truePatriot)
+    {
+        $this->truePatriot = $truePatriot;
+
+        return $this;
+    }
+
+    /**
+     * Get truePatriot
+     *
+     * @return string
+     */
+    public function getTruePatriot()
+    {
+        return $this->truePatriot;
+    }
+
+    /**
+     * Set country
+     *
+     * @param string $country
+     * @return Player
+     */
+    public function setCountry($country)
+    {
+        $this->country = $country;
+
+        return $this;
+    }
+
+    /**
+     * Get country
+     *
+     * @return string
+     */
+    public function getCountry()
+    {
+        return $this->country;
+    }
+
+    /**
+     * Set region
+     *
+     * @param string $region
+     * @return Player
+     */
+    public function setRegion($region)
+    {
+        $this->region = $region;
+
+        return $this;
+    }
+
+    /**
+     * Get region
+     *
+     * @return string
+     */
+    public function getRegion()
+    {
+        return $this->region;
+    }
+
+    /**
+     * Set citizenship
+     *
+     * @param string $citizenship
+     * @return Player
+     */
+    public function setCitizenship($citizenship)
+    {
+        $this->citizenship = $citizenship;
+
+        return $this;
+    }
+
+    /**
+     * Get citizenship
+     *
+     * @return string
+     */
+    public function getCitizenship()
+    {
+        return $this->citizenship;
+    }
+
+    /**
+     * Set nationalRank
+     *
+     * @param integer $nationalRank
+     * @return Player
+     */
+    public function setNationalRank($nationalRank)
+    {
+        $this->nationalRank = $nationalRank;
+
+        return $this;
+    }
+
+    /**
+     * Get nationalRank
+     *
+     * @return integer
+     */
+    public function getNationalRank()
+    {
+        return $this->nationalRank;
+    }
+
+    /**
+     * Set partyId
+     *
+     * @param integer $partyId
+     * @return Player
+     */
+    public function setPartyId($partyId)
+    {
+        $this->partyId = $partyId;
+
+        return $this;
+    }
+
+    /**
+     * Get partyId
+     *
+     * @return integer
+     */
+    public function getPartyId()
+    {
+        return $this->partyId;
+    }
+
+    /**
+     * Set partyName
+     *
+     * @param string $partyName
+     * @return Player
+     */
+    public function setPartyName($partyName)
+    {
+        $this->partyName = $partyName;
+
+        return $this;
+    }
+
+    /**
+     * Get partyName
+     *
+     * @return string
+     */
+    public function getPartyName()
+    {
+        return $this->partyName;
+    }
+
+    /**
+     * Set militaryUnitId
+     *
+     * @param integer $militaryUnitId
+     * @return Player
+     */
+    public function setMilitaryUnitId($militaryUnitId)
+    {
+        $this->militaryUnitId = $militaryUnitId;
+
+        return $this;
+    }
+
+    /**
+     * Get militaryUnitId
+     *
+     * @return integer
+     */
+    public function getMilitaryUnitId()
+    {
+        return $this->militaryUnitId;
+    }
+
+    /**
+     * Set militaryUnitName
+     *
+     * @param string $militaryUnitName
+     * @return Player
+     */
+    public function setMilitaryUnitName($militaryUnitName)
+    {
+        $this->militaryUnitName = $militaryUnitName;
+
+        return $this;
+    }
+
+    /**
+     * Get militaryUnitName
+     *
+     * @return string
+     */
+    public function getMilitaryUnitName()
+    {
+        return $this->militaryUnitName;
+    }
+
+    /**
+     * Set achievements
+     *
+     * @param json_array $achievements
+     * @return Player
+     */
+    public function setAchievements($achievements)
+    {
+        $this->achievements = $achievements;
+
+        return $this;
+    }
+
+    /**
+     * Get achievements
+     *
+     * @return json_array
+     */
+    public function getAchievements()
+    {
+        return $this->achievements;
+    }
+
+    /**
+     * Set influence
+     *
+     * @param string $influence
+     * @return CitizenHistory
+     */
+    public function setInfluence($influence)
+    {
+        $this->influence = $influence;
+
+        return $this;
+    }
+
+    /**
+     * Get influence
+     *
+     * @return string
+     */
+    public function getInfluence()
+    {
+        return $this->influence;
     }
 
     /**

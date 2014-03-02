@@ -57,10 +57,6 @@ class EgovFetcherService extends CurlUtils
 
             $history = $mu->getSingleHistory();
 
-            // if($history == null) {
-            //     $history = new MilitaryUnitHistory($mu);
-            // }
-
             $history->setBattles($muFreshData['battles']);
             $history->setHits($muFreshData['hits']);
             $history->setInfluence($muFreshData['influence']);
@@ -73,9 +69,8 @@ class EgovFetcherService extends CurlUtils
 
     public function updateCitizens() {
         $em = $this->getEm();
-        $nationalRaport = $this->getNationalRaportArray(1);
+        $nationalRaport = $this->getNationalRaportArray();
 
-        $i = 0;
         foreach($nationalRaport['minisoldiersStats'] as $citizenFreshData) {
             $citizen = $this
                 ->getRepo('ChiaveErepublikScrobblerBundle:Citizen')
@@ -91,7 +86,7 @@ class EgovFetcherService extends CurlUtils
                 // $em->flush();
             }
 
-            $history = $citizen->getSingleHistory(1);
+            $history = $citizen->getSingleHistory();
             $history->setEgovBattles($citizenFreshData['battles']);
             $history->setEgovHits($citizenFreshData['hits']);
             $history->setEgovInfluence($citizenFreshData['influence']);

@@ -32,6 +32,26 @@ class FrontendController extends Controller
             ->findAll()
         ;
 
+        // $dayChange = $this->container->get('date_time')->getDayChange(1);
+        // $now = new \DateTime('now');
+
+        // $citizenHistories = $em
+        //     ->getRepository('ChiaveErepublikScrobblerBundle:CitizenHistory')
+        //     ->createQueryBuilder('ch')
+        //         ->where('ch.egovBattles != 0')
+        //         ->andWhere('ch.createdAt >= :dayChange')
+        //             ->setParameter('dayChange', $dayChange)
+        //         ->andWhere('ch.createdAt <= :now')
+        //             ->setParameter('now', $now)
+        //         ->orderBy('ch.createdAt', 'ASC')
+        //         ->getQuery()
+        //         ->getResult()
+        // ;
+        // return array(
+        //     'citizenHistories' => $citizenHistories,
+        //     'militaryUnits' => $militaryUnits,
+        // );
+
         return array(
             'citizens' => $citizens,
             'militaryUnits' => $militaryUnits,

@@ -27,7 +27,7 @@ class CitizenInfluenceService
 
         $em = $this->getEm();
 
-        $influence = $em
+        $history = $em
             ->getRepository('ChiaveErepublikScrobblerBundle:CitizenHistory')
             ->createQueryBuilder('cih')
                 ->where('cih.citizen = :citizen')
@@ -39,8 +39,8 @@ class CitizenInfluenceService
                 ->getOneOrNullResult()
         ;
 
-        if ($influence == null) {
-            $influence = new CitizenHistory($citizen);
+        if ($history == null) {
+            $history = new CitizenHistory($citizen);
         }
 
         //last influence from day before
@@ -86,13 +86,12 @@ class CitizenInfluenceService
             $influenceValue = $rankPointsDifference*10;
         }
 
-        //egovInfluence?
-        $influence->setInfluence($influenceValue);
+        $history->setInfluence($influenceValue);
 
-        $em->persist($influence);
+        $em->persist($history);
         $em->flush();
 
-        return $influence;
+        return $history;
     }
 
     private function getEm()

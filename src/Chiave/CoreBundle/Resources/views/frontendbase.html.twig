@@ -6,15 +6,17 @@
         <title>BLUEROSE najlepsza mafijna bojówka</title>
         <link rel="Stylesheet" type="text/css" href={{ asset('css/style.css') }} />
 
+
+        <script src="http://code.jquery.com/jquery-2.1.0.min.js"></script>
+        <script src="{{ asset('js/jquery.tablesorter.min.js')}}"></script>
+        <script src="{{ asset('js/widgets/widget-scroller.js')}}"></script>
     </head>
 
     <body>
         <center>
         <div id= "content">
-            <div id="logo1">
-            </div>
-            <div id="logo2">
-            </div>
+            <div id="logo1"></div>
+            <div id="logo2"></div>
             <div id="menu">
                 <ul>
 <li><a href="{{ path('chiave_scrobbler_citizens_frontend') }}">Statystyki</a></li>
@@ -25,7 +27,7 @@
 <li><a href="{{ path('chiave_static', { slug: 'dof'}) }}">Dofinansowanie</a></li>
 <li><a href="{{ path('chiave_static', { slug: 'download'}) }}">Do pobrania</a></li>
 <li><a href="{{ path('chiave_static', { slug: 'funrose'}) }}">Strefa FUNrose</a></li>
-<li><a href="#">LOGOWANIE</a></li>
+{# <li><a href="#">LOGOWANIE</a></li> #}
                 </ul>
             </div>
 
@@ -34,78 +36,28 @@
                 {% block body %}{% endblock %}
             </div>
 
-
         <div class="both"></div>
         <div id="stopka">
-        Copyright @BLUEROSE
-    </div>
+            Copyright @BLUEROSE
+        </div>
 
-    {% block javascripts %}{% endblock %}
-
-</body>
-
-{#
-    <body>
-        <div id="page">
-            <div id="header">
-                <div class="fullWrapper">
-
-                    <div class="topMenu">
-                        {{ render(controller('ChiaveCMSBundle:Pages:renderMenu')) }}
-                    </div><!-- end topMenu class -->
-                </div><!--  end class fullWrapper for #header -->
-            </div><!-- end div header -->
-
-            <div id="content">
-                <div class="fullWrapperPad">
-                    <div class="column s7">
-                        {% block body %}{% endblock %}
-                    </div><!-- end column s7 -->
-
-                    <div class="column s3">
-                        {{ render(controller('ChiaveCMSBundle:Articles:importantArticles')) }}
-                    </div><!-- end column s3 -->
-            </div><!--  end fullWrapperPad for content -->
-            </div><!-- end div content -->
-
-            <div id="footer">
-            </div><!--  end div footer -->
-        </div><!-- end div page -->
-
-        {% block javascripts %}{% endblock %}
-        <script type="text/javascript">
-
-            $(document).ready(function(){
-
-                $('.tabWrapper ul:FIRST-CHILD li:FIRST-CHILD' ).addClass('active');
-                $('.tabWrapper ul:FIRST-CHILD li').click(function(){
-                	$('.tabWrapper ul:FIRST-CHILD li').removeClass("active");
-                	$(this).addClass('active');
-                	$('div.tabWrapper > div').hide();
-                    $('div.tabWrapper > div:eq('+$(this).index()+')').show();
-                    });
-
-                $(".listToggle").click(function(){
-                    $('div.more').slideUp();
-                    if($(this).next().is(':hidden'))
-                    {
-                    	$(this).next().slideDown();
+        <script>
+            $(function() {
+                $.tablesorter.addWidget({
+                    // give the widget a id
+                    id: "preserveFirstColumnNumeration",
+                    // format is called when the on init and when a sorting has finished
+                    format: function(table) {
+                        // loop all tr elements and set the value for the first column
+                        for(var i=1; i <= table.tBodies[0].rows.length; i++) {
+                            $("tbody tr:eq(" + (i - 1) + ") td:first",table).html(i);
+                        }
                     }
-                });
-
-                $('.hide').click(function() {
-                    $(this).parent().slideUp();
-                    });
-
-                $('#plainBoxToggle').click(function(){
-                    $(this).hide();
-                    $('#plainBoxTarget').slideDown();
-                });
-                $('#plainBoxToggle2').click(function(){
-                    $('#plainBoxTarget').slideUp();
-                    $('#plainBoxToggle').show();
                 });
             });
         </script>
-    </body> #}
+
+        {% block javascripts %}{% endblock %}
+
+    </body>
 </html>

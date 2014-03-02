@@ -48,7 +48,7 @@ class MilitaryUnitHistory
      *
      * @ORM\Column(type="string", length=1024)
      */
-    private $influence = '-----';
+    private $influence = 0;
 
     /**
      * @var integer
