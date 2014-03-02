@@ -142,7 +142,11 @@ class ErepublikScrobblerService extends CurlUtils
         $history->setMilitaryUnitId($citizen->getMilitaryUnitId());
         $history->setMilitaryUnitName($citizen->getMilitaryUnitName());
         $history->setAchievements($citizen->getAchievements());
-        $history->setInfluence($citizen->getInfluence());
+
+        //Handled by
+        //$this->container->get('citizen_infuence')->update($updatedCitizen);
+        //
+        //$history->setInfluence();
 
         $em->persist($history);
         $em->flush();

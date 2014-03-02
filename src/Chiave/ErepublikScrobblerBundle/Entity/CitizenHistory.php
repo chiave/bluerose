@@ -816,4 +816,187 @@ class CitizenHistory
     {
         $this->updatedAt = new \DateTime('now');
     }
+
+    /**
+     * Count hit
+     *
+     * @return integer
+     */
+    public function countHit($weaponsQuality = 7)
+    {
+        $influence = 10 *
+                (1 + $this->getStrength()/400) *
+                (1 + $this->getRankLevel()/5) *
+                (1 + $this->getWeaponsFirePower($weaponsQuality)/100)
+        ;
+
+        return round($influence);
+    }
+
+    /**
+     * Count division
+     *
+     * @return string
+     */
+    private function countDivision($level)
+    {
+        if ($level >= 70) {
+            return 4;
+        } else if ($level >= 50) {
+            return 3;
+        } else if ($level >= 35) {
+            return 2;
+        }
+
+        return 1;
+    }
+
+    /**
+     * Count rankLevel
+     *
+     * @return integer
+     */
+    private function countRankLevel($rankPoints)
+    {
+        $rankArray = array_reverse($this->getRankArray(), true);
+
+        foreach ($rankArray as $rankLevel => $rank) {
+            if ($rankPoints >= $rank) {
+                return $rankLevel;
+            }
+        }
+
+        return 0;
+    }
+
+    private function romanNumerals($num){
+        $n = intval($num);
+        $res = '';
+
+        /*** roman_numerals array  ***/
+        $roman_numerals = array(
+            'M'  => 1000,
+            'CM' => 900,
+            'D'  => 500,
+            'CD' => 400,
+            'C'  => 100,
+            'XC' => 90,
+            'L'  => 50,
+            'XL' => 40,
+            'X'  => 10,
+            'IX' => 9,
+            'V'  => 5,
+            'IV' => 4,
+            'I'  => 1);
+
+        foreach ($roman_numerals as $roman => $number){
+            /*** divide to get  matches ***/
+            $matches = intval($n / $number);
+
+            /*** assign the roman char * $matches ***/
+            $res .= str_repeat($roman, $matches);
+
+            /*** substract from the number ***/
+            $n = $n % $number;
+        }
+
+        /*** return the res ***/
+        return $res;
+    }
+
+    private function getWeaponsFirePower($weaponsQuality)
+    {
+        $weaponsFirepowerArray = $this->getWeaponsFirepowerArray();
+
+        return $weaponsFirepowerArray[$weaponsQuality];
+    }
+
+    private function getWeaponsFirepowerArray()
+    {
+        return array (
+            1 => 20,
+            2 => 40,
+            3 => 60,
+            4 => 80,
+            5 => 100,
+            6 => 120,
+            7 => 200,
+        );
+    }
+
+    private function getRankArray()
+    {
+        return array(
+                1   => 0,
+                2   => 15,
+                3   => 45,
+                4   => 80,
+                5   => 120,
+                6   => 170,
+                7   => 250,
+                8   => 350,
+                9   => 450,
+                10  => 600,
+                11  => 800,
+                12  => 1000,
+                13  => 1400,
+                14  => 1850,
+                15  => 2350,
+                16  => 3000,
+                17  => 3750,
+                18  => 5000,
+                19  => 6500,
+                20  => 9000,
+                21  => 12000,
+                22  => 15500,
+                23  => 20000,
+                24  => 25000,
+                25  => 31000,
+                26  => 40000,
+                27  => 52000,
+                28  => 67000,
+                29  => 85000,
+                30  => 110000,
+                31  => 140000,
+                32  => 180000,
+                33  => 225000,
+                34  => 285000,
+                35  => 355000,
+                36  => 435000,
+                37  => 540000,
+                38  => 660000,
+                39  => 800000,
+                40  => 950000,
+                41  => 1140000,
+                42  => 1350000,
+                43  => 1600000,
+                44  => 1875000,
+                45  => 2185000,
+                46  => 2550000,
+                47  => 3000000,
+                48  => 3500000,
+                49  => 4150000,
+                50  => 4900000,
+                51  => 5800000,
+                52  => 7000000,
+                53  => 9000000,
+                54  => 11500000,
+                55  => 14500000,
+                56  => 18000000,
+                57  => 22000000,
+                58  => 26500000,
+                59  => 31500000,
+                60  => 37000000,
+                61  => 43000000,
+                62  => 50000000,
+                63  => 100000000,
+                64  => 200000000,
+                65  => 500000000,
+                66  => 1000000000,
+                67  => 2000000000,
+                68  => 4000000000,
+                69  => 10000000000,
+            )
+        ;
+    }
 }
