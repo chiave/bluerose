@@ -2,7 +2,7 @@
 
 namespace Chiave\StatsBundle\Service;
 
-use Chiave\ErepublikScrobblerBundle\Entity\CitizenInfluenceHistory;
+use Chiave\ErepublikScrobblerBundle\Entity\CitizenHistory;
 
 /**
  * class CitizenInfluenceService
@@ -28,7 +28,7 @@ class CitizenInfluenceService
         $em = $this->getEm();
 
         $influence = $em
-            ->getRepository('ChiaveErepublikScrobblerBundle:CitizenInfluenceHistory')
+            ->getRepository('ChiaveErepublikScrobblerBundle:CitizenHistory')
             ->createQueryBuilder('cih')
                 ->where('cih.citizen = :citizen')
                     ->setParameter('citizen', $citizen)
@@ -40,7 +40,7 @@ class CitizenInfluenceService
         ;
 
         if ($influence == null) {
-            $influence = new CitizenInfluenceHistory($citizen);
+            $influence = new CitizenHistory($citizen);
         }
 
         //last influence from day before

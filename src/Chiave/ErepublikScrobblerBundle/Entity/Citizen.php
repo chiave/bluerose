@@ -198,13 +198,13 @@ class Citizen
 
     /**
      * @ORM\OneToMany(
-     *     targetEntity="CitizenInfluenceHistory",
+     *     targetEntity="CitizenHistory",
      *     mappedBy="citizen",
      *     cascade={"all"}
      * )
      * @ORM\OrderBy({"createdAt" = "DESC"})
      */
-    private $influenceHistory;
+    private $history;
 
     /**
      * @var \DateTime
@@ -223,7 +223,7 @@ class Citizen
 
     public function __construct() {
         $this->changes = new ArrayCollection();
-        $this->influenceHistory = new ArrayCollection();
+        $this->history = new ArrayCollection();
     }
 
     public function __toString() {
@@ -851,64 +851,67 @@ class Citizen
     }
 
     /**
-     * Add influenceHistory
+     * Add history
      *
-     * @param \Chiave\ErepublikScrobblerBundle\Entity\CitizenInfluenceHistory $influenceHistory
+     * @param \Chiave\ErepublikScrobblerBundle\Entity\CitizenHistory $history
      * @return Citizen
      */
-    public function addInfluenceHistory(\Chiave\ErepublikScrobblerBundle\Entity\CitizenInfluenceHistory $influenceHistory)
+    public function addHistory(\Chiave\ErepublikScrobblerBundle\Entity\CitizenHistory $history)
     {
-        $this->influenceHistory[] = $influenceHistory;
+        $this->history[] = $history;
 
         return $this;
     }
 
     /**
-     * Remove influenceHistory
+     * Remove history
      *
-     * @param \Chiave\ErepublikScrobblerBundle\Entity\CitizenInfluenceHistory $influenceHistory
+     * @param \Chiave\ErepublikScrobblerBundle\Entity\CitizenHistory $history
      */
-    public function removeInfluenceHistory(\Chiave\ErepublikScrobblerBundle\Entity\CitizenInfluenceHistory $influenceHistory)
+    public function removeHistory(\Chiave\ErepublikScrobblerBundle\Entity\CitizenHistory $history)
     {
-        $this->influenceHistory->removeElement($influenceHistory);
+        $this->history->removeElement($history);
     }
 
     /**
-     * Get influenceHistory
+     * Get history
      *
      * @return \Doctrine\Common\Collections\Collection
      */
-    public function getInfluenceHistory()
+    public function getHistory()
     {
-        return $this->influenceHistory;
+        return $this->history;
     }
 
     /**
      * Get influence
      *
-     * @return \Chiave\ErepublikScrobblerBundle\Entity\CitizenInfluenceHistory
+     * @return \Chiave\ErepublikScrobblerBundle\Entity\CitizenHistory
      */
     public function getInfluence($modifyDays = 0)
     {
         //same logic as in DateTimeService:getDayChange()
-            $dayChange = new \DateTime('now');
-            $dayChange->modify("-$modifyDays days");
-            if($dayChange->format('G') < 9) {
-                $dayChange->modify('-1 day');
+            $startDC = new \DateTime('now');
+            $startDC->modify("-$modifyDays days");
+            if($startDC->format('G') < 9) {
+                $startDC->modify('-1 day');
             }
 
-            $dayChange->setTime(9, 0);
+            $startDC->setTime(9, 0);
 
-        $influences = $this->influenceHistory->filter(
-            function($influence) use ($dayChange) {
-                return $influence->getCreatedAt() >= $dayChange &&
-                    $influence->getCreatedAt() <= $dayChange->modify('+1 day')
+        $endDC = clone $startDC;
+        $endDC->modify('+1 day');
+
+        $influences = $this->history->filter(
+            function($influence) use ($startDC, $endDC) {
+                return $influence->getCreatedAt() >= $startDC &&
+                    $influence->getCreatedAt() <= $endDC
                 ;
             }
         );
 
         if ($influences->isEmpty()) {
-            return new \Chiave\ErepublikScrobblerBundle\Entity\CitizenInfluenceHistory($this);
+            return new \Chiave\ErepublikScrobblerBundle\Entity\CitizenHistory($this);
         }
 
         return $influences->last();

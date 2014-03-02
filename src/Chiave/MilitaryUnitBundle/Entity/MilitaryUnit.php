@@ -163,18 +163,21 @@ class MilitaryUnit
     public function getSingleHistory($modifyDays = 0)
     {
         //same logic as in DateTimeService:getDayChange()
-            $dayChange = new \DateTime('now');
-            $dayChange->modify("-$modifyDays days");
-            if($dayChange->format('G') < 9) {
-                $dayChange->modify('-1 day');
+            $startDC = new \DateTime('now');
+            $startDC->modify("-$modifyDays days");
+            if($startDC->format('G') < 9) {
+                $startDC->modify('-1 day');
             }
 
-            $dayChange->setTime(9, 0);
+            $startDC->setTime(9, 0);
+
+        $endDC = clone $startDC;
+        $endDC->modify('+1 day');
 
         $histories = $this->history->filter(
-            function($history) use ($dayChange) {
-                return $history->getCreatedAt() >= $dayChange &&
-                    $history->getCreatedAt() <= $dayChange->modify('+1 day')
+            function($history) use ($startDC, $endDC) {
+                return $history->getCreatedAt() >= $startDC &&
+                    $history->getCreatedAt() <= $endDC
                 ;
             }
         );
@@ -183,7 +186,7 @@ class MilitaryUnit
             return new \Chiave\MilitaryUnitBundle\Entity\MilitaryUnitHistory($this);
         }
 
-        return $histories->last();
+        return $histories->first();
     }
 
     /**

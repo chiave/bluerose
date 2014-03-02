@@ -6,13 +6,13 @@ use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
 
 /**
- * CitizenInfluenceHistory
+ * CitizenHistory
  *
- * @ORM\Table(name="citizen_influence_history")
+ * @ORM\Table(name="citizen_history")
  * @ORM\Entity
  * @ORM\HasLifecycleCallbacks()
  */
-class CitizenInfluenceHistory
+class CitizenHistory
 {
     /**
      * @var integer
@@ -24,7 +24,7 @@ class CitizenInfluenceHistory
     private $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Citizen", inversedBy="influenceHistory")
+     * @ORM\ManyToOne(targetEntity="Citizen", inversedBy="history")
      * @ORM\JoinColumn(name="citizen_id", referencedColumnName="id")
      **/
     private $citizen;
@@ -72,7 +72,7 @@ class CitizenInfluenceHistory
      * Set citizen
      *
      * @param \Chiave\ErepublikScrobblerBundle\Entity\Citizen $citizen
-     * @return CitizenInfluenceHistory
+     * @return CitizenHistory
      */
     public function setCitizen(\Chiave\ErepublikScrobblerBundle\Entity\Citizen $citizen = null)
     {
@@ -95,7 +95,7 @@ class CitizenInfluenceHistory
      * Set influence
      *
      * @param string $influence
-     * @return CitizenInfluenceHistory
+     * @return CitizenHistory
      */
     public function setInfluence($influence)
     {
