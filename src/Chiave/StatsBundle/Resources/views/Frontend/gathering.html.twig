@@ -40,15 +40,17 @@
           <td>Obrażenia</td>
 
         </tr>
+        {% for citizen in citizens %}
         <tr>
-          <td>LP</td>
-          <td>Av</td>
-          <td>djstrach</td>
-          <td>2</td>
-          <td>234</td>
-          <td>15098273</td>
+          <td>{{ loop.index }}</td>
+          <td><img src="{{ citizen.smallAvatarUrl }}" /></td>
+          <td>{{ citizen.nick }}</td>
+          <td>{{ citizen.getSingleHistory(1).egovBattles }}</td>
+          <td>{{ citizen.getSingleHistory(1).egovHits }}</td>
+          <td>{{ citizen.getSingleHistory(1).egovInfluence }}</td>
 
         </tr>
+        {% endfor %}
 
       </tbody>
     </table>

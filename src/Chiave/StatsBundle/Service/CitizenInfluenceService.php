@@ -86,6 +86,7 @@ class CitizenInfluenceService
             $influenceValue = $rankPointsDifference*10;
         }
 
+        //egovInfluence?
         $influence->setInfluence($influenceValue);
 
         $em->persist($influence);

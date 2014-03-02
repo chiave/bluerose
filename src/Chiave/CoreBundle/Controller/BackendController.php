@@ -49,6 +49,10 @@ class BackendController extends Controller
         //     ->get('erepublik_citizen_scrobbler')
         //     ->updateCitizen($citizen)
         // ;
+        // $this->container
+        //     ->get('egov_nationalraport_fetcher')
+        //     ->updateCitizens()
+        // ;
 
         //2494465 - djstrach
         //4241769 - aplhanumerix

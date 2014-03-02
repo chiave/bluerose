@@ -30,11 +30,25 @@ class CitizenHistory
     private $citizen;
 
     /**
+     * @var integer
+     *
+     * @ORM\Column(type="integer")
+     */
+    private $egovBattles = 0;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(type="integer")
+     */
+    private $egovHits = 0;
+
+    /**
      * @var string
      *
      * @ORM\Column(type="string", length=1024)
      */
-    private $influence;
+    private $egovInfluence = '-----';
 
     /**
      * @var \DateTime
@@ -55,7 +69,7 @@ class CitizenHistory
     }
 
     public function __toString() {
-        return $this->influence ? $this->influence : '-----';
+        return $this->egovInfluence ? $this->egovInfluence : '-----';
     }
 
     /**
@@ -92,26 +106,72 @@ class CitizenHistory
     }
 
     /**
-     * Set influence
+     * Set egovBattles
      *
-     * @param string $influence
+     * @param integer $egovBattles
      * @return CitizenHistory
      */
-    public function setInfluence($influence)
+    public function setEgovBattles($egovBattles)
     {
-        $this->influence = $influence;
+        $this->egovBattles = $egovBattles;
 
         return $this;
     }
 
     /**
-     * Get influence
+     * Get egovBattles
+     *
+     * @return integer
+     */
+    public function getEgovBattles()
+    {
+        return $this->egovBattles;
+    }
+
+    /**
+     * Set egovHits
+     *
+     * @param integer $egovHits
+     * @return CitizenHistory
+     */
+    public function setEgovHits($egovHits)
+    {
+        $this->egovHits = $egovHits;
+
+        return $this;
+    }
+
+    /**
+     * Get egovHits
+     *
+     * @return integer
+     */
+    public function getEgovHits()
+    {
+        return $this->egovHits;
+    }
+
+    /**
+     * Set egovInfluence
+     *
+     * @param string $egovInfluence
+     * @return CitizenHistory
+     */
+    public function setEgovInfluence($egovInfluence)
+    {
+        $this->egovInfluence = $egovInfluence;
+
+        return $this;
+    }
+
+    /**
+     * Get egovInfluence
      *
      * @return string
      */
-    public function getInfluence()
+    public function getEgovInfluence()
     {
-        return $this->influence;
+        return $this->egovInfluence;
     }
 
     /**

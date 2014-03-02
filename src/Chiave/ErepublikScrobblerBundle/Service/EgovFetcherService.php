@@ -71,6 +71,36 @@ class EgovFetcherService extends CurlUtils
         }
     }
 
+    public function updateCitizens() {
+        $em = $this->getEm();
+        $nationalRaport = $this->getNationalRaportArray(1);
+
+        $i = 0;
+        foreach($nationalRaport['minisoldiersStats'] as $citizenFreshData) {
+            $citizen = $this
+                ->getRepo('ChiaveErepublikScrobblerBundle:Citizen')
+                ->findOneByCitizenId($citizenFreshData['citizen']);
+
+            if($citizen == null) {
+                //TODO: Continue for now,
+                //  create new citizen if part of bluerose in the future
+                continue;
+                // $citizen = new MilitaryUnit($citizenFreshData['unit']);
+
+                // $em->persist($citizen);
+                // $em->flush();
+            }
+
+            $history = $citizen->getSingleHistory(1);
+            $history->setEgovBattles($citizenFreshData['battles']);
+            $history->setEgovHits($citizenFreshData['hits']);
+            $history->setEgovInfluence($citizenFreshData['influence']);
+
+            $em->persist($history);
+            $em->flush();
+        }
+    }
+
     public function muExists()
     {
         $query = $this->_xpath->query("//div[@class='header_content']/h2/span");

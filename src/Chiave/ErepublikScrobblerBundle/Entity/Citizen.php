@@ -884,11 +884,11 @@ class Citizen
     }
 
     /**
-     * Get influence
+     * Get single history
      *
      * @return \Chiave\ErepublikScrobblerBundle\Entity\CitizenHistory
      */
-    public function getInfluence($modifyDays = 0)
+    public function getSingleHistory($modifyDays = 0)
     {
         //same logic as in DateTimeService:getDayChange()
             $startDC = new \DateTime('now');
@@ -902,19 +902,19 @@ class Citizen
         $endDC = clone $startDC;
         $endDC->modify('+1 day');
 
-        $influences = $this->history->filter(
-            function($influence) use ($startDC, $endDC) {
-                return $influence->getCreatedAt() >= $startDC &&
-                    $influence->getCreatedAt() <= $endDC
+        $histories = $this->history->filter(
+            function($history) use ($startDC, $endDC) {
+                return $history->getCreatedAt() >= $startDC &&
+                    $history->getCreatedAt() <= $endDC
                 ;
             }
         );
 
-        if ($influences->isEmpty()) {
+        if ($histories->isEmpty()) {
             return new \Chiave\ErepublikScrobblerBundle\Entity\CitizenHistory($this);
         }
 
-        return $influences->last();
+        return $histories->last();
     }
 
     /**

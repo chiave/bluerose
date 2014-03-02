@@ -32,14 +32,14 @@ class MilitaryUnitHistory
     /**
      * @var integer
      *
-     * @ORM\Column(name="battles", type="integer", nullable=true)
+     * @ORM\Column(type="integer", nullable=true)
      */
     private $battles;
 
     /**
      * @var integer
      *
-     * @ORM\Column(name="hits", type="integer", nullable=true)
+     * @ORM\Column(type="integer", nullable=true)
      */
     private $hits;
 

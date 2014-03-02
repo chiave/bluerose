@@ -27,7 +27,13 @@ class FrontendController extends Controller
             ->findAll()
         ;
 
+        $citizens = $em
+            ->getRepository('ChiaveErepublikScrobblerBundle:Citizen')
+            ->findAll()
+        ;
+
         return array(
+            'citizens' => $citizens,
             'militaryUnits' => $militaryUnits,
         );
     }

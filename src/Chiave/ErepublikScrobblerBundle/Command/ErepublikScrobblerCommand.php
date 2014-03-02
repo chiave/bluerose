@@ -7,13 +7,13 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 
-class CitizenScrobblerCommand extends ContainerAwareCommand
+class ErepublikScrobblerCommand extends ContainerAwareCommand
 {
     protected function configure()
     {
         $this
-            ->setName('erepublik:scrobbler:citizens')
-            ->setDescription('Fetch citizens data.')
+            ->setName('erepublik:scrobbler')
+            ->setDescription('Scrobble erepubliks data.')
             // ->addArgument(
             //     'citizenId',
             //     InputArgument::REQUIRED,
