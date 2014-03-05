@@ -16,17 +16,17 @@
             </tr>
         </thead>
       <tbody>
-        {% for citizen in citizens if citizen.gethistory().egovBattles != 0 %}
+        {% for citizen in citizens if citizen.history.egovBattles != 0 %}
         <tr>
             <td>{{ loop.index }}</td>
-            <td><img src="{{ citizen.smallAvatarUrl }}" /></td>
+            <td><img src="{{ citizen.history.smallAvatarUrl }}" /></td>
             <td>
-                {{ citizen.nick }}
+                {{ citizen.history.nick }}
             </td>
-            <td>{{ citizen.gethistory().egovBattles }}</td>
-            <td>{{ citizen.gethistory().egovHits }}</td>
-            <td>{{ citizen.gethistory().egovInfluence }}</td>
-            <td>{{ citizen.countHit }}</td>
+            <td>{{ citizen.history.egovBattles }}</td>
+            <td>{{ citizen.history.egovHits }}</td>
+            <td>{{ citizen.history.egovInfluence }}</td>
+            <td>{{ citizen.history.hit }}</td>
         </tr>
         {% endfor %}
 
@@ -46,16 +46,16 @@
             </tr>
         </thead>
       <tbody>
-        {% for citizen in citizens if citizen.gethistory(1).egovBattles != 0 %}
+        {% for citizen in citizens if citizen.history(1).egovBattles != 0 %}
         <tr>
             <td>{{ loop.index }}</td>
-            <td><img src="{{ citizen.smallAvatarUrl }}" /></td>
+            <td><img src="{{ citizen.history.smallAvatarUrl }}" /></td>
             <td>
-                {{ citizen.nick }}
+                {{ citizen.history(1).nick }}
             </td>
-            <td>{{ citizen.gethistory(1).egovBattles }}</td>
-            <td>{{ citizen.gethistory(1).egovHits }}</td>
-            <td>{{ citizen.gethistory(1).egovInfluence }}</td>
+            <td>{{ citizen.history(1).egovBattles }}</td>
+            <td>{{ citizen.history(1).egovHits }}</td>
+            <td>{{ citizen.history(1).egovInfluence }}</td>
 
         </tr>
         {% endfor %}
@@ -82,10 +82,10 @@
         <tr>
           <td>{{ loop.index }}</td>
           <td>{{ mu.name }}</td>
-          <td>{{ mu.gethistory(1).battles }}</td>
-          <td>{{ mu.gethistory(1).soldiers }}</td>
-          <td>{{ mu.gethistory(1).hits }}</td>
-          <td>{{ mu.gethistory(1).influence }}</td>
+          <td>{{ mu.history(1).battles }}</td>
+          <td>{{ mu.history(1).soldiers }}</td>
+          <td>{{ mu.history(1).hits }}</td>
+          <td>{{ mu.history(1).influence }}</td>
 
         </tr>
         {% endfor %}
