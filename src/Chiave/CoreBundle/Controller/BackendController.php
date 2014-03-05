@@ -24,13 +24,18 @@ class BackendController extends Controller
     {
 
 
-        // $em = $this->getDoctrine()->getManager();
+        $em = $this->getDoctrine()->getManager();
 
-        // $citizen = $em
-        //     ->getRepository('Chiave\ErepublikScrobblerBundle\Entity\Citizen')
-        //     ->findOneByCitizenId(2494465)
-        // ;
+        $citizen = $em
+            ->getRepository('Chiave\ErepublikScrobblerBundle\Entity\Citizen')
+            ->findOneByCitizenId(4241769)
+        ;
+        // var_dump($citizen);
+        $cScrobbler = $this->get('erepublik_citizen_scrobbler');
 
+        $cScrobbler->updateCitizen($citizen->getCitizenId());
+
+        die;
         // $index = 1;
 
         // $endHistory = $citizen->getHistory($index);

@@ -68,7 +68,7 @@ class BackendCitizenController extends Controller
                 $em->persist($citizen);
                 $em->flush();
 
-                $this->container
+                $firstHistory = $this->container
                     ->get('erepublik_citizen_scrobbler')
                 ->updateCitizenHistory($citizen);
 

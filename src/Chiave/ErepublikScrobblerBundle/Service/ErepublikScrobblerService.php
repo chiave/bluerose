@@ -127,8 +127,22 @@ class ErepublikScrobblerService extends CurlUtils
 
         $em = $this->getEm();
 
+        echo $citizen->getAllHistory()->count(), "<br />";
+
+        if(!$citizen->getAllHistory()->count()) {
+            echo "cloning! <br />";
+            $zeroHistory = clone $history;
+            $em->persist($zeroHistory);
+        }
+
         $em->persist($history);
         $em->flush();
+
+        if(!$citizen->getAllHistory()->count()) {
+            echo "createdAt changing<br />";
+            $zeroHistory->setCreatedAt($history->getCreatedAt()->modify('-1 day'));
+            $em->flush();
+        }
 
         return $history;
     }
