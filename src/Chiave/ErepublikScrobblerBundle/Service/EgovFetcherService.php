@@ -55,7 +55,7 @@ class EgovFetcherService extends CurlUtils
                 $em->flush();
             }
 
-            $history = $mu->getSingleHistory();
+            $history = $mu->gethistory();
 
             $history->setBattles($muFreshData['battles']);
             $history->setHits($muFreshData['hits']);
@@ -86,7 +86,7 @@ class EgovFetcherService extends CurlUtils
                 // $em->flush();
             }
 
-            $history = $citizen->getSingleHistory();
+            $history = $citizen->gethistory();
             $history->setEgovBattles($citizenFreshData['battles']);
             $history->setEgovHits($citizenFreshData['hits']);
             $history->setEgovInfluence($citizenFreshData['influence']);

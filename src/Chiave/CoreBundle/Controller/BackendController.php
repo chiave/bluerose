@@ -22,12 +22,30 @@ class BackendController extends Controller
      */
     public function dashboardAction()
     {
-        // $em = $this->getDoctrine()->getManager();
 
-        // $citizen = $em
-        //     ->getRepository('Chiave\ErepublikScrobblerBundle\Entity\Citizen')
-        //     ->findOneByCitizenId(4241769)
-        // ;
+
+        $em = $this->getDoctrine()->getManager();
+
+        $citizen = $em
+            ->getRepository('Chiave\ErepublikScrobblerBundle\Entity\Citizen')
+            ->findOneByCitizenId(2494465)
+        ;
+
+        $index = 1;
+
+        $endHistory = $citizen->getHistory($index);
+        $endRankPoints = $endHistory->getRankPoints();
+        echo $endHistory->getId(), ' ', $endRankPoints, '<br />';
+
+        $startHistory = $endHistory->getCitizen()
+            ->getHistoryByDate($endHistory->getCreatedAt()->modify('-1 day'));
+        $startRankPoints = $startHistory->getRankPoints();
+        echo $startHistory->getId(), ' ', $startRankPoints, '<br />';;
+
+        $result = ($endRankPoints-$startRankPoints)*10;
+        echo $result;
+
+        die;
 
         // var_dump($citizen->getInfluence());
 

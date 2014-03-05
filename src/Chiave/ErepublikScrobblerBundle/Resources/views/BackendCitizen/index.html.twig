@@ -34,10 +34,10 @@
             <tr>
                 <td>{{ loop.index }}</td>
                 <td>{{ citizen.citizenId }}</td>
-                <td>{{ citizen.nick }}</td>
-                <td>{{ citizen.experience }}</td>
-                <td>{{ citizen.strength }}</td>
-                <td>{{ citizen.rankPoints }}</td>
+                <td>{{ citizen.history.nick }}</td>
+                <td>{{ citizen.history.experience }}</td>
+                <td>{{ citizen.history.strength }}</td>
+                <td>{{ citizen.history.rankPoints }}</td>
                 {# <td>{{ citizen.truePatriot }}</td>
                 <td>eBirth</td>
                 <td>{{ citizen.country }}<br />
@@ -49,9 +49,6 @@
                 <td>
                     <div class="button-bar">
                         <ul class="button-group">
-                            <li>
-                                <a class="tiny button" href="{{ path('chiave_scrobbler_citizens_changes', { 'citizenId': citizen.id }) }}">Pokaż zmiany</a>
-                            </li>
                             <li>
                                 <a class="tiny button" href="{{ path('chiave_scrobbler_citizens_histories', { 'citizenId': citizen.id }) }}">Pokaż historię</a>
                             </li>

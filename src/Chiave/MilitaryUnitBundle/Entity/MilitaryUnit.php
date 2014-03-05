@@ -150,7 +150,7 @@ class MilitaryUnit
      *
      * @return \Doctrine\Common\Collections\Collection
      */
-    public function getHistory()
+    public function getAllHistory()
     {
         return $this->history;
     }
@@ -160,7 +160,7 @@ class MilitaryUnit
      *
      * @return \Chiave\MilitaryUnitBundle\Entity\MilitaryUnitHistory
      */
-    public function getSingleHistory($modifyDays = 0)
+    public function getHistory($modifyDays = 0)
     {
         //same logic as in DateTimeService:getDayChange()
             $startDC = new \DateTime('now');

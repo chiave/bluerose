@@ -68,16 +68,7 @@ class ErepublikScrobblerCommand extends ContainerAwareCommand
         //     $cScrobbler->updateCitizen($user);
         // }
 
-        $citizens = $this->getContainer()
-            ->get('doctrine.orm.entity_manager')
-            ->getRepository('ChiaveErepublikScrobblerBundle:Citizen')
-            ->findAll()
-        ;
-
-        foreach($citizens as $citizen) {
-            $cScrobbler->updateCitizen($citizen);
-        }
-
+        $cScrobbler->updateCitizens();
         $output->writeln('Done. I think.');
     }
 }

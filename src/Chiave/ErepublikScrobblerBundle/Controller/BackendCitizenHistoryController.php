@@ -34,13 +34,18 @@ class BackendCitizenHistoryController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
-        $histories = $em
-            ->getRepository('ChiaveErepublikScrobblerBundle:CitizenHistory')
-            ->findByCitizen($citizenId)
+        $citizen = $em
+            ->getRepository('ChiaveErepublikScrobblerBundle:Citizen')
+            ->find($citizenId)
         ;
+        // $histories = $em
+        //     ->getRepository('ChiaveErepublikScrobblerBundle:CitizenHistory')
+        //     ->findByCitizen($citizenId)
+        // ;
 
         return array(
-            'histories' => $histories,
+            'citizen' => $citizen,
+            // 'histories' => $histories,
         );
     }
 }
