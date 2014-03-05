@@ -26,26 +26,26 @@
             <tr>
                 <td>{{ loop.index }}</td>
                 <td>
-                    <img src="{{ citizen.smallAvatarUrl }}" />
+                    <img src="{{ citizen.history.smallAvatarUrl }}" />
                 </td>
                 <td>{{ citizen.citizenId }}</td>
-                <td>{{ citizen.nick }}</td>
-                <td>{{ citizen.division('roman') }}</td>
-                <td>{{ citizen.level }}{# <br />(xx/100 %) #}</td>
+                <td>{{ citizen.history.nick }}</td>
+                <td>{{ citizen.history.divisionText }}</td>
+                <td>{{ citizen.history.level }}{# <br />(xx/100 %) #}</td>
                 <td>
-                    <img src="{{ citizen.rankImageUrl }}" />{# <br /> #}
-                    {{ citizen.rankName }}{#  - {{ citizen.rankLevel }} #}
+                    <img src="{{ citizen.history.rankImageUrl }}" />{# <br /> #}
+                    {{ citizen.history.rankName }}{#  - {{ citizen.rankLevel }} #}
                 </td>
-                <td>{{ citizen.countHit }}</td>
-                <td>{{ citizen.strength }}</td>
-                <td>{{ citizen.getSingleHistory() }}{# {% render controller('citizen_stats:getTodayInfluence', {'citizenId': citizen.citizenId } ) %}<br /> #}
+                <td>{{ citizen.history.hit }}</td>
+                <td>{{ citizen.history.strength }}</td>
+                <td>{{ citizen.history.influence }}{# {% render controller('citizen_stats:getTodayInfluence', {'citizenId': citizen.citizenId } ) %}<br />
                 {# {% render controller('citizen_stats:getInfluenceByDay', {'citizenId': citizen.citizenId, } ) %} #}
                 </td>
-                <td>{{ citizen.getSingleHistory(1) }}{# {% render controller(
+                <td>{{ citizen.history(1).influence }}{# {% render controller(
                 'citizen_stats:getInfluenceByDay', {
                     'citizenId': citizen.citizenId,
                     'modify': 1
-                } ) %} #}</td>
+                } ) %}#}</td>
             </tr>
             {% endfor %}
 

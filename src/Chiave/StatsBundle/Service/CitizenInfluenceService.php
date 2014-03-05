@@ -27,8 +27,8 @@ class CitizenInfluenceService
 
         $em = $this->getEm();
 
-        $currentHistory = $citizen->getSingleHistory();
-        $previousHistory = $citizen->getSingleHistory(1);
+        $currentHistory = $citizen->gethistory();
+        $previousHistory = $citizen->gethistory(1);
 
         $endRankPoints = $citizen->getRankPoints();
 

@@ -32,7 +32,7 @@ class BackendCitizenController extends Controller
      */
     public function indexAction()
     {
-        $em = $this->getDoctrine()->getManager();
+        $em = $this->getEm();
 
         $citizens = $em
             ->getRepository('ChiaveErepublikScrobblerBundle:Citizen')
@@ -52,6 +52,8 @@ class BackendCitizenController extends Controller
      */
     public function createAction(Request $request)
     {
+        $em = $this->getEm();
+
         $citizen = new Citizen();
 
         $form = $this->createCitizenForm(
@@ -62,21 +64,16 @@ class BackendCitizenController extends Controller
         $form->handleRequest($request);
 
         if ($form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
 
-            $citizen = $this
-                ->get('erepublik_citizen_scrobbler')
-                ->updateCitizen(
-                    $citizen
-                )
-            ;
+                $em->persist($citizen);
+                $em->flush();
 
-            // $em->persist($citizen);
+                $this->container
+                    ->get('erepublik_citizen_scrobbler')
+                ->updateCitizenHistory($citizen);
 
-            // $em->flush();
-
-            return $this->redirect(
-                $this->generateUrl('chiave_scrobbler_citizens')
+                return $this->redirect(
+                    $this->generateUrl('chiave_scrobbler_citizens')
             );
         }
 
@@ -184,7 +181,7 @@ class BackendCitizenController extends Controller
         $result = new \stdClass();
         $result->success = false;
 
-        $em = $this->getDoctrine()->getManager();
+        $em = $this->getEm();
         $citizen = $em->getRepository('ChiaveErepublikScrobblerBundle:Citizen')->find($id);
 
         if (!$citizen) {
@@ -222,5 +219,10 @@ class BackendCitizenController extends Controller
                 'method' => 'post',
             )
         );
+    }
+
+    private function getEm()
+    {
+        return $this->getDoctrine()->getEntityManager();
     }
 }

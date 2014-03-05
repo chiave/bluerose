@@ -32,58 +32,37 @@ class CitizenHistory
     /**
      * @var string
      *
-     * @ORM\Column(name="nick", type="string", length=64, nullable=true)
+     * @ORM\Column(name="nick", type="string", length=64)
      */
     private $nick;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="experience", type="string", nullable=true)
+     * @ORM\Column(name="avatarUrl", type="string", length=255)
+     */
+    private $avatarUrl;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="experience", type="string")
      */
     private $experience;
 
     /**
-     * @var integer
-     *
-     * @ORM\Column(name="level", type="integer", nullable=true)
-     */
-    private $level;
-
-    /**
-     * @var integer
-     *
-     * @ORM\Column(name="division", type="integer", nullable=true)
-     */
-    private $division;
-
-    /**
      * @var float
      *
-     * @ORM\Column(name="strength", type="float", nullable=true)
+     * @ORM\Column(name="strength", type="float")
      */
     private $strength;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="rankPoints", type="string", nullable=true)
+     * @ORM\Column(name="rankPoints", type="string")
      */
     private $rankPoints;
-
-    /**
-     * @var integer
-     *
-     * @ORM\Column(name="rankLevel", type="integer", nullable=true)
-     */
-    private $rankLevel;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="rankName", type="string", nullable=true)
-     */
-    private $rankName;
 
     /**
      * @var string
@@ -93,30 +72,37 @@ class CitizenHistory
     private $truePatriot;
 
     /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="ebirth", type="date")
+     */
+    private $ebirth;
+
+    /**
      * @var string
      *
-     * @ORM\Column(name="country", type="string", length=64, nullable=true)
+     * @ORM\Column(name="country", type="string", length=64)
      */
     private $country;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="region", type="string", length=64, nullable=true)
+     * @ORM\Column(name="region", type="string", length=64)
      */
     private $region;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="citizenship", type="string", length=64, nullable=true)
+     * @ORM\Column(name="citizenship", type="string", length=64)
      */
     private $citizenship;
 
     /**
      * @var integer
      *
-     * @ORM\Column(name="nationalRank", type="integer", nullable=true)
+     * @ORM\Column(name="nationalRank", type="integer")
      */
     private $nationalRank;
 
@@ -154,13 +140,6 @@ class CitizenHistory
      * @ORM\Column(name="achievements", type="json_array", nullable=true)
      */
     private $achievements;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="influence", type="string")
-     */
-    private $influence = '0';
 
     /**
      * @var integer
@@ -202,7 +181,8 @@ class CitizenHistory
     }
 
     public function __toString() {
-        return $this->influence ? $this->influence : '0';
+        return $this->nick;
+        // return $this->influence ? $this->influence : '0';
     }
 
     /**
@@ -262,6 +242,67 @@ class CitizenHistory
     }
 
     /**
+     * Set avatarUrl
+     *
+     * @param string $avatarUrl
+     * @return Player
+     */
+    public function setAvatarUrl($avatarUrl)
+    {
+        $this->avatarUrl = $avatarUrl;
+
+        return $this;
+    }
+
+    /**
+     * Get avatarUrl
+     *
+     * @return string
+     */
+    public function getAvatarUrl()
+    {
+        return $this->avatarUrl;
+    }
+
+    /**
+     * Get avatarUrl
+     *
+     * @return string
+     */
+    public function getLargeAvatarUrl()
+    {
+        return $this->avatarUrl;
+    }
+
+    /**
+     * Get medium avatarUrl
+     *
+     * @return string
+     */
+    public function getMediumAvatarUrl()
+    {
+        $filename = $this->avatarUrl;
+        $extension_pos = strrpos($filename, '.');
+
+        return substr($filename, 0, $extension_pos) .
+            '_142x142' . substr($filename, $extension_pos);
+    }
+
+    /**
+     * Get small avatarUrl
+     *
+     * @return string
+     */
+    public function getSmallAvatarUrl()
+    {
+        $filename = $this->avatarUrl;
+        $extension_pos = strrpos($filename, '.');
+
+        return substr($filename, 0, $extension_pos) .
+            '_55x55' . substr($filename, $extension_pos);
+    }
+
+    /**
      * Set experience
      *
      * @param string $experience
@@ -284,59 +325,28 @@ class CitizenHistory
         return $this->experience;
     }
 
-    /**
-     * Set level
-     *
-     * @param integer $level
-     * @return Citizen
-     */
-    public function setLevel($level)
-    {
-        $this->level = $level;
+    public function getLevel() {
+        $levelData = $this->getLevelData($this->getExperience());
 
-        $this->setDivision(
-            $this->countDivision($level)
-        );
-
-        return $this;
+        return $levelData['level'];
     }
 
-    /**
-     * Get level
-     *
-     * @return integer
-     */
-    public function getLevel()
-    {
-        return $this->level;
+    public function getHp() {
+        $levelData = $this->getLevelData($this->getExperience());
+
+        return $levelData['hp'];
     }
 
-    /**
-     * Set division
-     *
-     * @param integer $division
-     * @return Citizen
-     */
-    public function setDivision($division)
+    public function getDivision()
     {
-        $this->division = $division;
+        $levelData = $this->getLevelData($this->getExperience());
 
-        return $this;
+        return $this->countDivision($levelData['level']);
     }
 
-    /**
-     * Get division
-     *
-     * @return integer
-     */
-    public function getDivision($mode = 'arabic')
+    public function getDivisionText($mode = 'arabic')
     {
-        $result = '';
-        $mode == 'arabic' ?
-            $result = $this->division :
-            $result = $this->romanNumerals($this->division)
-        ;
-        return $result;
+        return $this->romanNumerals($this->getDivision());
     }
 
     /**
@@ -371,7 +381,6 @@ class CitizenHistory
     public function setRankPoints($rankPoints)
     {
         $this->rankPoints = $rankPoints;
-        $this->rankLevel = $this->countRankLevel($rankPoints);
 
         return $this;
     }
@@ -386,57 +395,32 @@ class CitizenHistory
         return $this->rankPoints;
     }
 
-    /**
-     * Set rankLevel
-     *
-     * @param integer $rankLevel
-     * @return CitizenHistory
-     */
-    public function setRankLevel($rankLevel)
-    {
-        $this->rankLevel = $rankLevel;
-
-        return $this;
-    }
-
-    /**
-     * Get rankLevel
-     *
-     * @return integer
-     */
     public function getRankLevel()
     {
-        return $this->rankLevel;
+        $rankData = $this->getRankData($this->getRankPoints());
+
+        return $rankData['level'];
     }
 
-    /**
-     * Set rankName
-     *
-     * @param string $rankName
-     * @return Citizen
-     */
-    public function setRankName($rankName)
+    public function getRankImageUrl()
     {
-        $this->rankName = $rankName;
+        $rankData = $this->getRankData($this->getRankPoints());
 
-        return $this;
+        return $rankData['image'];
     }
 
-    /**
-     * Get rankName
-     *
-     * @return string
-     */
     public function getRankName()
     {
-        return $this->rankName;
+        $rankData = $this->getRankData($this->getRankPoints());
+
+        return $rankData['name'];
     }
 
     /**
      * Set truePatriot
      *
      * @param string $truePatriot
-     * @return Player
+     * @return CitizenHistory
      */
     public function setTruePatriot($truePatriot)
     {
@@ -456,10 +440,33 @@ class CitizenHistory
     }
 
     /**
+     * Set ebirth
+     *
+     * @param \DateTime $ebirth
+     * @return CitizenHistory
+     */
+    public function setEbirth($ebirth)
+    {
+        $this->ebirth = $ebirth;
+
+        return $this;
+    }
+
+    /**
+     * Get ebirth
+     *
+     * @return \DateTime
+     */
+    public function getEbirth()
+    {
+        return $this->ebirth;
+    }
+
+    /**
      * Set country
      *
      * @param string $country
-     * @return Player
+     * @return CitizenHistory
      */
     public function setCountry($country)
     {
@@ -482,7 +489,7 @@ class CitizenHistory
      * Set region
      *
      * @param string $region
-     * @return Player
+     * @return CitizenHistory
      */
     public function setRegion($region)
     {
@@ -505,7 +512,7 @@ class CitizenHistory
      * Set citizenship
      *
      * @param string $citizenship
-     * @return Player
+     * @return CitizenHistory
      */
     public function setCitizenship($citizenship)
     {
@@ -528,7 +535,7 @@ class CitizenHistory
      * Set nationalRank
      *
      * @param integer $nationalRank
-     * @return Player
+     * @return CitizenHistory
      */
     public function setNationalRank($nationalRank)
     {
@@ -551,7 +558,7 @@ class CitizenHistory
      * Set partyId
      *
      * @param integer $partyId
-     * @return Player
+     * @return CitizenHistory
      */
     public function setPartyId($partyId)
     {
@@ -574,7 +581,7 @@ class CitizenHistory
      * Set partyName
      *
      * @param string $partyName
-     * @return Player
+     * @return CitizenHistory
      */
     public function setPartyName($partyName)
     {
@@ -597,7 +604,7 @@ class CitizenHistory
      * Set militaryUnitId
      *
      * @param integer $militaryUnitId
-     * @return Player
+     * @return CitizenHistory
      */
     public function setMilitaryUnitId($militaryUnitId)
     {
@@ -620,7 +627,7 @@ class CitizenHistory
      * Set militaryUnitName
      *
      * @param string $militaryUnitName
-     * @return Player
+     * @return CitizenHistory
      */
     public function setMilitaryUnitName($militaryUnitName)
     {
@@ -642,8 +649,8 @@ class CitizenHistory
     /**
      * Set achievements
      *
-     * @param json_array $achievements
-     * @return Player
+     * @param array $achievements
+     * @return CitizenHistory
      */
     public function setAchievements($achievements)
     {
@@ -655,34 +662,11 @@ class CitizenHistory
     /**
      * Get achievements
      *
-     * @return json_array
+     * @return array
      */
     public function getAchievements()
     {
         return $this->achievements;
-    }
-
-    /**
-     * Set influence
-     *
-     * @param string $influence
-     * @return CitizenHistory
-     */
-    public function setInfluence($influence)
-    {
-        $this->influence = $influence;
-
-        return $this;
-    }
-
-    /**
-     * Get influence
-     *
-     * @return string
-     */
-    public function getInfluence()
-    {
-        return $this->influence;
     }
 
     /**
@@ -822,22 +806,33 @@ class CitizenHistory
      *
      * @return integer
      */
-    public function countHit($weaponsQuality = 7)
+    public function getHit($weaponsQuality = 7)
     {
-        $influence = 10 *
+        $hit = 10 *
                 (1 + $this->getStrength()/400) *
                 (1 + $this->getRankLevel()/5) *
                 (1 + $this->getWeaponsFirePower($weaponsQuality)/100)
         ;
 
-        return round($influence);
+        return round($hit);
     }
 
     /**
-     * Count division
+     * Count influence
      *
-     * @return string
+     * @return integer
      */
+    public function getInfluence()
+    {
+        $endRankPoints = $this->getRankPoints();
+        $startRankPoints = $this->citizen
+            ->getHistoryByDate($this->getCreatedAt()->modify('-1 day'))
+            ->getRankPoints()
+        ;
+
+        return ($endRankPoints-$startRankPoints)*10;
+    }
+
     private function countDivision($level)
     {
         if ($level >= 70) {
@@ -851,29 +846,10 @@ class CitizenHistory
         return 1;
     }
 
-    /**
-     * Count rankLevel
-     *
-     * @return integer
-     */
-    private function countRankLevel($rankPoints)
-    {
-        $rankArray = array_reverse($this->getRankArray(), true);
-
-        foreach ($rankArray as $rankLevel => $rank) {
-            if ($rankPoints >= $rank) {
-                return $rankLevel;
-            }
-        }
-
-        return 0;
-    }
-
     private function romanNumerals($num){
         $n = intval($num);
         $res = '';
 
-        /*** roman_numerals array  ***/
         $roman_numerals = array(
             'M'  => 1000,
             'CM' => 900,
@@ -890,17 +866,11 @@ class CitizenHistory
             'I'  => 1);
 
         foreach ($roman_numerals as $roman => $number){
-            /*** divide to get  matches ***/
             $matches = intval($n / $number);
-
-            /*** assign the roman char * $matches ***/
             $res .= str_repeat($roman, $matches);
-
-            /*** substract from the number ***/
             $n = $n % $number;
         }
 
-        /*** return the res ***/
         return $res;
     }
 
@@ -924,79 +894,142 @@ class CitizenHistory
         );
     }
 
+    private function getRankData($rankPoints)
+    {
+        $rankArray = $this->getRankArray();
+
+        foreach ($rankArray as $key => $value) {
+            if ($rankPoints >= $key) {
+                return $value;
+            }
+        }
+
+        //NOTICE: Just in case...
+        return -1;
+    }
+
     private function getRankArray()
     {
         return array(
-                1   => 0,
-                2   => 15,
-                3   => 45,
-                4   => 80,
-                5   => 120,
-                6   => 170,
-                7   => 250,
-                8   => 350,
-                9   => 450,
-                10  => 600,
-                11  => 800,
-                12  => 1000,
-                13  => 1400,
-                14  => 1850,
-                15  => 2350,
-                16  => 3000,
-                17  => 3750,
-                18  => 5000,
-                19  => 6500,
-                20  => 9000,
-                21  => 12000,
-                22  => 15500,
-                23  => 20000,
-                24  => 25000,
-                25  => 31000,
-                26  => 40000,
-                27  => 52000,
-                28  => 67000,
-                29  => 85000,
-                30  => 110000,
-                31  => 140000,
-                32  => 180000,
-                33  => 225000,
-                34  => 285000,
-                35  => 355000,
-                36  => 435000,
-                37  => 540000,
-                38  => 660000,
-                39  => 800000,
-                40  => 950000,
-                41  => 1140000,
-                42  => 1350000,
-                43  => 1600000,
-                44  => 1875000,
-                45  => 2185000,
-                46  => 2550000,
-                47  => 3000000,
-                48  => 3500000,
-                49  => 4150000,
-                50  => 4900000,
-                51  => 5800000,
-                52  => 7000000,
-                53  => 9000000,
-                54  => 11500000,
-                55  => 14500000,
-                56  => 18000000,
-                57  => 22000000,
-                58  => 26500000,
-                59  => 31500000,
-                60  => 37000000,
-                61  => 43000000,
-                62  => 50000000,
-                63  => 100000000,
-                64  => 200000000,
-                65  => 500000000,
-                66  => 1000000000,
-                67  => 2000000000,
-                68  => 4000000000,
-                69  => 10000000000,
+                10000000000   => array('level' => 69,'image' => 'http//wiki.erepublik.com/images/6/63/Icon_rank_Titan%2A%2A%2A.png','name'=>'69. Titan***'),
+                4000000000   => array('level' => 68,'image' => 'http://wiki.erepublik.com/images/9/96/Icon_rank_Titan%2A%2A.png','name'=>'68. Titan**'),
+                2000000000   => array('level' => 67,'image' => 'http://wiki.erepublik.com/images/9/94/Icon_rank_Titan%2A.png','name'=>'67. Titan*'),
+                1000000000   => array('level' => 66,'image' => 'http://wiki.erepublik.com/images/a/a4/Icon_rank_Titan.png','name'=>'66. Titan'),
+                500000000   => array('level' => 65,'image' => 'http://wiki.erepublik.com/images/9/9d/Icon_rank_God_of_War%2A%2A%2A.png','name'=>'65. God_of_War***'),
+                200000000   => array('level' => 64,'image' => 'http://wiki.erepublik.com/images/1/18/Icon_rank_God_of_War%2A%2A.png','name'=>'64. God_of_War**'),
+                100000000   => array('level' => 63,'image' => 'http://wiki.erepublik.com/images/b/bd/Icon_rank_God_of_War%2A.png','name'=>'63. God_of_War*'),
+                50000000   => array('level' => 62,'image' => 'http://wiki.erepublik.com/images/f/f5/Icon_rank_God_of_War.png','name'=>'62. God_of_War'),
+                43000000   => array('level' => 61,'image' => 'http://wiki.erepublik.com/images/5/5c/Icon_rank_Legendary_Force%2A%2A%2A.png','name'=>'61. Legendary_Force***'),
+                37000000   => array('level' => 60,'image' => 'http://wiki.erepublik.com/images/f/fc/Icon_rank_Legendary_Force%2A%2A.png','name'=>'60. Legendary_Force**'),
+                31500000   => array('level' => 59,'image' => 'http://wiki.erepublik.com/images/2/2c/Icon_rank_Legendary_Force%2A.png','name'=>'59. Legendary_Force*'),
+                26500000   => array('level' => 58,'image' => 'http://wiki.erepublik.com/images/b/b5/Icon_rank_Legendary_Force.png','name'=>'58. Legendary_Force'),
+                22000000   => array('level' => 57,'image' => 'http://wiki.erepublik.com/images/b/b2/Icon_rank_World_Class_Force%2A%2A%2A.png','name'=>'57. World_Class_Force***'),
+                18000000   => array('level' => 56,'image' => 'http://wiki.erepublik.com/images/a/a1/Icon_rank_World_Class_Force%2A%2A.png','name'=>'56. World_Class_Force**'),
+                14500000   => array('level' => 55,'image' => 'http://wiki.erepublik.com/images/3/39/Icon_rank_World_Class_Force%2A.png','name'=>'55. World_Class_Force*'),
+                11500000   => array('level' => 54,'image' => 'http://wiki.erepublik.com/images/d/de/Icon_rank_World_Class_Force.png','name'=>'54. World_Class_Force'),
+                9000000   => array('level' => 53,'image' => 'http://wiki.erepublik.com/images/9/98/Icon_rank_National_Force%2A%2A%2A.png','name'=>'53. National_Force***'),
+                7000000   => array('level' => 52,'image' => 'http://wiki.erepublik.com/images/8/84/Icon_rank_National_Force%2A%2A.png','name'=>'52. National_Force**'),
+                5800000   => array('level' => 51,'image' => 'http://wiki.erepublik.com/images/6/6c/Icon_rank_National_Force%2A.png','name'=>'51. National_Force*'),
+                4900000   => array('level' => 50,'image' => 'http://wiki.erepublik.com/images/0/0a/Icon_rank_National_Force.png','name'=>'50. National_Force'),
+                4150000   => array('level' => 49,'image' => 'http://wiki.erepublik.com/images/0/06/Icon_rank_Supreme_Marshal%2A%2A%2A.png','name'=>'49. Supreme_Marshal***'),
+                3500000   => array('level' => 48,'image' => 'http://wiki.erepublik.com/images/4/4b/Icon_rank_Supreme_Marshal%2A%2A.png','name'=>'48. Supreme_Marshal**'),
+                3000000   => array('level' => 47,'image' => 'http://wiki.erepublik.com/images/8/86/Icon_rank_Supreme_Marshal%2A.png','name'=>'47. Supreme_Marshal*'),
+                2550000   => array('level' => 46,'image' => 'http://wiki.erepublik.com/images/a/ab/Icon_rank_Supreme_Marshal.png','name'=>'46. Supreme_Marshal'),
+                2185000   => array('level' => 45,'image' => 'http://wiki.erepublik.com/images/3/30/Icon_rank_Field_Marshal%2A%2A%2A.png','name'=>'45. Field_Marshal***'),
+                1875000   => array('level' => 44,'image' => 'http://wiki.erepublik.com/images/5/59/Icon_rank_Field_Marshal%2A%2A.png','name'=>'44. Field_Marshal**'),
+                1600000   => array('level' => 43,'image' => 'http://wiki.erepublik.com/images/7/7e/Icon_rank_Field_Marshal%2A.png','name'=>'43. Field_Marshal*'),
+                1350000   => array('level' => 42,'image' => 'http://wiki.erepublik.com/images/b/bf/Icon_rank_Field_Marshal.png','name'=>'42. Field_Marshal'),
+                1140000   => array('level' => 41,'image' => 'http://wiki.erepublik.com/images/9/92/Icon_rank_General%2A%2A%2A.png','name'=>'41. General***'),
+                950000   => array('level' => 40,'image' => 'http://wiki.erepublik.com/images/6/68/Icon_rank_General%2A%2A.png','name'=>'40. General**'),
+                800000   => array('level' => 39,'image' => 'http://wiki.erepublik.com/images/6/6d/Icon_rank_General%2A.png','name'=>'39. General*'),
+                660000   => array('level' => 38,'image' => 'http://wiki.erepublik.com/images/7/75/Icon_rank_General.png','name'=>'38. General'),
+                540000   => array('level' => 37,'image' => 'http://wiki.erepublik.com/images/4/42/Icon_rank_Colonel%2A%2A%2A.png','name'=>'37. Colonel***'),
+                435000   => array('level' => 36,'image' => 'http://wiki.erepublik.com/images/d/d4/Icon_rank_Colonel%2A%2A.png','name'=>'36. Colonel**'),
+                355000   => array('level' => 35,'image' => 'http://wiki.erepublik.com/images/f/f7/Icon_rank_Colonel%2A.png','name'=>'35. Colonel*'),
+                285000   => array('level' => 34,'image' => 'http://wiki.erepublik.com/images/a/ad/Icon_rank_Colonel.png','name'=>'34. Colonel'),
+                225000   => array('level' => 33,'image' => 'http://wiki.erepublik.com/images/5/5d/Icon_rank_Lt_Colonel%2A%2A%2A.png','name'=>'33. Lt_Colonel***'),
+                180000   => array('level' => 32,'image' => 'http://wiki.erepublik.com/images/2/2b/Icon_rank_Lt_Colonel%2A%2A.png','name'=>'32. Lt_Colonel**'),
+                140000   => array('level' => 31,'image' => 'http://wiki.erepublik.com/images/e/e3/Icon_rank_Lt_Colonel%2A.png','name'=>'31. Lt_Colonel*'),
+                110000   => array('level' => 30,'image' => 'http://wiki.erepublik.com/images/0/06/Icon_rank_Lt_Colonel.png','name'=>'30. Lt_Colonel'),
+                85000   => array('level' => 29,'image' => 'http://wiki.erepublik.com/images/5/55/Icon_rank_Commander%2A%2A%2A.png','name'=>'29. Commander***'),
+                67000   => array('level' => 28,'image' => 'http://wiki.erepublik.com/images/8/89/Icon_rank_Commander%2A%2A.png','name'=>'28. Commander**'),
+                52000   => array('level' => 27,'image' => 'http://wiki.erepublik.com/images/2/22/Icon_rank_Commander%2A.png','name'=>'27. Commander*'),
+                40000   => array('level' => 26,'image' => 'http://wiki.erepublik.com/images/a/ad/Icon_rank_Commander.png','name'=>'26. Commander'),
+                31000   => array('level' => 25,'image' => 'http://wiki.erepublik.com/images/b/bf/Icon_rank_Major%2A%2A%2A.png','name'=>'25. Major***'),
+                25000   => array('level' => 24,'image' => 'http://wiki.erepublik.com/images/9/99/Icon_rank_Major%2A%2A.png','name'=>'24. Major**'),
+                20000   => array('level' => 23,'image' => 'http://wiki.erepublik.com/images/a/ae/Icon_rank_Major%2A.png','name'=>'23. Major*'),
+                15500   => array('level' => 22,'image' => 'http://wiki.erepublik.com/images/e/e3/Icon_rank_Major.png','name'=>'22. Major'),
+                12000   => array('level' => 21,'image' => 'http://wiki.erepublik.com/images/c/c2/Icon_rank_Captain%2A%2A%2A.png','name'=>'21. Captain***'),
+                9000   => array('level' => 20,'image' => 'http://wiki.erepublik.com/images/3/36/Icon_rank_Captain%2A%2A.png','name'=>'20. Captain**'),
+                6500   => array('level' => 19,'image' => 'http://wiki.erepublik.com/images/1/12/Icon_rank_Captain%2A.png','name'=>'19. Captain*'),
+                5000   => array('level' => 18,'image' => 'http://wiki.erepublik.com/images/3/33/Icon_rank_Captain.png','name'=>'18. Captain'),
+                3750   => array('level' => 17,'image' => 'http://wiki.erepublik.com/images/d/dd/Icon_rank_Lieutenant%2A%2A%2A.png','name'=>'17. Lieutenant***'),
+                3000   => array('level' => 16,'image' => 'http://wiki.erepublik.com/images/f/f3/Icon_rank_Lieutenant%2A%2A.png','name'=>'16. Lieutenant**'),
+                2350   => array('level' => 15,'image' => 'http://wiki.erepublik.com/images/7/73/Icon_rank_Lieutenant%2A.png','name'=>'15. Lieutenant*'),
+                1850   => array('level' => 14,'image' => 'http://wiki.erepublik.com/images/5/56/Icon_rank_Lieutenant.png','name'=>'14. Lieutenant'),
+                1400   => array('level' => 13,'image' => 'http://wiki.erepublik.com/images/0/03/Icon_rank_Sergeant%2A%2A%2A.png','name'=>'13. Sergeant***'),
+                1000   => array('level' => 12,'image' => 'http://wiki.erepublik.com/images/4/45/Icon_rank_Sergeant%2A%2A.png','name'=>'12. Sergeant**'),
+                800   => array('level' => 11,'image' => 'http://wiki.erepublik.com/images/f/fc/Icon_rank_Sergeant%2A.png','name'=>'11. Sergeant*'),
+                600   => array('level' => 10,'image' => 'http://wiki.erepublik.com/images/a/a1/Icon_rank_Sergeant.png','name'=>'10. Sergeant'),
+                450   => array('level' => 9,'image' => 'http://wiki.erepublik.com/images/9/98/Icon_rank_Corporal%2A%2A%2A.png','name'=>'9. Corporal***'),
+                350   => array('level' => 8,'image' => 'http://wiki.erepublik.com/images/4/4b/Icon_rank_Corporal%2A%2A.png','name'=>'8. Corporal**'),
+                250   => array('level' => 7,'image' => 'http://wiki.erepublik.com/images/3/31/Icon_rank_Corporal%2A.png','name'=>'7. Corporal*'),
+                170   => array('level' => 6,'image' => 'http://wiki.erepublik.com/images/8/8b/Icon_rank_Corporal.png','name'=>'6. Corporal'),
+                120   => array('level' => 5,'image' => 'http://wiki.erepublik.com/images/7/74/Icon_rank_Private%2A%2A%2A.png','name'=>'5. Private***'),
+                80   => array('level' => 4,'image' => 'http://wiki.erepublik.com/images/e/e3/Icon_rank_Private%2A%2A.png','name'=>'4. Private**'),
+                45   => array('level' => 3,'image' => 'http://wiki.erepublik.com/images/f/f1/Icon_rank_Private*.png','name'=>'3. Private*'),
+                15   => array('level' => 2,'image' => 'http://wiki.erepublik.com/images/4/4c/Icon_rank_Private.png','name'=>'2. Private'),
+                0   => array('level' => 1,'image' => 'http://wiki.erepublik.com/images/2/20/Icon_rank_Recruit.png','name'=>'1. Recruit'),
             )
         ;
     }
+
+    private function getLevelData($experience)
+    {
+        if ($experience >= 15000) {
+            $level = ((int)($experience/5000))+25;
+            return array('level'=> $level,'hp'=> 500);
+        } else {
+            $levelArray = $this->getLevelArray();
+            foreach ($levelArray as $key => $value) {
+                if ($experience >= $key) {
+                    return $value;
+                }
+            }
+        }
+    }
+
+    private function getLevelArray() {
+        return array(
+                10000 => array('level' => 27,'hp' => 500),
+                7000 => array('level' => 26,'hp' => 500),
+                5000 => array('level' => 25,'hp' => 500),
+                3000 => array('level' => 24,'hp' => 500),
+                2000 => array('level' => 23,'hp' => 500),
+                1500 => array('level' => 22,'hp' => 500),
+                1000 => array('level' => 21,'hp' => 500),
+                500 => array('level' => 20,'hp' => 480),
+                450 => array('level' => 19,'hp' => 460),
+                410 => array('level' => 18,'hp' => 440),
+                370 => array('level' => 17,'hp' => 420),
+                335 => array('level' => 16,'hp' => 400),
+                300 => array('level' => 15,'hp' => 380),
+                270 => array('level' => 14,'hp' => 360),
+                240 => array('level' => 13,'hp' => 340),
+                210 => array('level' => 12,'hp' => 320),
+                180 => array('level' => 11,'hp' => 300),
+                150 => array('level' => 10,'hp' => 280),
+                130 => array('level' => 9,'hp' => 260),
+                110 => array('level' => 8,'hp' => 240),
+                90 => array('level' => 7,'hp' => 220),
+                70 => array('level' => 6,'hp' => 200),
+                50 => array('level' => 5,'hp' => 180),
+                35 => array('level' => 4,'hp' => 160),
+                20 => array('level' => 3,'hp' => 140),
+                10 => array('level' => 2,'hp' => 120),
+                0 => array('level' => 1,'hp' => 100),
+            )
+        ;
+    }
+
 }
