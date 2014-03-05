@@ -33,19 +33,14 @@
                 <td>{{ citizen.history.divisionText }}</td>
                 <td>{{ citizen.history.level }}{# <br />(xx/100 %) #}</td>
                 <td>
-                    <img src="{{ citizen.history.rankImageUrl }}" />{# <br /> #}
-                    {{ citizen.history.rankName }}{#  - {{ citizen.rankLevel }} #}
+                    <img src="{{ citizen.history.rankImageUrl }}" />
+                    {{ citizen.history.rankName }}
                 </td>
                 <td>{{ citizen.history.hit }}</td>
                 <td>{{ citizen.history.strength }}</td>
-                <td>{{ citizen.history.influence }}{# {% render controller('citizen_stats:getTodayInfluence', {'citizenId': citizen.citizenId } ) %}<br />
-                {# {% render controller('citizen_stats:getInfluenceByDay', {'citizenId': citizen.citizenId, } ) %} #}
+                <td>{{ citizen.history.influence }}
                 </td>
-                <td>{{ citizen.history(1).influence }}{# {% render controller(
-                'citizen_stats:getInfluenceByDay', {
-                    'citizenId': citizen.citizenId,
-                    'modify': 1
-                } ) %}#}</td>
+                <td>{{ citizen.history(1).influence }}</td>
             </tr>
             {% endfor %}
 
