@@ -24,28 +24,28 @@ class BackendController extends Controller
     {
 
 
-        $em = $this->getDoctrine()->getManager();
+        // $em = $this->getDoctrine()->getManager();
 
-        $citizen = $em
-            ->getRepository('Chiave\ErepublikScrobblerBundle\Entity\Citizen')
-            ->findOneByCitizenId(2494465)
-        ;
+        // $citizen = $em
+        //     ->getRepository('Chiave\ErepublikScrobblerBundle\Entity\Citizen')
+        //     ->findOneByCitizenId(2494465)
+        // ;
 
-        $index = 1;
+        // $index = 1;
 
-        $endHistory = $citizen->getHistory($index);
-        $endRankPoints = $endHistory->getRankPoints();
-        echo $endHistory->getId(), ' ', $endRankPoints, '<br />';
+        // $endHistory = $citizen->getHistory($index);
+        // $endRankPoints = $endHistory->getRankPoints();
+        // echo $endHistory->getId(), ' ', $endRankPoints, '<br />';
 
-        $startHistory = $endHistory->getCitizen()
-            ->getHistoryByDate($endHistory->getCreatedAt()->modify('-1 day'));
-        $startRankPoints = $startHistory->getRankPoints();
-        echo $startHistory->getId(), ' ', $startRankPoints, '<br />';;
+        // $startHistory = $endHistory->getCitizen()
+        //     ->getHistoryByDate($endHistory->getCreatedAt()->modify('-1 day'));
+        // $startRankPoints = $startHistory->getRankPoints();
+        // echo $startHistory->getId(), ' ', $startRankPoints, '<br />';;
 
-        $result = ($endRankPoints-$startRankPoints)*10;
-        echo $result;
+        // $result = ($endRankPoints-$startRankPoints)*10;
+        // echo $result;
 
-        die;
+        // die;
 
         // var_dump($citizen->getInfluence());
 
