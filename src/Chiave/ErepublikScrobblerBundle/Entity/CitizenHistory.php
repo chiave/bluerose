@@ -163,6 +163,13 @@ class CitizenHistory
     private $egovInfluence = '0';
 
     /**
+     * @var smallint
+     *
+     * @ORM\Column(type="smallint")
+     */
+    private $dof = 0;
+
+    /**
      * @var \DateTime
      *
      * @ORM\Column(name="createdAt", type="datetime")
@@ -739,6 +746,47 @@ class CitizenHistory
     }
 
     /**
+     * Set dof
+     *
+     * @param smallint $dof
+     * @return CitizenHistory
+     */
+    public function setDof($dof)
+    {
+        $this->dof = $dof;
+
+        return $this;
+    }
+
+    /**
+     * Get dof
+     *
+     * @return smallint
+     */
+    public function getDof()
+    {
+        return $this->dof;
+    }
+
+    /**
+     * Is dof
+     *
+     * @return smallint
+     */
+    public function getDofText()
+    {
+        if ($this->dof == 1) {
+            return 'wydany';
+        } elseif ($this->dof == 0) {
+            return 'niewydany';
+        } elseif ($this->dof == -1) {
+            return 'pominięty';
+        } else {
+            return 'stan nieznany';
+        }
+    }
+
+    /**
      * Set createdAt
      *
      * @param \DateTime $createdAt
@@ -799,6 +847,16 @@ class CitizenHistory
     public function setUpdatedTimestamps()
     {
         $this->updatedAt = new \DateTime('now');
+    }
+
+    public function getDate()
+    {
+        $date = $this->getCreatedAt();
+
+        $erepZeroDay = new \DateTime('2007-11-20 9:00:00');
+        $interval = $date->diff($erepZeroDay);
+
+        return $interval->format('%a');
     }
 
     /**
@@ -1031,5 +1089,4 @@ class CitizenHistory
             )
         ;
     }
-
 }
