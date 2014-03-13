@@ -322,6 +322,6 @@ class BackendDofController extends Controller
 
     private function getEm()
     {
-        return $this->getDoctrine()->getEntityManager();
+        return $this->getDoctrine()->getManager();
     }
 }
