@@ -35,19 +35,29 @@ class DateTimeService
         return $dayChange;
     }
 
+    public function getDateByDay($day)
+    {
+        $date = new \DateTime('now');
+
+        $erepZeroDay = new \DateTime('2007-11-20 9:00:00');
+        $today = $date->diff($erepZeroDay)->format('%a');
+
+        return $this->getDayChange($today-$day);
+    }
+
     public function getErepublikDate($modifyDays = 0, $response = false)
     {
         $date = new \DateTime('now');
         $date->modify("-$modifyDays days");
 
         $erepZeroDay = new \DateTime('2007-11-20 9:00:00');
-        $interval = $date->diff($erepZeroDay);
+        $erepDay = $date->diff($erepZeroDay)->format('%a');
 
         if ($response == true) {
-            return new Response($interval->format('%a'));
+            return new Response($erepDay);
         }
 
-        return $interval->format('%a');
+        return $erepDay;
     }
 
     private function getEm()

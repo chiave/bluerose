@@ -60,6 +60,10 @@ class ErepublikScrobblerService extends CurlUtils
             echo '<br>id mu: ' . $this->getMilitaryUnitId();
             echo '<br>';echo '<br>';
             var_dump($this->getMedals());
+            echo '<br>';echo '<br>';
+            echo '<br>small bombs: ' . $this->getSmallBombs();
+            echo '<br>big bombs: ' . $this->getBigBombs();
+            echo '<br>last used: ' . $this->getLastUsedMsg();
         } else {
             echo '<br />User o podanym ID prawdopodobnie nie istnieje.';
         }
@@ -124,6 +128,9 @@ class ErepublikScrobblerService extends CurlUtils
         $history->setMilitaryUnitId($this->getMilitaryUnitId());
         $history->setMilitaryUnitName($this->getMilitaryUnit());
         $history->setAchievements($this->getMedals());
+        $history->setSmallBombs($this->getSmallBombs());
+        $history->setBigBombs($this->getBigBombs());
+        $history->setLastUsedMsg($this->getLastUsedMsg());
 
         $em = $this->getEm();
 
@@ -342,6 +349,26 @@ class ErepublikScrobblerService extends CurlUtils
         return $medals;
     }
 
+    public function getSmallBombs()
+    {
+        return trim($this->_xpath->query("//div[@class='citizen_mass_destruction']/strong[1]/b")
+            ->item(0)->nodeValue
+        );
+    }
+
+    public function getBigBombs()
+    {
+        return trim($this->_xpath->query("//div[@class='citizen_mass_destruction']/strong[2]/b")
+            ->item(0)->nodeValue
+        );
+    }
+
+    public function getLastUsedMsg()
+    {
+        return trim($this->_xpath->query("//div[@class='citizen_mass_destruction']/em")
+            ->item(0)->nodeValue
+        );
+    }
     //helpers
 
     private function getEm()

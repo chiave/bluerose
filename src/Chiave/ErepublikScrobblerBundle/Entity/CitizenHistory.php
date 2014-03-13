@@ -146,6 +146,27 @@ class CitizenHistory
      *
      * @ORM\Column(type="integer")
      */
+    private $smallBombs = 0;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(type="integer")
+     */
+    private $bigBombs = 0;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(type="string", length=256)
+     */
+    private $lastUsedMsg = '';
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(type="integer")
+     */
     private $egovBattles = 0;
 
     /**
@@ -168,6 +189,15 @@ class CitizenHistory
      * @ORM\Column(type="smallint")
      */
     private $dof = 0;
+
+    //counted
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(type="integer")
+     */
+    private $division;
 
     /**
      * @var \DateTime
@@ -318,6 +348,7 @@ class CitizenHistory
     public function setExperience($experience)
     {
         $this->experience = $experience;
+        $this->division = $this->getDivision();
 
         return $this;
     }
@@ -677,6 +708,75 @@ class CitizenHistory
     }
 
     /**
+     * Set smallBombs
+     *
+     * @param integer $smallBombs
+     * @return CitizenHistory
+     */
+    public function setSmallBombs($smallBombs)
+    {
+        $this->smallBombs = $smallBombs;
+
+        return $this;
+    }
+
+    /**
+     * Get smallBombs
+     *
+     * @return integer
+     */
+    public function getSmallBombs()
+    {
+        return $this->smallBombs;
+    }
+
+    /**
+     * Set bigBombs
+     *
+     * @param integer $bigBombs
+     * @return CitizenHistory
+     */
+    public function setBigBombs($bigBombs)
+    {
+        $this->bigBombs = $bigBombs;
+
+        return $this;
+    }
+
+    /**
+     * Get bigBombs
+     *
+     * @return integer
+     */
+    public function getBigBombs()
+    {
+        return $this->bigBombs;
+    }
+
+    /**
+     * Set lastUsedMsg
+     *
+     * @param string $lastUsedMsg
+     * @return CitizenHistory
+     */
+    public function setLastUsedMsg($lastUsedMsg)
+    {
+        $this->lastUsedMsg = $lastUsedMsg;
+
+        return $this;
+    }
+
+    /**
+     * Get lastUsedMsg
+     *
+     * @return string
+     */
+    public function getLastUsedMsg()
+    {
+        return $this->lastUsedMsg;
+    }
+
+    /**
      * Set egovBattles
      *
      * @param integer $egovBattles
@@ -871,6 +971,18 @@ class CitizenHistory
                 (1 + $this->getRankLevel()/5) *
                 (1 + $this->getWeaponsFirePower($weaponsQuality)/100)
         ;
+
+        return round($hit);
+    }
+
+    /**
+     * Count egovHit
+     *
+     * @return integer
+     */
+    public function getEgovQWeaponHit($weaponsQuality = 7)
+    {
+        $hit = $this->egovHits * $this->getHit();
 
         return round($hit);
     }

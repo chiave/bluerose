@@ -27,25 +27,66 @@ class BackendDofController extends Controller
      * Lists all citizens.
      *
      * @Route("s/", name="chiave_dofs")
-     * @Method("GET")
      * @Template()
      */
-    public function indexAction()
+    public function indexAction(Request $request)
     {
-        $em = $this->getEm();
 
-        //only undofed, and
-        //  with influ and
-        //  with egov influ and
-        //  not from today and
-        //  not from first day
-        $citizens = $em
-            ->getRepository('ChiaveErepublikScrobblerBundle:Citizen')
-            ->findAll()
+        $timeMaster = $this->container->get('date_time');
+
+        $todayDay = $timeMaster->getErepublikDate(1);
+
+        $post = $request->request->get('form');
+
+        isset($post['startDay']) && $post['startDay'] != null ?
+            $data['startDay'] = $post['startDay'] :
+            $data['startDay'] = $todayDay
+        ;
+        isset($post['endDay']) && $post['endDay'] != null ?
+            $data['endDay'] = $post['endDay'] :
+            $data['endDay'] = $todayDay
+        ;
+        isset($post['div']) && $post['div'] != null ?
+            $data['div'] = $post['div'] :
+            $data['div'] = null
+        ;
+        isset($post['status']) && $post['status'] != null ?
+            $data['status'] = $post['status'] :
+            $data['status'] = ''
         ;
 
+        $searchForm = $this->createSearchForm($data);
+
+        $startDate = $timeMaster->getDateByDay($data['startDay']);
+        $endDate = $timeMaster->getDateByDay($data['endDay'])->modify('+1 day');
+
+        $query = $this->getEm()
+            ->getRepository('ChiaveErepublikScrobblerBundle:CitizenHistory')
+            ->createQueryBuilder('ch')
+
+            ->where('ch.createdAt >= :startDate')
+            ->andWhere('ch.createdAt < :endDate')
+                ->setParameter('startDate', $startDate)
+                ->setParameter('endDate', $endDate);
+
+            if ($data['div'] != null) {
+                $query->andWhere('ch.division = :div')
+                    ->setParameter('div', $data['div']);
+            }
+            if ($data['status'] !== '') {
+                $query->andWhere('ch.dof = :status')
+                    ->setParameter('status', $data['status']);
+            }
+
+            $query->andWhere('ch.egovHits != 0')
+                ->orderBy('ch.nick', 'ASC')
+            ;
+
+        $histories = $query->getQuery()->getResult();
+
         return array(
-            'citizens' => $citizens,
+            'searchForm'    => $searchForm->createView(),
+            'histories' => $histories,
         );
     }
 
@@ -228,6 +269,56 @@ class BackendDofController extends Controller
     //         )
     //     );
     // }
+
+
+    /**
+    * Creates a form for dof picking.
+    *
+    * @return \Symfony\Component\Form\Form Form
+    */
+    public function createSearchForm($data)
+    {
+        return $this->createFormBuilder(null, array('csrf_protection' => false))
+            ->add('startDay', 'integer', array(
+                'precision' => 0,
+                'data'      => $data['startDay'],
+                'required'  => false,
+            ))
+            ->add('endDay', 'integer', array(
+                'precision' => 0,
+                'data'      => $data['endDay'],
+                'required'  => false,
+            ))
+            ->add('div', 'choice', array(
+                'choices'   => array(
+                    '' => 'Wszystkie',
+                    '1' => 'I',
+                    '2' => 'II',
+                    '3' => 'III',
+                    '4' => 'IV',
+                ),
+                'data'      => $data['div'],
+                'required'  => false,
+            ))
+            ->add('status', 'choice', array(
+                'choices'   => array(
+                        '0'     => 'niewydane',
+                        '1'     => 'wydane',
+                        '-1'    => 'pominięte',
+                        ''      => 'wszystkie',
+                ),
+                'data'      => $data['status'],
+                'required'  => false,
+            ))
+            // ->add('div', 'integer', array(
+                // 'precision' => 0,
+                // 'data'      => $data['div'],
+                // // 'mapped'    => false,
+                // 'required'  => false,
+            // ))
+            ->add('send', 'submit')
+            ->getForm();
+    }
 
     private function getEm()
     {

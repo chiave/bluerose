@@ -152,7 +152,7 @@ class Citizen
      *
      * @return \Chiave\ErepublikScrobblerBundle\Entity\CitizenHistory
      */
-    public function getHistoryByDate($startDC = null)
+    public function getHistoryByDate($startDC = null, $modify = 1)
     {
         if($startDC == null) {
             $startDC = new \DateTime('now');
@@ -165,7 +165,7 @@ class Citizen
             $startDC->setTime(9, 0);
 
         $endDC = clone $startDC;
-        $endDC->modify('+1 day');
+        $endDC->modify("+$modify day");
 
         $histories = $this->history->filter(
             function($history) use ($startDC, $endDC) {

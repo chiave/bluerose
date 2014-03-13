@@ -55,6 +55,10 @@ class BackendController extends Controller
         // var_dump($citizen->getInfluence());
 
 
+        echo $this->container
+            ->get('erepublik_citizen_scrobbler')
+            ->showRawData(4241769);
+
         // var_dump(
         //     $this->container
         //         ->get('egov_nationalraport_fetcher')
