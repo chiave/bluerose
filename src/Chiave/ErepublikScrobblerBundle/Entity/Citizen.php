@@ -40,7 +40,6 @@ class Citizen
      *     mappedBy="citizen",
      *     cascade={"all"}
      * )
-namespace Chiave\StatsBundle\Entity;
      * @ORM\OrderBy({"createdAt" = "DESC"})
      */
     private $history;
