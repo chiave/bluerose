@@ -57,4 +57,34 @@ class FrontendController extends Controller
             'militaryUnits' => $militaryUnits,
         );
     }
+
+    /**
+     * @Route("/ranking")
+     * @Template()
+     */
+    public function rankingAction()
+    {
+        $em = $this->getEm();
+
+        $lastRankingTime = $this->container->get('date_time')->getRankingTime();
+
+        $rankings = $em
+            ->getRepository('ChiaveStatsBundle:Ranking')
+            ->findBy(
+                array(),
+                array('createdAt' => 'DESC')
+            )
+        ;
+
+        $ranking = $rankings[0];
+
+        return array(
+            'ranking' => $ranking,
+        );
+    }
+
+    private function getEm()
+    {
+        return $this->getDoctrine()->getManager();
+    }
 }

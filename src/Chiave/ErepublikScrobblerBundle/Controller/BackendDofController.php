@@ -78,7 +78,7 @@ class BackendDofController extends Controller
                     ->setParameter('status', $data['status']);
             }
 
-            $query->andWhere('ch.egovHits != 0')
+            $query->andWhere('ch.egovBattles != 0')
                 ->orderBy('ch.nick', 'ASC')
             ;
 

@@ -60,6 +60,20 @@ class DateTimeService
         return $erepDay;
     }
 
+    public function getRankingTime($modifyWeeks = 0)
+    {
+        $date = new \DateTime('now');
+        $date->modify("-$modifyWeeks weeks");
+
+        $timestamp = strtotime('last Sunday', $date->getTimestamp());
+        $result = \DateTime::createFromFormat('U', $timestamp);
+
+        $result->setTimezone(new \DateTimeZone("Europe/Warsaw"));
+
+        //NOTICE: +9h because DC is set on 9:00
+        return $result->modify('+9 hours');
+    }
+
     private function getEm()
     {
         return $this->container

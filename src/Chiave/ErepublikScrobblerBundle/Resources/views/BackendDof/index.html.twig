@@ -78,15 +78,15 @@
 {#                             </li>#}
 {#                         </ul>#}
 {#                     </div>#}
-                    <a class="button split tiny" href="{{ citizenItems~citizenId }}">
+                    <a class="button split tiny" href="{{ citizenItems~citizenId }}" target="_blank">
                         Donuj
                         <span data-dropdown="drop-interact-{{ history.id }}"></span>
                     </a>
                     <ul id="drop-interact-{{ history.id }}" class="f-dropdown" data-dropdown-content>
-                        <li><a href="{{ citizenProfile~citizenId }}">Pokaż profil</a></li>
-                        <li><a href="{{ citizenPM~citizenId }}">Ślij PM</a></li>
-                        <li><a href="{{ citizenItems~citizenId }}">Wyślij przedmioty</a></li>
-                        <li><a href="{{ citizenMoney~citizenId }}">Wyślij piniondze</a></li>
+                        <li><a href="{{ citizenProfile~citizenId }}" target="_blank">Pokaż profil</a></li>
+                        <li><a href="{{ citizenPM~citizenId }}" target="_blank">Ślij PM</a></li>
+                        <li><a href="{{ citizenItems~citizenId }}" target="_blank">Wyślij przedmioty</a></li>
+                        <li><a href="{{ citizenMoney~citizenId }}" target="_blank">Wyślij piniondze</a></li>
                     </ul>
                 </td>
             </tr>

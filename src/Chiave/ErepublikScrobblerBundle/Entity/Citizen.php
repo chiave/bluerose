@@ -40,9 +40,20 @@ class Citizen
      *     mappedBy="citizen",
      *     cascade={"all"}
      * )
+namespace Chiave\StatsBundle\Entity;
      * @ORM\OrderBy({"createdAt" = "DESC"})
      */
     private $history;
+
+    /**
+     * @ORM\OneToMany(
+     *     targetEntity="Chiave\StatsBundle\Entity\RankingUser",
+     *     mappedBy="citizen",
+     *     cascade={"all"}
+     * )
+     * @ORM\OrderBy({"createdAt" = "DESC"})
+     */
+    private $rankingUsers;
 
     /**
      * @var \DateTime
@@ -181,6 +192,40 @@ class Citizen
 
         return $histories->last();
     }
+
+    /**
+     * Add rankingUsers
+     *
+     * @param \Chiave\StatsBundle\Entity\RankingUser $rankingUsers
+     * @return Citizen
+     */
+    public function addRankingUser(\Chiave\StatsBundle\Entity\RankingUser $rankingUsers)
+    {
+        $this->rankingUsers[] = $rankingUsers;
+
+        return $this;
+    }
+
+    /**
+     * Remove rankingUsers
+     *
+     * @param \Chiave\StatsBundle\Entity\RankingUser $rankingUsers
+     */
+    public function removeRankingUser(\Chiave\StatsBundle\Entity\RankingUser $rankingUsers)
+    {
+        $this->rankingUsers->removeElement($rankingUsers);
+    }
+
+    /**
+     * Get rankingUsers
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getRankingUsers()
+    {
+        return $this->rankingUsers;
+    }
+
     /**
      * Set createdAt
      *

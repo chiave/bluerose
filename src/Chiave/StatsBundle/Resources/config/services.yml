@@ -13,3 +13,8 @@ services:
         class:  Chiave\StatsBundle\Service\CitizenInfluenceService
         calls:
             - [setContainer, [@service_container]]
+
+    ranking:
+        class:  Chiave\StatsBundle\Service\RankingService
+        calls:
+            - [setContainer, [@service_container]]
