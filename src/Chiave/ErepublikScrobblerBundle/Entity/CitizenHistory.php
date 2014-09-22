@@ -926,13 +926,17 @@ class CitizenHistory {
      * @return integer
      */
     public function getInfluence() {
-        $endRankPoints = $this->getRankPoints();
-        $startRankPoints = $this->citizen
-                ->getHistoryByDate($this->getCreatedAt()->modify('-1 day'))
-                ->getRankPoints()
-        ;
+        if ($this->getCreatedAt()) {
+            $endRankPoints = $this->getRankPoints();
+            $startRankPoints = $this->citizen
+                    ->getHistoryByDate($this->getCreatedAt()->modify('-1 day'))
+                    ->getRankPoints()
+            ;
 
-        return ($endRankPoints - $startRankPoints) * 10;
+            return ($endRankPoints - $startRankPoints) * 10;
+        }
+
+        return 0;
     }
 
     private function countDivision($level) {
