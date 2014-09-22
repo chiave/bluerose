@@ -54,3 +54,10 @@ th .button {
     margin-bottom: 15px;
     padding: 10px;
 }
+
+.row {
+    margin: 0 auto;
+    max-width: 80em;
+    width: 100%;
+}
+

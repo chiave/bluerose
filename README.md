@@ -1,78 +1,170 @@
-Dostępność akcji:
-/test/{erepublikId}
-/test/4241769
-    surowe wypisanie danych o userze.
+Symfony Standard Edition
+========================
 
-konsola:
-app/console erepublik:scrobbler:citizes {erepublikId}
-app/console erepublik:scrobbler:citizes 4241769
-    aktualizuje/tworzy wpis o userze w naszej bazie danych. Zwraca info, jeśli za id-kiem nie kryje się aktywny gracz.
+Welcome to the Symfony Standard Edition - a fully-functional Symfony2
+application that you can use as the skeleton for your new applications.
 
+This document contains information on how to download, install, and start
+using Symfony. For a more detailed explanation, see the [Installation][1]
+chapter of the Symfony Documentation.
 
+1) Installing the Standard Edition
+----------------------------------
 
+When it comes to installing the Symfony Standard Edition, you have the
+following options.
 
+### Use Composer (*recommended*)
 
+As Symfony uses [Composer][2] to manage its dependencies, the recommended way
+to create a new project is to use it.
 
-Symfony2 project.
+If you don't have Composer yet, download it following the instructions on
+http://getcomposer.org/ or just run the following command:
 
-Zaczynamy!
+    curl -s http://getcomposer.org/installer | php
 
-Aby pobrać wymagana obsługa gita lub wrodzony spryt i chęć do szperania w necie.
+Then, use the `create-project` command to generate a new Symfony application:
 
-W Linuxach z konsoli instalujemy gita i w konsoli dajemy:
+    php composer.phar create-project symfony/framework-standard-edition path/to/install
 
-    git clone https://github.com/chiave/bluerose <nazwa katalogu>
+Composer will install Symfony and all its dependencies under the
+`path/to/install` directory.
 
-nazwa katalogu - nazwa katalogu, gdzie ma być wsadzony projekt. Musi być on pusty.
+### Download an Archive File
 
-Po sklonowaniu kodu z repo z poziomu katalogu głownego (a więc tego, co wpisaliśmy w <nazwa katalogu>) używamy narzędzia do pilnowania zależności - composera. Użycie:
+To quickly test Symfony, you can also download an [archive][3] of the Standard
+Edition and unpack it somewhere under your web server root directory.
 
-php composer.phar selfupdate
-php composer.phar install
+If you downloaded an archive "without vendors", you also need to install all
+the necessary dependencies. Download composer (see above) and run the
+following command:
 
+    php composer.phar install
 
+2) Checking your System Configuration
+-------------------------------------
 
-Uwagi:
-    projekt uruchamiamy przez:
+Before starting coding, make sure that your local system is properly
+configured for Symfony.
 
-http://localhost/<ścieżka do katalogu web>/app.php
-        lub                                app_dev.php
+Execute the `check.php` script from the command line:
 
-Symfony2 jest cacheowane dla wersji app.php co oznacza, że nie widać tam wprowadzanych zmian od razu. Aby były one tam widoczne należy wywalić zawartość katalogu app/cache (ręcznie, lub poleceniem z konsoli, bez różnicy). Wersja app_dev.php (deweloperska) jest wolna od tej niedogodności, ale też działa wolniej.
+    php app/check.php
 
-Z poziomu konsoli mamy dostępne całkiem przyjazne narzędzie. Aby wywołać listę komend wpisujemy:
+The script returns a status code of `0` if all mandatory requirements are met,
+`1` otherwise.
 
-    php app/console
+Access the `config.php` script from a browser:
 
-W pliku app/config/parameters.yml trzymane są wszystkie ustawienia, jak dane do serwera mailowego, czy bazy danych. Po utworzeniu sobie lokalnej bazy danych trzeba tam wprowadzić stosowne zmiany. Cały czas dostępny jest tam też plik parameters.yml.dist, który jest przykładem "nieruszanego" pliku.
+    http://localhost/path-to-project/web/config.php
 
+If you get any warnings or recommendations, fix them before moving on.
 
+3) Browsing the Demo Application
+--------------------------------
 
-Parę linków:
+Congratulations! You're now ready to use Symfony.
 
-Oficjalna dokumentacja:                 http://symfony.com/doc/current/book/index.html
-Polska wersja (minimalnie nieaktualna): http://symfony-docs.pl/
+From the `config.php` page, click the "Bypass configuration and go to the
+Welcome page" link to load up your first Symfony page.
 
+You can also use a web-based configurator by clicking on the "Configure your
+Symfony Application online" link of the `config.php` page.
 
+To see a real-live Symfony page in action, access the following page:
 
-Tyle na start - zachęcam do pisania ticketów w zakładce Issues. W razie problemów z Symfony, serwerem, gitem lub czymś związanym z projektem można śmiało zaczepiać tutaj, na IRC-u, gTalku i mailowo.
+    web/app_dev.php/demo/hello/Fabien
 
+4) Getting started with Symfony
+-------------------------------
 
-EDIT:
-Utworzyłem trzy pierwsze bundle. Wszystkie siedzą w src/Chiave
+This distribution is meant to be the starting point for your Symfony
+applications, but it also contains some sample code that you can learn from
+and play with.
 
+A great way to start learning Symfony is via the [Quick Tour][4], which will
+take you through all the basic features of Symfony2.
 
-CoreBundle:
-    Będzie służył do niewielu rzeczy, ale takie jest jego założenie. Obsługa logowania, może szablony niektórych widoków. Na razie nie robi nic.
+Once you're feeling good, you can move onto reading the official
+[Symfony2 book][5].
 
-ErepublikScrobblerBundle:
-    Chyba najtrudniejsze co nas czeka. Będzie miał za zadanie skanować co jakiś czas eRepublik, a to co wyszpera będzie zapisywał do bazy danych. Na chwilę obecną przewiduję, że będzie on działał cały czas iterując po id-kach userów, firm, bojówek i czego nam tylko przyjdzie do głowy. Pytanie tylko, czy nas erepublik wtedy nie zablokuje. Jeśli tak, ograniczymy się do listy zarejestrowanych nastronce userów.
+A default bundle, `AcmeDemoBundle`, shows you Symfony2 in action. After
+playing with it, you can remove it by following these steps:
 
-StatsBundle:
-    Tutaj będą się wykonywały wszelakie automagiczne czynności na zescrobblowanych danych. Przeliczanie, wyliczanie, podliczanie, zliczanie, i wszystko inne. Cel prosty.
+  * delete the `src/Acme` directory;
 
-StaticBundle:
-    W zasadzie gotowy do użytku. Jego zadaniem jest wyświetlanie stron statycznych. Controller jest całkiem prosty - ma za zadanie przekierować wchodzącego na <naszadomena>/xyz usera do widoku xyz.html.twig siedzącego w src/Chiave/StaticBundle/Resources/views/Frontend. Cokolwiek będzie wpisane po slashu - do takiego zasobu nas wyśle. Gdy zasób nie istnieje - zwraca 404. Bundle przyda się dla każdego, kto będzie pracował nad wyglądem stron, bo tutaj może to robić na spokojnie bez obaw, że jakieś dziwne dane wyjściowe będzie dostawał.
+  * remove the routing entry referencing AcmeDemoBundle in `app/config/routing_dev.yml`;
 
-MilitaryUnitBundle:
-    Bundle z rzeczami specyficznymi dla bojówki. Nie mam pewności co tu wsadzimy jeszcze, ale celuję w takie rzeczy jak wysyłąnie PM-ek, linki do profilów, mapy, dotacje, wewnętrzne informacje, wyliczenia należności i tym podobne. W skrócie - narzędzia ułatwiające pracę bojówce.
+  * remove the AcmeDemoBundle from the registered bundles in `app/AppKernel.php`;
+
+  * remove the `web/bundles/acmedemo` directory;
+
+  * empty the `security.yml` file or tweak the security configuration to fit
+    your needs.
+
+What's inside?
+---------------
+
+The Symfony Standard Edition is configured with the following defaults:
+
+  * Twig is the only configured template engine;
+
+  * Doctrine ORM/DBAL is configured;
+
+  * Swiftmailer is configured;
+
+  * Annotations for everything are enabled.
+
+It comes pre-configured with the following bundles:
+
+  * **FrameworkBundle** - The core Symfony framework bundle
+
+  * [**SensioFrameworkExtraBundle**][6] - Adds several enhancements, including
+    template and routing annotation capability
+
+  * [**DoctrineBundle**][7] - Adds support for the Doctrine ORM
+
+  * [**TwigBundle**][8] - Adds support for the Twig templating engine
+
+  * [**SecurityBundle**][9] - Adds security by integrating Symfony's security
+    component
+
+  * [**SwiftmailerBundle**][10] - Adds support for Swiftmailer, a library for
+    sending emails
+
+  * [**MonologBundle**][11] - Adds support for Monolog, a logging library
+
+  * [**AsseticBundle**][12] - Adds support for Assetic, an asset processing
+    library
+
+  * **WebProfilerBundle** (in dev/test env) - Adds profiling functionality and
+    the web debug toolbar
+
+  * **SensioDistributionBundle** (in dev/test env) - Adds functionality for
+    configuring and working with Symfony distributions
+
+  * [**SensioGeneratorBundle**][13] (in dev/test env) - Adds code generation
+    capabilities
+
+  * **AcmeDemoBundle** (in dev/test env) - A demo bundle with some example
+    code
+
+All libraries and bundles included in the Symfony Standard Edition are
+released under the MIT or BSD license.
+
+Enjoy!
+
+[1]:  http://symfony.com/doc/2.5/book/installation.html
+[2]:  http://getcomposer.org/
+[3]:  http://symfony.com/download
+[4]:  http://symfony.com/doc/2.5/quick_tour/the_big_picture.html
+[5]:  http://symfony.com/doc/2.5/index.html
+[6]:  http://symfony.com/doc/2.5/bundles/SensioFrameworkExtraBundle/index.html
+[7]:  http://symfony.com/doc/2.5/book/doctrine.html
+[8]:  http://symfony.com/doc/2.5/book/templating.html
+[9]:  http://symfony.com/doc/2.5/book/security.html
+[10]: http://symfony.com/doc/2.5/cookbook/email.html
+[11]: http://symfony.com/doc/2.5/cookbook/logging/monolog.html
+[12]: http://symfony.com/doc/2.5/cookbook/assetic/asset_management.html
+[13]: http://symfony.com/doc/2.5/bundles/SensioGeneratorBundle/index.html
